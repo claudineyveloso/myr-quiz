@@ -1,0 +1,21 @@
+<div class="intro-social d-flex justify-content-center align-items-center vh-100">
+  <div class='col-md-8 py-3'>
+    
+    <div class='text-center'>
+      <h1 class='mb-2 mt-4  number-axis-social' data-slides-target="id"></h1>
+      <h2 class='title-axis-social' data-slides-target="title"></h2>
+      <div class="dots mb-5">
+        <span class="dot" data-action="click->slides#currentSlide" data-slides-index-param="1"></span>
+        <span class="dot active" data-action="click->slides#currentSlide" data-slides-index-param="2"></span>
+        <span class="dot" data-action="click->slides#currentSlide" data-slides-index-param="3"></span>
+      </div>
+      <p class='description-axis-social mb-5'>
+<%= @axi.name %>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum bibendum dolor, nec ultrices turpis. Praesent pulvinar sit amet orci ac aliquet. Cras non ultrices mauris.
+      </p>
+      <%= button_to "Começar", start_answers_path, class: "btn-start btn-social mt-5" %>
+    </div>
+  </div>
+</div>
+
+

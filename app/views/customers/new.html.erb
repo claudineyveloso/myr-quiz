@@ -1,0 +1,38 @@
+<h1 class="mb-4">Cadastrar Cliente</h1>
+
+<%= form_with(model: @customer, local: true, html: { data: { controller: "customers-form-validation", action: "submit->customers-form-validation#validate" } }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: "form-control", data: { customers_form_validation_target: "name" }, maxlength: 100 %>
+    <div class="text-danger" data-customers-form-validation-target="errorName"></div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :email, class: 'form-label' %>
+    <%= form.email_field :email, class: 'form-control', data: { customers_form_validation_target: "email" }, maxlength: 100 %>
+    <div class="text-danger" data-customers-form-validation-target="errorEmail"></div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :phone, class: 'form-label' %>
+    <%= form.telephone_field :phone, class: 'form-control', data: { customers_form_validation_target: "phone" }, data: { action: "input->customers-form-validation#maskPhone" }, maxlength: 15 %>
+    <div class="text-danger" data-customers-form-validation-target="errorPhone"></div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :company_name, class: 'form-label' %>
+    <%= form.text_field :company_name, class: 'form-control', data: { customers_form_validation_target: "companyName" }, maxlength: 100 %>
+    <div class="text-danger" data-customers-form-validation-target="errorCompanyName"></div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :cnpj, class: 'form-label' %>
+    <%= form.text_field :cnpj, class: 'form-control', data: { customers_form_validation_target: "cnpj" } %>
+    <div class="text-danger" data-customers-form-validation-target="errorCnpj"></div>
+  </div>
+
+  <div class="d-grid">
+    <%= form.submit "Cadastrar", class: 'btn btn-success' %>
+  </div>
+<% end %>
+

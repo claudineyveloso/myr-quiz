@@ -1,0 +1,21 @@
+<div data-controller="slides">
+  <!-- Slideshow container -->
+  <div class="slide-container d-flex justify-content-center align-items-center vh-100">
+    
+    <!-- Slide 1 (Environmental) -->
+    <div data-slides-target="slide" style="display: none;">
+      <%= render partial: 'environmental' %>
+    </div>
+
+    <!-- Slide 2 (Social) -->
+    <div data-slides-target="slide" style="display: none;">
+      <%= render partial: 'social' %> <!-- Partial para o eixo Social -->
+    </div>
+
+    <!-- Slide 3 (Governança) -->
+    <div data-slides-target="slide" style="display: none;">
+      <%= render partial: 'governanca' %> <!-- Partial para o eixo Governança -->
+    </div>
+  </div>
+</div>
+

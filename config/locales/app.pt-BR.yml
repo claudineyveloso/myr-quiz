@@ -1,0 +1,91 @@
+pt-BR:
+  errors:
+    no_record: "Não há nenhum registro"
+    messages:
+      invalid_date: "is not a valid date"
+      invalid_time: "is not a valid time"
+      invalid_datetime: "is not a valid datetime"
+      is_at: "must be at %{restriction}"
+      before: "deve ser antes %{restriction}"
+      on_or_before: "must be on or before %{restriction}"
+      after: "deve ser depois %{restriction}"
+      on_or_after: "must be on or after %{restriction}"
+
+  format_email: "O formato do e-mail está inválido."
+  user:
+    errors:
+      without_company: "Selecione pelo menos uma empresa para este usuário."
+
+  report:
+    page: "Página"
+    title_report: "Relatório"
+    title_report_request: "Ordem de serviço No. "
+  error_open_request:
+    serial_number_exists: "Número do serial já existe vinculado a um contrato com o status ATIVO!"
+    serial_number_without_contract: "Número do serial não está vinculado a nenhum contrato!"
+    serial_number_unavailable: "Número do serial está indiponivel no objeto de contrato!"
+    serial_number_dont_exists: "Número do serial não existe ou não está relacionado a nenhum contrato!"
+    serial_number_not_exist: "Número do serial não está cadastrado ou não pertence ao produto selecionado."
+    serial_number_pending: "Número de data chip já em uso porém não exite contrato."
+    serial_number_active: "Número de data chip já em uso."
+
+  layouts:
+    application:
+      site_name: Caixa eletrônico
+  application:
+    header:
+      site_name: Caixa eletrônico
+      logout: Encerrar
+      main-page: Menu principal
+      sign-in: Entrar
+      new-account: Registrar conta
+  models_and_attributes: &models_and_attributes
+    models:
+      axi:
+        one: Eixo
+        other: Eixos
+      theme:
+        one: Tema
+        other: Temas
+      maturity:
+        one: Maturidade
+        other: Maturidades
+      scenario:
+        one: Cenário
+        other: Cenários
+      customer:
+        one: Cliente
+        other: Clientes
+      user:
+        one: Usuário
+        other: Usuarios
+    attributes:
+      axi:
+        name: "Nome"
+      theme:
+        name: "Nome"
+        axi_id: "Eixo"
+      maturity:
+        name: "Nome"
+      scenario:
+        theme: "Tema"
+        maturity: "Maturidade"
+        description: "Descrição"
+      customer:
+        name: "Nome"
+        email: "Email"
+        phone: "Telefone"
+        company_name: "Razão Social"
+        cnpj: "CNPJ"
+      user:
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirmar Senha"
+        is_active: "Situação do Usuário"
+        user_type: "Tipo de Usuário"
+        remember_me: "Mantenha-me Conectado"
+        current_password: "Senha Atual"
+  activerecord:
+    <<: *models_and_attributes
+  activemodel:
+    <<: *models_and_attributes

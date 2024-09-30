@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer: one
+  theme: one
+  maturity: one
+  scenario: one
+
+two:
+  customer: two
+  theme: two
+  maturity: two
+  scenario: two
