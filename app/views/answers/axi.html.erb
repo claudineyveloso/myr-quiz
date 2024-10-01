@@ -1,9 +1,9 @@
-<div class="row py-3 align-items-center space-title-quiz" style="background-color: #d1d58a; margin: 0;">
+<div class="row py-3 align-items-center space-title-quiz" style="background-color: <%= @axi.background_color %>; margin: 0;">
   <div class="col-7">
-    <h1 class="display-4 color-environmental fw-normal"><span class='fw-bold'>1.</span> Environmental</h1>
+    <h1 class="display-4 <%= @axi.text_color_class %> fw-normal"><span class='fw-bold'><%= @axi.id%>.</span> <%= @axi.name%></h1>
   </div>
   <div class="col-5 text-end">
-    <h2 class="fw-bold color-environmental">Eficiência Energética</h2>
+    <h2 class="fw-bold <%= @axi.text_color_class %>"><%= @axi.main_theme %></h2>
   </div>
 </div>
 

@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
   end
 
   def axi
-    @axi = params[:id]
+    @axi = Axi.find(params[:id])
   end
 
   def axi_data
@@ -28,5 +28,20 @@ class AnswersController < ApplicationController
       render json: { error: "Axi not found" }, status: :not_found
     end
   end
+
+  def background_color
+    case name.downcase
+    when 'environmental'
+      '#d1d58a'
+    when 'social'
+      '#02747F'
+    when 'governance'
+      '#B5838D'
+    else
+      '#ffffff'
+    end
+  end
+
+
 
 end
