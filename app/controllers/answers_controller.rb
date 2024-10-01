@@ -17,6 +17,30 @@ class AnswersController < ApplicationController
 
   def axi
     @axi = Axi.find(params[:id])
+    
+    # Corrigido para carregar todos os temas relacionados ao axi
+    @themes = Theme.where(axi_id: @axi.id)
+
+    Rails.logger.info "Themes encontrados: #{@themes.inspect}" # Isso agora vai funcionar corretamente
+    
+    # Seleciona o primeiro tema da coleção de temas
+    if @themes.any?
+      @theme = @themes.first
+      @answers = Scenario.quiz_by_axis(@axi.id, @theme.id)
+    else
+      @answers = [] # Caso não haja temas
+    end
+  end
+
+  def quiz_by_theme
+    axi_id = params[:axi_id]
+    theme_id = params[:theme_id]
+
+    # Use o scope para buscar as respostas com base no eixo e tema
+    answers = Scenario.quiz_by_axis(axi_id, theme_id)
+
+    # Retorna as respostas no formato JSON
+    render json: { answers: answers }
   end
 
   def axi_data
@@ -28,20 +52,5 @@ class AnswersController < ApplicationController
       render json: { error: "Axi not found" }, status: :not_found
     end
   end
-
-  def background_color
-    case name.downcase
-    when 'environmental'
-      '#d1d58a'
-    when 'social'
-      '#02747F'
-    when 'governance'
-      '#B5838D'
-    else
-      '#ffffff'
-    end
-  end
-
-
 
 end

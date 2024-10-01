@@ -8,75 +8,49 @@
 </div>
 
 
-<!-- Form Section -->
-<form class='container' >
+<!-- form section -->
+<form class='container' data-controller="quiz" data-quiz-current-index-value="0" data-quiz-axi-id-param="<%= @axi.id %>">
   <div class="row my-5">
-    <div class="col-12">
-      <!-- Question options -->
-      <div class="form-check mb-4">
-        <input class="form-check-input" type="radio" name="question1" id="option1">
-        <label class="form-check-label" for="option1">
-        Não possuo controle sobre o consumo de energia e seus impactos na cadeia de valor.
-        </label>
-      </div>
-      <div class="form-check mb-4">
-        <input class="form-check-input" type="radio" name="question1" id="option2">
-        <label class="form-check-label" for="option2">
-        Coleto dados básicos de consumo de energia de contas mensais de eletricidade, mas não realizo análises ou planejo ações de redução.
-        </label>
-      </div>
-      <div class="form-check mb-4">
-        <input class="form-check-input" type="radio" name="question1" id="option3">
-        <label class="form-check-label" for="option3">
-        A empresa possui um sistema de monitoramento simples e inicia a classificação do consumo de energia por fontes renováveis e não renováveis.
-        </label>
-      </div>
-      <div class="form-check mb-4">
-        <input class="form-check-input" type="radio" name="question1" id="option4">
-        <label class="form-check-label" for="option4">
-        Estabeleço metas de eficiência energética e invisto em fontes de energia renováveis.
-        </label>
-      </div>
-      <div class="form-check mb-4">
-        <input class="form-check-input" type="radio" name="question1" id="option5">
-        <label class="form-check-label" for="option5">
-        A empresa implementa tecnologias avançadas de gestão energética, como sistemas automatizados de monitoramento do uso de energia.
-        </label>
-      </div>
-      <div class="form-check mb-4">
-        <input class="form-check-input" type="radio" name="question1" id="option6">
-        <label class="form-check-label" for="option6">
-        Vou além da eficiência energética interna, investindo em projetos de geração de energia renovável e compensações de carbono para terceiros.
-        </label>
-      </div>
+    <div class="col-12 answers-container">
+      <% @answers.each_with_index do |answer, index| %>
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="radio" name="question" id="option<%= index + 1 %>" value="<%= answer.id %>">
+          <label class="form-check-label" for="option<%= index + 1 %>">
+            <%= answer.description %>
+          </label>
+        </div>
+      <% end %>
     </div>
   </div>
-  <!-- Pagination and Buttons Section -->
+
+  <!-- pagination and buttons section -->
   <div class="fixed-bottom py-3">
     <div class="container">
       <div class="row align-items-center">
-        <!-- Dots, "1 de 6", and Line all in the same line on the left -->
+        <!-- dots, "1 de 6", and line all in the same line on the left -->
         <div class="col-12 col-md-7 d-flex align-items-center mb-3 mb-md-0">
-          <!-- Progress indicators -->
+          <!-- progress indicators -->
           <div class="progress-indicator">
-            <span class="dot dot-quiz-environmental-active"></span>
-            <span class="dot dot-quiz-environmental"></span>
-            <span class="dot dot-quiz-environmental"></span>
-            <span class="dot dot-quiz-environmental"></span>
-            <span class="dot dot-quiz-environmental"></span>
-            <span class="dot dot-quiz-environmental"></span>
+            <% @themes.each_with_index do |theme, index| %>
+              <span class="dot <%= index == 0 ? 'dot-quiz-environmental-active' : 'dot-quiz-environmental' %>" 
+                    data-theme-id="<%= theme.id %>" 
+                    data-action="click->quiz#currentslide" 
+                    data-slides-index-param="<%= index + 1 %>"></span>
+            <% end %>
           </div>
-          <!-- Text "1 de 6" -->
-          <p class="mx-3 mb-0">1 de 6</p>
-          <!-- Line separator -->
+
+          <!-- text "1 de 6" -->
+          <p class="mx-3 mb-0" data-quiz-target="progressText">1 de 6</p> <!-- Corrigido aqui -->
+          <!-- line separator -->
           <hr class="flex-grow-1" style="border-top: 2px solid #d1d58a; margin-left: 10px;">
         </div>
-        <!-- Buttons aligned to the right -->
-        <div class="col-12 col-md-5 text-end">  
-          <button type="button" class="btn-step btn-previous">Anterior</button>
-          <button type="submit" class="btn-step btn-next">Próxima</button>
+        <!-- buttons aligned to the right -->
+        <div class="col-12 col-md-5 text-end">
+          <button type="button" class="btn-step btn-previous" data-action="click->quiz#previous">anterior</button>
+          <button type="button" class="btn-step btn-next" data-action="click->quiz#next">próxima</button>
         </div>
       </div>
     </div>
   </div>
 </form>
+
