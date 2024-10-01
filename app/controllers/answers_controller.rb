@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
 
-  skip_before_action :authenticate_user!, only: [:new, :create, :start, :axi_data]
+  skip_before_action :authenticate_user!, only: [:new, :create, :start, :axi_data, :step, :axi]
   def new
   end
 
@@ -9,7 +9,14 @@ class AnswersController < ApplicationController
 
   def start
     @axi = Axi.by_id(1).first
+  end
 
+  def step
+    @step = params[:step]
+  end
+
+  def axi
+    @axi = params[:id]
   end
 
   def axi_data

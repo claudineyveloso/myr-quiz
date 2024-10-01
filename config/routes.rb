@@ -17,9 +17,9 @@ Rails.application.routes.draw do
     collection do
       get 'start', to: 'answers#start'
       get 'step/:step', to: 'answers#step', as: 'step'
+      get 'axi/:id', to: 'answers#axi', as: 'axi'
       get 'axi_data/:id', to: 'answers#axi_data', as: 'axi_data'
     end
-
   end
 
   # Defines the root path route ("/")

@@ -11,7 +11,7 @@ class CustomersController < ApplicationController
 
     if @customer.save
       # Redireciona para a ação 'index' ou outra página de sua escolha
-      redirect_to customers_path, notice: 'Cliente criado com sucesso.'
+      redirect_to start_answers_path, notice: 'Cliente criado com sucesso.'
     else
       # Renderiza a nova página de formulário se houver erros
       render :new

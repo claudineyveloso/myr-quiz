@@ -56,6 +56,9 @@ pt-BR:
       customer:
         one: Cliente
         other: Clientes
+      answer:
+        one: Resposta
+        other: Respostas
       user:
         one: Usuário
         other: Usuarios
@@ -77,6 +80,11 @@ pt-BR:
         phone: "Telefone"
         company_name: "Razão Social"
         cnpj: "CNPJ"
+      answer:
+        customer: "Cliente"
+        theme: "Tema"
+        maturity: "Maturidade"
+        scenario: "Cenário"
       user:
         email: "Email"
         password: "Senha"

@@ -1,3 +1,27 @@
+h1 {
+  font-size: 40px !important;
+}
+h2 {
+  font-size: 30px !important;
+}
+
+.space-title-quiz {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.color-environmental {
+  color: #787a0c;
+}
+
+.color-social {
+  background-color: #02747f;
+}
+
+.color-governanca {
+  background-color: #9b5b94;
+}
+
 .intro-environmental {
   background-color: #dbdd71;
 }
@@ -83,13 +107,55 @@
   opacity: 1;
 }
 
+.title-axis {
+  letter-spacing: 4px;
+  opacity: 1;
+}
+
+.btn-step {
+  border-radius: 55px;
+  opacity: 1;
+  width: 110px;
+  height: 40px;
+  border: none;
+}
+
+.btn-previous {
+  background: #f1f2d4 0% 0% no-repeat padding-box;
+}
+
+.btn-next {
+  background: #dbdd71 0% 0% no-repeat padding-box;
+}
+
 .btn-start {
   width: 160px;
-  height: 60px;
+  height: 44px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 55px;
   border: 1px solid #707070;
   opacity: 1;
+  display: inline-block;
+  text-align: center;
+  text-decoration: auto;
+  font: normal normal bold 15px/40px Montserrat;
+  transition: all 0.3s ease; /* Transição suave para o hover */
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Inicialmente sem sombra */
+}
+
+.btn-start:hover {
+  //background-color: #707070; /* Muda a cor de fundo */
+  //color: #fff; /* Muda a cor do texto para branco */
+
+  // border-color: #ffffff; /* Muda a cor da borda */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra suave */
+  transform: translateY(-4px); /* Eleva ligeiramente o botão */
+}
+
+/* Efeito de "pressão" no clique */
+.btn-start:active {
+  transform: translateY(0); /* Remove a elevação no clique */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra menos intensa */
 }
 
 .btn-environmental {
@@ -109,6 +175,13 @@
   margin-top: 20px;
 }
 
+.dot-quiz-environmental {
+  background-color: #f1f2d4 !important;
+}
+.dot-quiz-environmental-active {
+  background-color: #dbdd71 !important;
+}
+
 .dot {
   height: 15px;
   width: 15px;
@@ -121,4 +194,11 @@
 
 .active {
   background: #787a0c 0% 0% no-repeat padding-box;
+}
+.active-social {
+  background: #b6d7db 0% 0% no-repeat padding-box;
+}
+
+.active-governanca {
+  background: #600c56 0% 0% no-repeat padding-box;
 }
