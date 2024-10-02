@@ -40,7 +40,7 @@ class AnswersController < ApplicationController
     answers = Scenario.quiz_by_axis(axi_id, theme_id)
 
     # Retorna as respostas no formato JSON
-    render json: { answers: answers }
+    render json: { answers: answers, main_theme: answers.first.theme_name }
   end
 
   def axi_data

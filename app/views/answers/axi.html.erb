@@ -3,7 +3,7 @@
     <h1 class="display-4 <%= @axi.text_color_class %> fw-normal"><span class='fw-bold'><%= @axi.id%>.</span> <%= @axi.name%></h1>
   </div>
   <div class="col-5 text-end">
-    <h2 class="fw-bold <%= @axi.text_color_class %>"><%= @axi.main_theme %></h2>
+    <h2 class="fw-bold <%= @axi.text_color_class %>" id='theme-current'><%= @axi.main_theme %></h2>
   </div>
 </div>
 
@@ -34,13 +34,15 @@
             <% @themes.each_with_index do |theme, index| %>
               <span class="dot <%= index == 0 ? 'dot-quiz-environmental-active' : 'dot-quiz-environmental' %>" 
                     data-theme-id="<%= theme.id %>" 
-                    data-action="click->quiz#currentslide" 
-                    data-slides-index-param="<%= index + 1 %>"></span>
+                    data-action="click->quiz#currentSlide" 
+                    data-slides-index-param="<%= index + 1 %>"
+                    data-quiz-target="dot">
+              </span>
             <% end %>
           </div>
 
           <!-- text "1 de 6" -->
-          <p class="mx-3 mb-0" data-quiz-target="progressText">1 de 6</p> <!-- Corrigido aqui -->
+          <p class="mx-3 mb-0" data-quiz-target="progressText"></p> <!-- Corrigido aqui -->
           <!-- line separator -->
           <hr class="flex-grow-1" style="border-top: 2px solid #d1d58a; margin-left: 10px;">
         </div>
