@@ -65,15 +65,18 @@ pt-BR:
     attributes:
       axi:
         name: "Nome"
+        description: "Descrição do resultado"
       theme:
         name: "Nome"
         axi_id: "Eixo"
       maturity:
         name: "Nome"
+        range_initial: "Faixa inicial"
+        range_final: "Faixa final"
+        description_result: "Descrição do resultado"
       scenario:
         theme: "Tema"
         maturity: "Maturidade"
-        description: "Descrição"
       customer:
         name: "Nome"
         email: "Email"

@@ -3,6 +3,7 @@
   "private": "true",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "aos": "^2.3.4",
     "autoprefixer": "^10.4.20",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
@@ -10,7 +11,8 @@
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
     "rails_admin": "3.2.0",
-    "sass": "^1.79.4"
+    "sass": "^1.79.4",
+    "sweetalert2": "^11.14.1"
   },
   "scripts": {
     "build:css:compile": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",

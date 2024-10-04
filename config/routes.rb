@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "result_quizzes/create"
   get "answers/create"
   devise_for :users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
@@ -24,5 +25,6 @@ Rails.application.routes.draw do
   end
 
   # Defines the root path route ("/")
-  root "home#index"
+  # root "home#index"
+  root "customers#new"
 end

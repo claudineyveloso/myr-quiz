@@ -5,7 +5,31 @@ class AnswersController < ApplicationController
   end
 
   def create
-  end
+    # Acessa os dados enviados no array JSON
+    responses = params.require(:_json)
+
+    # Itera sobre as respostas e processa cada uma
+    responses.each do |response|
+      customer_id = response[:customer_id]
+      theme_id = response[:theme_id]
+      scenario_id = response[:scenario_id]
+
+      maturity_value_sum = Scenario.joins(:maturity)
+                                  .where(id: scenario_id)
+                                  .sum('maturities.value')
+      total_maturity_score += maturity_value_sum
+      
+      # Aqui você pode criar ou processar cada resposta
+      Answer.create(customer_id: customer_id, theme_id: theme_id, scenario_id: scenario_id)
+    end
+
+    average_score = total_maturity_score / 6.0
+
+    ResultQuiz.create(customer_id: customer_id, maturity_id: maturity_id, average_score: average_score)
+
+    render json: { message: "Respostas salvas com sucesso!" }, status: :ok
+  end 
+  
 
   def start
     @axi = Axi.by_id(1).first

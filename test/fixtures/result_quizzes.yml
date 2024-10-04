@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer: one
+  axi.references: MyString
+  maturity: one
+  average_score: 9.99
+
+two:
+  customer: two
+  axi.references: MyString
+  maturity: two
+  average_score: 9.99

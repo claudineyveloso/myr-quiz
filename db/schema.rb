@@ -10,19 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_29_194204) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_03_013412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
     t.bigint "customer_id", null: false
     t.bigint "theme_id", null: false
-    t.bigint "maturity_id", null: false
     t.bigint "scenario_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_answers_on_customer_id"
-    t.index ["maturity_id"], name: "index_answers_on_maturity_id"
     t.index ["scenario_id"], name: "index_answers_on_scenario_id"
     t.index ["theme_id"], name: "index_answers_on_theme_id"
   end
@@ -50,7 +48,22 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_29_194204) do
     t.decimal "value", precision: 2, scale: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "range_initial", precision: 2, scale: 1, default: "0.0", null: false
+    t.decimal "range_final", precision: 2, scale: 1, default: "0.0", null: false
+    t.text "description_result"
     t.index ["name"], name: "index_maturities_on_name", unique: true
+  end
+
+  create_table "result_quizzes", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "axi_id", null: false
+    t.bigint "maturity_id", null: false
+    t.decimal "average_score", default: "0.0", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["axi_id"], name: "index_result_quizzes_on_axi_id"
+    t.index ["customer_id"], name: "index_result_quizzes_on_customer_id"
+    t.index ["maturity_id"], name: "index_result_quizzes_on_maturity_id"
   end
 
   create_table "scenarios", force: :cascade do |t|
@@ -87,9 +100,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_29_194204) do
   end
 
   add_foreign_key "answers", "customers"
-  add_foreign_key "answers", "maturities"
   add_foreign_key "answers", "scenarios"
   add_foreign_key "answers", "themes"
+  add_foreign_key "result_quizzes", "axis", column: "axi_id"
+  add_foreign_key "result_quizzes", "customers"
+  add_foreign_key "result_quizzes", "maturities"
   add_foreign_key "scenarios", "maturities"
   add_foreign_key "scenarios", "themes"
   add_foreign_key "themes", "axis", column: "axi_id"

@@ -2,27 +2,38 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="quiz"
 export default class extends Controller {
-  static targets = ["question", "dot", "progressText"];
+  static targets = ["question", "dot", "progressText", "nextButton"];
   static values = { currentIndex: Number };
 
   connect() {
+    this.responses = [];
     this.currentIndexValue = 1; // Começamos no primeiro tema
     this.totalDots = this.dotTargets.length;
     this.progressTextTarget.textContent = `1 de ${this.totalDots}`;
+    this.themeCurrentId = 0;
+    this.scenarioCurrentId = 0;
   }
 
   next() {
-    console.log("Clicou no botão proximo!");
     if (this.isAnswerSelected()) {
       this.currentThemeIndex = this.currentIndexValue;
       this.currentIndexValue++;
-      // debugger;
       if (this.currentIndexValue >= this.totalDots) {
         this.currentIndexValue = this.questionTargets.length - 1; // Não ultrapassa o limite de temas
       }
       this.loadTheme(this.currentIndexValue);
     } else {
-      alert("Por favor, selecione uma resposta antes de continuar.");
+      Swal.fire({
+        icon: "warning",
+        title: "Atenção",
+        text: "Por favor, selecione uma resposta antes de continuar.",
+        confirmButtonText: "Ok",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+      });
+      return;
     }
   }
 
@@ -42,15 +53,44 @@ export default class extends Controller {
     this.updateView();
   }
 
+  currentScenario() {
+    let dotElement = document.querySelector(".dot-quiz-environmental-active"); // Seleciona o elemento
+    this.themeCurrentId = dotElement.dataset.themeId;
+
+    let selectedInput = document.querySelector(
+      'input[name="question"]:checked',
+    );
+    this.scenarioCurrentId = selectedInput ? selectedInput.value : null;
+  }
+
   currentSlide(event) {
     const index = Number(event.currentTarget.dataset.slidesIndexParam);
     this.currentThemeIndex = index - 1;
     if (this.isAnswerSelected()) {
+      this.storeAnswer();
     } else {
-      alert("Por favor, selecione uma resposta antes de prosseguir.");
+      Swal.fire({
+        icon: "warning",
+        title: "Atenção",
+        text: "Por favor, selecione uma resposta antes de continuar.",
+        confirmButtonText: "Ok",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+      });
+
       return;
     }
     this.loadTheme(index);
+    if (index == this.totalDots) {
+      this.nextButtonTarget.textContent = "Finalizar";
+      this.nextButtonTarget.dataset.action = "click->quiz#saveQuiz";
+      console.log("Iguais");
+    } else {
+      this.nextButtonTarget.textContent = "Próxima";
+      this.nextButtonTarget.dataset.action = "click->quiz#next";
+    }
   }
 
   isAnswerSelected() {
@@ -83,7 +123,7 @@ export default class extends Controller {
     answers.forEach((answer, index) => {
       const answerHTML = `
       <div class="form-check mb-4">
-        <input class="form-check-input" type="radio" name="question" id="option${index + 1}" value="${answer.id}">
+        <input class="form-check-input" type="radio" name="question" id="option${index + 1}" value="${answer.id}" data-action="click->quiz#currentScenario">
         <label class="form-check-label" for="option${index + 1}">
           ${answer.description}
         </label>
@@ -130,5 +170,41 @@ export default class extends Controller {
 
     // Atualiza o texto do progresso "X de 6"
     this.progressTextTarget.textContent = `${this.currentIndexValue + 1} de ${this.questionTargets.length}`;
+  }
+
+  storeAnswer() {
+    console.log("Valor de themeCurrentId", this.themeCurrentId);
+    console.log("Valor de scenarioCurrentId", this.scenarioCurrentId);
+    const responseData = {
+      customer_id: 12,
+      theme_id: this.themeCurrentId,
+      scenario_id: this.scenarioCurrentId,
+    };
+    this.responses.push(responseData);
+  }
+
+  saveQuiz() {
+    console.log("Quiz finalizado! Salvando dados...");
+    const responseData = {
+      customer_id: 12,
+      theme_id: this.themeCurrentId,
+      scenario_id: this.scenarioCurrentId,
+    };
+    debugger;
+    this.responses.push(responseData);
+    fetch("/answers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
+      },
+      body: JSON.stringify(this.responses),
+    }).then((response) => {
+      if (response.ok) {
+        //Swal.fire("Sucesso!", "Seu quiz foi salvo.", "success");
+      } else {
+        //Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
+      }
+    });
   }
 }

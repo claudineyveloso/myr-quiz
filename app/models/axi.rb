@@ -1,5 +1,7 @@
 class Axi < ApplicationRecord
   has_many :themes  
+  has_many :result_quizzes
+
   validates :name,
             length: { maximum: 100 },
             presence: true

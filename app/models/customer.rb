@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
   has_one :answer
+  has_many :result_quizzes
 
   validates :name,
             :email,
