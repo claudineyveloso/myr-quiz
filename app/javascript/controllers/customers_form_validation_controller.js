@@ -40,11 +40,6 @@ export default class extends Controller {
       valid = false;
     }
 
-    if (this.emailTarget.value.trim() === "") {
-      this.errorEmailTarget.textContent = "* Email é obrigatório";
-      valid = false;
-    }
-
     if (this.phoneTarget.value.trim() === "") {
       this.errorPhoneTarget.textContent = "* Telefone é obrigatório";
       valid = false;
