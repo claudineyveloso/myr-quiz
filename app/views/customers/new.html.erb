@@ -15,7 +15,7 @@
 
   <div class="mb-3">
     <%= form.label :phone, class: 'form-label' %>
-    <%= form.telephone_field :phone, class: 'form-control', data: { customers_form_validation_target: "phone" }, data: { action: "input->customers-form-validation#maskPhone" }, maxlength: 15 %>
+    <%= form.telephone_field :phone, class: 'form-control', data: { customers_form_validation_target: "phone", action: "input->customers-form-validation#maskPhone" }, maxlength: 15 %>
     <div class="text-danger" data-customers-form-validation-target="errorPhone"></div>
   </div>
 
