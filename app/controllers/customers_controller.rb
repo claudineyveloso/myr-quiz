@@ -1,6 +1,5 @@
 class CustomersController < ApplicationController
-
-  skip_before_action :authenticate_user!, only: [:new, :create, :check_email]
+  skip_before_action :authenticate_user!, only: [ :new, :create, :check_email ]
 
   def new
     @customer = Customer.new # Inicializa um novo objeto Customer
@@ -11,7 +10,7 @@ class CustomersController < ApplicationController
 
     if @customer.save
       # Redireciona para a ação 'index' ou outra página de sua escolha
-      redirect_to start_answers_path, notice: 'Cliente criado com sucesso.'
+      redirect_to start_answers_path, notice: "Cliente criado com sucesso."
     else
       # Renderiza a nova página de formulário se houver erros
       render :new
@@ -29,5 +28,4 @@ class CustomersController < ApplicationController
   def customer_params
     params.require(:customer).permit(:name, :email, :phone, :company_name, :cnpj)
   end
-
 end
