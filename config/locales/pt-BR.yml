@@ -136,6 +136,7 @@ pt-BR:
         title: Lista de %{model_label_plural}
         menu: Listar
         breadcrumb: Lista de %{model_label_plural}
+        no_records: Nenhum registro cadastrado
       show:
         title: Mostra
         menu: Mostrar

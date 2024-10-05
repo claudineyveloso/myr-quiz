@@ -1,7 +1,7 @@
 class Maturity < ApplicationRecord
-
   has_many :scenarios
   has_many :result_quizzes
+  has_many :maturity_messages
 
   # has_many :answer
 
@@ -12,5 +12,4 @@ class Maturity < ApplicationRecord
   validates :range_initial,
             :range_final,
             presence: true
-
 end

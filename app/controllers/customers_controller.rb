@@ -1,5 +1,5 @@
 class CustomersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :new, :create, :check_email ]
+  skip_before_action :authenticate_user!, only: [ :new, :create, :show, :check_email ]
 
   def new
     @customer = Customer.new # Inicializa um novo objeto Customer
@@ -15,6 +15,9 @@ class CustomersController < ApplicationController
       # Renderiza a nova página de formulário se houver erros
       render :new
     end
+  end
+
+  def show
   end
 
   def check_email

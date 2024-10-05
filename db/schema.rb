@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_03_013412) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_05_142819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_03_013412) do
     t.decimal "range_final", precision: 2, scale: 1, default: "0.0", null: false
     t.text "description_result"
     t.index ["name"], name: "index_maturities_on_name", unique: true
+  end
+
+  create_table "maturity_messages", force: :cascade do |t|
+    t.bigint "maturity_id", null: false
+    t.text "message", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["maturity_id"], name: "index_maturity_messages_on_maturity_id"
   end
 
   create_table "result_quizzes", force: :cascade do |t|
@@ -102,6 +110,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_03_013412) do
   add_foreign_key "answers", "customers"
   add_foreign_key "answers", "scenarios"
   add_foreign_key "answers", "themes"
+  add_foreign_key "maturity_messages", "maturities"
   add_foreign_key "result_quizzes", "axis", column: "axi_id"
   add_foreign_key "result_quizzes", "customers"
   add_foreign_key "result_quizzes", "maturities"

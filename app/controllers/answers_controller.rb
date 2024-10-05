@@ -1,6 +1,5 @@
 class AnswersController < ApplicationController
-
-  skip_before_action :authenticate_user!, only: [:new, :create, :start, :axi_data, :step, :axi, :quiz_by_theme]
+  skip_before_action :authenticate_user!, only: [ :new, :create, :start, :axi_data, :step, :axi, :quiz_by_theme ]
   def new
   end
 
@@ -16,9 +15,9 @@ class AnswersController < ApplicationController
 
       maturity_value_sum = Scenario.joins(:maturity)
                                   .where(id: scenario_id)
-                                  .sum('maturities.value')
+                                  .sum("maturities.value")
       total_maturity_score += maturity_value_sum
-      
+
       # Aqui você pode criar ou processar cada resposta
       Answer.create(customer_id: customer_id, theme_id: theme_id, scenario_id: scenario_id)
     end
@@ -28,8 +27,8 @@ class AnswersController < ApplicationController
     ResultQuiz.create(customer_id: customer_id, maturity_id: maturity_id, average_score: average_score)
 
     render json: { message: "Respostas salvas com sucesso!" }, status: :ok
-  end 
-  
+  end
+
 
   def start
     @axi = Axi.by_id(1).first
@@ -41,12 +40,12 @@ class AnswersController < ApplicationController
 
   def axi
     @axi = Axi.find(params[:id])
-    
+
     # Corrigido para carregar todos os temas relacionados ao axi
     @themes = Theme.where(axi_id: @axi.id)
 
     Rails.logger.info "Themes encontrados: #{@themes.inspect}" # Isso agora vai funcionar corretamente
-    
+
     # Seleciona o primeiro tema da coleção de temas
     if @themes.any?
       @theme = @themes.first
@@ -69,12 +68,11 @@ class AnswersController < ApplicationController
 
   def axi_data
     axi = Axi.by_id(params[:id]).first
-    
+
     if axi
       render json: { id: axi.id, name: axi.name }
     else
       render json: { error: "Axi not found" }, status: :not_found
     end
   end
-
 end

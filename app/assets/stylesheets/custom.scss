@@ -234,12 +234,34 @@ input::placeholder {
   border: none;
 }
 
-.btn-previous {
+.btn-previous-environmental {
   background: #f1f2d4 0% 0% no-repeat padding-box;
+  color: #787a0c;
 }
 
-.btn-next {
+.btn-next-environmental {
   background: #dbdd71 0% 0% no-repeat padding-box;
+  color: #787a0c;
+}
+
+.btn-previous-social {
+  background: #d6f0f2 0% 0% no-repeat padding-box;
+  color: #02747f;
+}
+
+.btn-next-social {
+  background: #02747f 0% 0% no-repeat padding-box;
+  color: #b6d7db;
+}
+
+.btn-previous-governanca {
+  background: #e6cbe3 0% 0% no-repeat padding-box;
+  color: #9b5b94;
+}
+
+.btn-next-governanca {
+  background: #9b5b94 0% 0% no-repeat padding-box;
+  color: #f2c3ed;
 }
 
 .btn-start {
