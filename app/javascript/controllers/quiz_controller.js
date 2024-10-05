@@ -6,6 +6,10 @@ export default class extends Controller {
   static values = { currentIndex: Number };
 
   connect() {
+    let url = window.location.href;
+    let id = url.match(/\/axi\/(\d+)/)[1];
+    this.axiIdValue = id;
+
     this.responses = [];
     this.currentIndexValue = 1; // Começamos no primeiro tema
     this.totalDots = this.dotTargets.length;
@@ -102,7 +106,6 @@ export default class extends Controller {
   }
 
   loadTheme(themeId) {
-    console.log("Valor de themeId", themeId);
     fetch(
       `/answers/quiz_by_theme?axi_id=${this.axiIdValue}&theme_id=${themeId}`,
     )
@@ -173,8 +176,6 @@ export default class extends Controller {
   }
 
   storeAnswer() {
-    console.log("Valor de themeCurrentId", this.themeCurrentId);
-    console.log("Valor de scenarioCurrentId", this.scenarioCurrentId);
     const responseData = {
       customer_id: 12,
       theme_id: this.themeCurrentId,
