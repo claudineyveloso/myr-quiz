@@ -34,6 +34,10 @@ h2 {
   font-weight: 400;
 }
 
+.fw-500 {
+  font-weight: 500;
+}
+
 .card-login {
   border-radius: 12px;
   max-width: 600px;
@@ -316,6 +320,22 @@ input::placeholder {
 }
 .dot-quiz-environmental-active {
   background-color: #dbdd71 !important;
+}
+
+.dot-quiz-social {
+  background: #d6f0f2 !important;
+}
+
+.dot-quiz-social-active {
+  background: #02747f !important;
+}
+
+.dot-quiz-governance {
+  background: #e6cbe3 !important;
+}
+
+.dot-quiz-governance-active {
+  background: #9b5b94 !important;
 }
 
 .dot {

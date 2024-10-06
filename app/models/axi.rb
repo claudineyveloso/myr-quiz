@@ -1,6 +1,7 @@
 class Axi < ApplicationRecord
   has_many :themes
   has_many :result_quizzes
+  has_many :maturity_messages
 
   validates :name,
             length: { maximum: 100 },
@@ -72,7 +73,29 @@ def btn_next_color_class
     end
   end
 
+  def dot_active_class
+    case name.downcase
+    when "ambiental"
+      "dot-quiz-environmental-active"
+    when "social"
+      "dot-quiz-social-active"
+    when "governança"
+      "dot-quiz-governance-active"
+    else
+    end
+  end
 
+ def dot_class
+    case name.downcase
+    when "ambiental"
+      "dot-quiz-environmental"
+    when "social"
+      "dot-quiz-social"
+    when "governança"
+      "dot-quiz-governance"
+    else
+    end
+  end
 
   def main_theme
     themes.first.name # Exemplo de como pegar o tema principal

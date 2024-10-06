@@ -33,7 +33,7 @@
           <!-- progress indicators -->
           <div class="progress-indicator">
             <% @themes.each_with_index do |theme, index| %>
-              <span class="dot <%= index == 0 ? 'dot-quiz-environmental-active' : 'dot-quiz-environmental' %>" 
+              <span class="dot <%= index == 0 ? @axi.dot_active_class : @axi.dot_class %>" 
                     data-theme-id="<%= theme.id %>" 
                     data-action="click->quiz#currentSlide" 
                     data-slides-index-param="<%= index + 1 %>"

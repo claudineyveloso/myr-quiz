@@ -72,12 +72,34 @@ export default class extends Controller {
     fetch(`/customers/check_email?email=${email}`)
       .then((response) => response.json())
       .then((data) => {
-        if (data.exists) {
-          this.errorEmailTarget.textContent = "Esse email já está cadastrado.";
-          this.emailTarget.focus();
-          valid = false;
-        } else {
-          this.errorEmailTarget.textContent = "";
+        if (data.status === "finished") {
+          this.showMessage(
+            "E-mail já utilizado",
+            "Este e-mail já finalizou o questionário.",
+            "error",
+          );
+        } else if (data.status === "not_finished") {
+          // Mostra a mensagem e só continua após o usuário clicar em "Ok"
+          Swal.fire({
+            title: "Questionário não finalizado",
+            text: "O questionário não foi finalizado. Você pode prosseguir.",
+            icon: "info",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Só executa o preenchimento dos campos após o usuário clicar "Ok"
+              this.fillCustomerData(data.customer);
+              document.getElementById("submitButton").textContent = "Continuar";
+              this.allowSubmit = false;
+            }
+          });
+        } else if (data.status === "not_found") {
+          // this.showMessage(
+          //   "E-mail não encontrado",
+          //   "Você pode iniciar o questionário.",
+          //   "success",
+          // );
+          this.allowSubmit = true;
         }
       })
       .catch((error) => {
@@ -131,5 +153,35 @@ export default class extends Controller {
     phone = phone.replace(/^(\d{2})(\d)/g, "($1) $2"); // Adiciona o parêntese no DDD
     phone = phone.replace(/(\d{5})(\d)/, "$1-$2"); // Adiciona o traço após os 5 primeiros números
     event.target.value = phone;
+  }
+
+  validate(event) {
+    // Verifica se o botão é "Continuar" antes de permitir o submit
+    const submitButton = document.getElementById("submitButton");
+
+    if (submitButton.textContent === "Continuar") {
+      event.preventDefault(); // Impede o submit do formulário
+
+      // Redireciona para a URL específica
+      window.location.href = "http://localhost:3000/answers/start";
+    } else if (!this.allowSubmit) {
+      event.preventDefault(); // Impede o submit se o cliente já existir e o questionário não estiver finalizado
+    }
+  }
+
+  showMessage(title, text, icon) {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      confirmButtonText: "Ok",
+    });
+  }
+
+  fillCustomerData(customer) {
+    // Supondo que os campos tenham os seguintes IDs
+    document.getElementById("phone").value = customer.phone;
+    document.getElementById("company_name").value = customer.company_name;
+    document.getElementById("cnpj").value = customer.cnpj;
   }
 }

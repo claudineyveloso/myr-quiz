@@ -22,9 +22,32 @@ class CustomersController < ApplicationController
 
   def check_email
     email = params[:email]
-    customer_exists = Customer.exists?(email: email)
-    render json: { exists: customer_exists }
+    customer = Customer.find_by(email: email)
+
+    if customer
+      if customer.finished_quiz
+        render json: { status: "finished", message: "Este e-mail já finalizou o questionário." }
+      else
+        render json: {
+          status: "not_finished",
+          message: "O questionário não foi finalizado. Você pode prosseguir.",
+          customer: {
+            phone: customer.phone,
+            company_name: customer.company_name,
+            cnpj: customer.cnpj
+        }
+      }
+      end
+    else
+      render json: { status: "not_found", message: "E-mail não encontrado. Você pode iniciar o questionário." }
+    end
   end
+
+  # def check_email
+  #   email = params[:email]
+  #   customer_exists = Customer.exists?(email: email, finished_quiz: true)
+  #   render json: { exists: customer_exists }
+  # end
 
   private
 
