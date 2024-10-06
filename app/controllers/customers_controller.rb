@@ -9,6 +9,8 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
+      cookies[:customer_id] = @customer.id
+      Rails.logger.info "Cookie set: #{cookies[:customer_id]}"
       # Redireciona para a ação 'index' ou outra página de sua escolha
       redirect_to start_answers_path, notice: "Cliente criado com sucesso."
     else
@@ -35,19 +37,17 @@ class CustomersController < ApplicationController
             phone: customer.phone,
             company_name: customer.company_name,
             cnpj: customer.cnpj
+          }
         }
-      }
+        # Destroy all Answer of Customer
+        Answer.where(customer_id: customer.id).destroy_all
+        ResultQuiz.where(customer_id: customer.id).destroy_all
+        cookies[:customer_id] = customer.id
       end
     else
       render json: { status: "not_found", message: "E-mail não encontrado. Você pode iniciar o questionário." }
     end
   end
-
-  # def check_email
-  #   email = params[:email]
-  #   customer_exists = Customer.exists?(email: email, finished_quiz: true)
-  #   render json: { exists: customer_exists }
-  # end
 
   private
 

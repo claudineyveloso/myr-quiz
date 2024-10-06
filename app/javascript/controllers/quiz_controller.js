@@ -18,6 +18,17 @@ export default class extends Controller {
     this.scenarioCurrentId = 0;
   }
 
+  initialize() {
+    this.customerId = this.getCookie("customer_id");
+    console.log(this.customerId); // Exibe o ID do cliente no console
+  }
+
+  getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
+
   next() {
     if (this.isAnswerSelected()) {
       this.currentThemeIndex = this.currentIndexValue;
@@ -177,21 +188,21 @@ export default class extends Controller {
 
   storeAnswer() {
     const responseData = {
-      customer_id: 12,
+      customer_id: this.customerId,
       theme_id: this.themeCurrentId,
       scenario_id: this.scenarioCurrentId,
     };
+    debugger;
     this.responses.push(responseData);
   }
 
   saveQuiz() {
     console.log("Quiz finalizado! Salvando dados...");
     const responseData = {
-      customer_id: 12,
+      customer_id: this.customerId,
       theme_id: this.themeCurrentId,
       scenario_id: this.scenarioCurrentId,
     };
-    debugger;
     this.responses.push(responseData);
     fetch("/answers", {
       method: "POST",

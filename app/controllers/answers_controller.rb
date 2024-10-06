@@ -7,6 +7,10 @@ class AnswersController < ApplicationController
     # Acessa os dados enviados no array JSON
     responses = params.require(:_json)
 
+    total_maturity_score = 0
+    customer_id = nil
+    # maturity_id = nil
+
     # Itera sobre as respostas e processa cada uma
     responses.each do |response|
       customer_id = response[:customer_id]
@@ -22,9 +26,11 @@ class AnswersController < ApplicationController
       Answer.create(customer_id: customer_id, theme_id: theme_id, scenario_id: scenario_id)
     end
 
-    average_score = total_maturity_score / 6.0
+    average_score = (total_maturity_score.to_f / 6)
 
-    ResultQuiz.create(customer_id: customer_id, maturity_id: maturity_id, average_score: average_score)
+    maturity = Maturity.find_by("range_initial <= ? AND range_final >= ?", average_score, average_score)
+
+    ResultQuiz.create(customer_id: customer_id, maturity_id: maturity.id, average_score: average_score, axi_id: 1)
 
     render json: { message: "Respostas salvas com sucesso!" }, status: :ok
   end

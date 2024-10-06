@@ -1,14 +1,13 @@
 class ResultQuizzesController < ApplicationController
-  def create
+  skip_before_action :authenticate_user!, only: [ :create ]
 
+  def create
     customer_id = params[:customer_id]
     maturity_id = params[:maturity_id]
     axi_id = params[:axi_id]
     average_score = params[:average_score]
 
-    maturity = Maturity.find_by('range_initial <= ? AND range_final >= ?', params[:average_score], params[:average_score])
-
-    average_score = params[:average_score]
+    byebug
 
     # Cria o registro em ResultQuiz
     result_quiz = ResultQuiz.new(
@@ -19,7 +18,7 @@ class ResultQuizzesController < ApplicationController
     )
 
     if result_quiz.save
-      render json: { message: "Resultado do quiz salvo com sucesso!" }, status: :ok
+      redirect_to axi_answers_path(id: 2), notice: "Resultado do quiz salvo com sucesso!"
     else
       render json: { error: "Erro ao salvar o resultado do quiz" }, status: :unprocessable_entity
     end
