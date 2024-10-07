@@ -6,9 +6,13 @@ class QuizProcessor
 
   def process
     customer_id = nil
+    axi_id = nil
+
+    byebug
 
     @responses.each do |response|
       customer_id = response[:customer_id]
+      axi_id = response[:axi_id]
       theme_id = response[:theme_id]
       scenario_id = response[:scenario_id]
 
@@ -25,8 +29,16 @@ class QuizProcessor
     average_score = calculate_average
     maturity = find_maturity(average_score)
 
-    ResultQuiz.create(customer_id: customer_id, maturity_id: maturity.id, average_score: average_score, axi_id: 1)
+    byebug
+
+    ResultQuiz.create(customer_id: customer_id, maturity_id: maturity.id, average_score: average_score, axi_id: axi_id.to_i)
+
     average_score
+  end
+
+  def get_next_axi_id(axi_id)
+    ids = Axi.where("id > ?", axi_id).order(:id).pluck(:id)
+    ids.first
   end
 
   private

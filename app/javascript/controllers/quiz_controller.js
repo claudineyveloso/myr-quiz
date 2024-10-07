@@ -23,12 +23,6 @@ export default class extends Controller {
     console.log(this.customerId); // Exibe o ID do cliente no console
   }
 
-  getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(";").shift();
-  }
-
   next() {
     if (this.isAnswerSelected()) {
       this.currentThemeIndex = this.currentIndexValue;
@@ -69,6 +63,11 @@ export default class extends Controller {
   }
 
   currentScenario() {
+    const dotClasses = {
+      1: "dot-quiz-environmental-active",
+      2: "dot-quiz-social-active",
+      3: "dot-quiz-governance-active",
+    };
     let dotElement = document.querySelector(".dot-quiz-environmental-active"); // Seleciona o elemento
     this.themeCurrentId = dotElement.dataset.themeId;
 
@@ -150,6 +149,35 @@ export default class extends Controller {
   }
 
   updateActiveDot() {
+    const dotClasses = {
+      1: {
+        active: "dot-quiz-environmental-active",
+        inactive: "dot-quiz-environmental",
+      },
+      2: { active: "dot-quiz-social-active", inactive: "dot-quiz-social" },
+      3: {
+        active: "dot-quiz-governance-active",
+        inactive: "dot-quiz-governance",
+      },
+    };
+
+    const currentDotClass = dotClasses[this.axiIdValue]; // Pega a classe correta para o axiIdValue
+
+    if (currentDotClass) {
+      this.dotTargets.forEach((dot, index) => {
+        // Alterna as classes com base no índice atual
+        if (index === this.currentThemeIndex) {
+          dot.classList.add(currentDotClass.active);
+          dot.classList.remove(currentDotClass.inactive);
+        } else {
+          dot.classList.add(currentDotClass.inactive);
+          dot.classList.remove(currentDotClass.active);
+        }
+      });
+    }
+  }
+
+  updateActiveDot123() {
     this.dotTargets.forEach((dot, index) => {
       // Verifica qual dot deve estar ativo com base no índice atual
       if (index === this.currentThemeIndex) {
@@ -169,6 +197,11 @@ export default class extends Controller {
   }
 
   updateView() {
+    const dotClasses = {
+      1: "dot-quiz-environmental-active",
+      2: "dot-quiz-social-active",
+      3: "dot-quiz-governance-active",
+    };
     // Mostra a pergunta atual e oculta as outras
     this.questionTargets.forEach((element, index) => {
       element.style.display =
@@ -177,10 +210,10 @@ export default class extends Controller {
 
     // Atualiza os dots
     this.dotTargets.forEach((dot, index) => {
-      dot.classList.toggle(
-        "dot-quiz-environmental-active",
-        index === this.currentIndexValue,
-      );
+      const activeClass = dotClasses[this.axiIdValue];
+      if (activeClass) {
+        dot.classList.toggle(activeClass, index === this.currentIndexValue);
+      }
     });
 
     // Atualiza o texto do progresso "X de 6"
@@ -188,6 +221,7 @@ export default class extends Controller {
   }
 
   storeAnswer() {
+    debugger;
     const responseData = {
       customer_id: this.customerId,
       theme_id: this.themeCurrentId,
@@ -202,6 +236,7 @@ export default class extends Controller {
       customer_id: this.customerId,
       theme_id: this.themeCurrentId,
       scenario_id: this.scenarioCurrentId,
+      axi_id: this.axiIdValue,
     };
     this.responses.push(responseData);
     fetch("/answers", {
@@ -213,12 +248,32 @@ export default class extends Controller {
       body: JSON.stringify(this.responses),
     }).then((response) => {
       if (response.ok) {
-        //window.location.href = "/answers/start";
-        window.location.href = "/answers/start?slide=2";
+        if (this.axiIdValue <= 3) {
+          window.location.href =
+            "/answers/start?slide=" + (Number(this.axiIdValue) + 1);
+        } else {
+          window.location.href = "/result_quizzes";
+        }
         //Swal.fire("Sucesso!", "Seu quiz foi salvo.", "success");
       } else {
         //Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
       }
     });
+  }
+
+  getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
+
+  setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
   }
 }

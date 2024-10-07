@@ -9,6 +9,8 @@ class Axi < ApplicationRecord
 
   scope :by_id, ->(id) { where(id: id) }
 
+  scope :current_axi, ->(axi_id) { where("id > ?", axi_id).order(:id) }
+
 
   def css_class
     case name.downcase
