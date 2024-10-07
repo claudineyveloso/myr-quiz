@@ -80,6 +80,7 @@ export default class extends Controller {
 
   currentSlide(event) {
     const index = Number(event.currentTarget.dataset.slidesIndexParam);
+    console.log("Esse é o valor de index no currentSlide", index);
     this.currentThemeIndex = index - 1;
     if (this.isAnswerSelected()) {
       this.storeAnswer();
@@ -101,7 +102,7 @@ export default class extends Controller {
     if (index == this.totalDots) {
       this.nextButtonTarget.textContent = "Finalizar";
       this.nextButtonTarget.dataset.action = "click->quiz#saveQuiz";
-      console.log("Iguais");
+      return;
     } else {
       this.nextButtonTarget.textContent = "Próxima";
       this.nextButtonTarget.dataset.action = "click->quiz#next";
@@ -192,7 +193,6 @@ export default class extends Controller {
       theme_id: this.themeCurrentId,
       scenario_id: this.scenarioCurrentId,
     };
-    debugger;
     this.responses.push(responseData);
   }
 
@@ -213,6 +213,8 @@ export default class extends Controller {
       body: JSON.stringify(this.responses),
     }).then((response) => {
       if (response.ok) {
+        //window.location.href = "/answers/start";
+        window.location.href = "/answers/start?slide=2";
         //Swal.fire("Sucesso!", "Seu quiz foi salvo.", "success");
       } else {
         //Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");

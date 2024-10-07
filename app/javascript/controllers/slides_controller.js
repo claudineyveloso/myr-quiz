@@ -5,7 +5,18 @@ export default class extends Controller {
   static targets = ["slide", "dot", "id", "title"];
 
   connect() {
-    this.currentSlideIndex = 1; // Inicia o slide atual
+    // this.currentSlideIndex = 1; // Inicia o slide atual
+    // this.showSlide(this.currentSlideIndex);
+    // this.loadAxiData(this.currentSlideIndex);
+    const urlParams = new URLSearchParams(window.location.search);
+    const slideParam = urlParams.get("slide"); // Verifica o parâme
+
+    if (slideParam) {
+      this.currentSlideIndex = parseInt(slideParam, 10); // Usa o slide passado na URL
+    } else {
+      this.currentSlideIndex = 1; // Se não houver parâmetro, inicia com o primeiro slide
+    }
+
     this.showSlide(this.currentSlideIndex);
     this.loadAxiData(this.currentSlideIndex);
   }

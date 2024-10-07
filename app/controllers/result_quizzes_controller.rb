@@ -7,8 +7,6 @@ class ResultQuizzesController < ApplicationController
     axi_id = params[:axi_id]
     average_score = params[:average_score]
 
-    byebug
-
     # Cria o registro em ResultQuiz
     result_quiz = ResultQuiz.new(
       customer_id: customer_id,

@@ -4,6 +4,19 @@ class AnswersController < ApplicationController
   end
 
   def create
+    responses = params.require(:_json)
+
+    # Processa o quiz e retorna a pontuação média
+    processor = QuizProcessor.new(responses)
+    average_score = processor.process
+
+    render json: { message: "Respostas salvas com sucesso!", average_score: average_score }, status: :ok
+  end
+
+
+
+
+  def createAAA
     # Acessa os dados enviados no array JSON
     responses = params.require(:_json)
 
