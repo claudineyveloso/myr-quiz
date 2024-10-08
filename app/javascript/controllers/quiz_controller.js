@@ -68,6 +68,38 @@ export default class extends Controller {
       2: "dot-quiz-social-active",
       3: "dot-quiz-governance-active",
     };
+
+    // Aqui, você pode dinamicamente escolher a classe correta baseada em algum valor, por exemplo, um ID de eixo
+    const activeDotClass = dotClasses[this.axiIdValue]; // Supondo que axiIdValue seja 1, 2 ou 3
+
+    // Seleciona o elemento dot com a classe ativa correta
+    let dotElement = document.querySelector(`.${activeDotClass}`);
+
+    if (dotElement) {
+      this.themeCurrentId = dotElement.dataset.themeId;
+    } else {
+      console.error("Elemento dot ativo não encontrado.");
+    }
+
+    // Seleciona o input da resposta marcada
+    let selectedInput = document.querySelector(
+      'input[name="question"]:checked',
+    );
+
+    // Se houver uma resposta marcada, define o scenarioCurrentId; caso contrário, define como null
+    this.scenarioCurrentId = selectedInput ? selectedInput.value : null;
+
+    // Log para verificar se os valores estão corretos
+    console.log("themeCurrentId:", this.themeCurrentId);
+    console.log("scenarioCurrentId:", this.scenarioCurrentId);
+  }
+
+  currentScenario_old() {
+    const dotClasses = {
+      1: "dot-quiz-environmental-active",
+      2: "dot-quiz-social-active",
+      3: "dot-quiz-governance-active",
+    };
     let dotElement = document.querySelector(".dot-quiz-environmental-active"); // Seleciona o elemento
     this.themeCurrentId = dotElement.dataset.themeId;
 
@@ -248,9 +280,9 @@ export default class extends Controller {
       body: JSON.stringify(this.responses),
     }).then((response) => {
       if (response.ok) {
-        if (this.axiIdValue <= 3) {
-          window.location.href =
-            "/answers/start?slide=" + (Number(this.axiIdValue) + 1);
+        let nextSlide = Number(this.axiIdValue) + 1;
+        if (nextSlide <= 3) {
+          window.location.href = "/answers/start?slide=" + nextSlide;
         } else {
           window.location.href = "/result_quizzes";
         }

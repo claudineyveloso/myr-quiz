@@ -11,7 +11,6 @@ class Axi < ApplicationRecord
 
   scope :current_axi, ->(axi_id) { where("id > ?", axi_id).order(:id) }
 
-
   def css_class
     case name.downcase
     when "ambiental"

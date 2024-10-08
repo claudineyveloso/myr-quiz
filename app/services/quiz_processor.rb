@@ -8,8 +8,6 @@ class QuizProcessor
     customer_id = nil
     axi_id = nil
 
-    byebug
-
     @responses.each do |response|
       customer_id = response[:customer_id]
       axi_id = response[:axi_id]
@@ -28,8 +26,6 @@ class QuizProcessor
 
     average_score = calculate_average
     maturity = find_maturity(average_score)
-
-    byebug
 
     ResultQuiz.create(customer_id: customer_id, maturity_id: maturity.id, average_score: average_score, axi_id: axi_id.to_i)
 

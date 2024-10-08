@@ -30,12 +30,31 @@ h2 {
   color: #338f98 !important;
 }
 
+.bg-title-result-quiz {
+  background-color: #1e494e;
+  color: #fff;
+}
+
+.fs-3rem {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.img-myr-tech-result-quiz {
+  height: 52px !important;
+  width: 170px;
+}
+
 .fw-400 {
   font-weight: 400;
 }
 
 .fw-500 {
   font-weight: 500;
+}
+
+.fs-20 {
+  font-size: 20px !important;
 }
 
 .card-login {
@@ -374,6 +393,146 @@ input::placeholder {
   background-position: right calc(0.375em + 0.235rem) center;
   background-size: calc(0.75em + 0.47rem) calc(0.75em + 0.47rem);
 }
+
+/* Begin Result Quizzes */
+/* Cores personalizadas */
+.bg-purple {
+  background-color: #6a1b9a; /* Cor roxa */
+}
+
+.bg-teal {
+  background-color: #008080; /* Cor teal */
+}
+
+/* Blocos de temas */
+.theme-results {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.theme-block {
+  flex: 1 1 30%; /* Ocupar cerca de 30% do espaço */
+  min-width: 150px; /* Largura mínima */
+  margin: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* fsdafdsafdsa */
+
+/* Cores customizadas */
+.bg-yellow {
+  background-color: #f0e68c; /* Amarelo */
+}
+
+.bg-teal {
+  background-color: #4682b4; /* Azul Teal */
+}
+
+.bg-purple {
+  background-color: #800080; /* Roxo */
+}
+
+/* Estilos da legenda */
+.legend-box {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+/* Barras do gráfico */
+.eixo-results {
+  width: 100%;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.eixo-bar {
+  width: 30%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: #eaeaea; /* Cor de fundo para toda a barra */
+  height: 100px; /* Altura máxima da barra */
+  border-radius: 8px; /* Deixa as bordas arredondadas */
+}
+
+.eixo-bar-fill {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.eixo-value {
+  position: absolute;
+  bottom: 100%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
+/* Cores dos valores */
+.text-yellow {
+  color: #f0e68c;
+}
+
+.text-teal {
+  color: #4682b4;
+}
+
+.text-purple {
+  color: #800080;
+}
+
+.legend-box {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.bg-yellow {
+  background-color: rgba(219, 221, 133, 1);
+}
+
+.bg-teal {
+  background-color: rgba(2, 116, 127, 1);
+}
+
+.bg-purple {
+  background-color: rgba(155, 91, 148, 1);
+}
+
+.chart-container {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    height: 300px;
+  }
+}
+
+/* End Result Quizzes */
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .gauge {
+    width: 150px;
+    height: 75px;
+  }
+  .gauge-center {
+    width: 60px;
+    height: 60px;
+  }
+  .gauge-value {
+    font-size: 1.2rem;
+  }
+}
+
+/* End grafico */
 
 @media (max-width: 1400px) {
   .image-maturity {

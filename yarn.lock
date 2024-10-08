@@ -27,6 +27,11 @@
   resolved "https://registry.npmjs.org/@hotwired/turbo/-/turbo-7.3.0.tgz"
   integrity sha512-Dcu+NaSvHLT7EjrDrkEmH4qET2ZJZ5IcCWmNXxNQTBwlnE5tBZfN6WxZ842n5cHV52DH/AKNirbPBtcEXDLW4g==
 
+"@kurkle/color@^0.3.0":
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@kurkle/color/-/color-0.3.2.tgz"
+  integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -67,6 +72,13 @@
   version "2.3.0"
   resolved "https://registry.npmjs.org/@sindresorhus/merge-streams/-/merge-streams-2.3.0.tgz"
   integrity sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==
+
+"@stimulus-components/chartjs@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@stimulus-components/chartjs/-/chartjs-6.0.0.tgz"
+  integrity sha512-kh7otiP/aDG7faG35av/mlyxLqTIBU9VzvPhhwUa7q5MUbI+T/wfJz5LrnJDMCctbmgfPqn4ZcxtCSSJW8w6lA==
+  dependencies:
+    chart.js "^4.4.1"
 
 ansi-regex@^5.0.1:
   version "5.0.1"
@@ -158,6 +170,13 @@ caniuse-lite@^1.0.30001646, caniuse-lite@^1.0.30001663:
   version "1.0.30001664"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001664.tgz"
   integrity sha512-AmE7k4dXiNKQipgn7a2xg558IRqPN3jMQY/rOsbxDhrd0tyChwbITBfiwtnqz8bi2M5mIWbxAYBvk7W7QBUS2g==
+
+chart.js@^4.4.1, chart.js@^4.4.4:
+  version "4.4.4"
+  resolved "https://registry.npmjs.org/chart.js/-/chart.js-4.4.4.tgz"
+  integrity sha512-emICKGBABnxhMjUjlYRR12PmOXhJ2eJjEHL2/dZlWjxRAZT1D8xplLFq5M0tMQK8ja+wBS/tuVEJB5C6r7VxJA==
+  dependencies:
+    "@kurkle/color" "^0.3.0"
 
 chokidar@^3.3.0, chokidar@^3.5.2:
   version "3.6.0"

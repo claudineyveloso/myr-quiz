@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get "result_quizzes/create"
   get "answers/create"
   devise_for :users
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  mount RailsAdmin::Engine => "/admin", as: "rails_admin"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -15,18 +15,20 @@ Rails.application.routes.draw do
 
   resources :customers do
     collection do
-      get 'check_email', to: 'customers#check_email'
+      get "check_email", to: "customers#check_email"
     end
   end
-  resources :answers do 
+  resources :answers do
     collection do
-      get 'start', to: 'answers#start'
-      get 'step/:step', to: 'answers#step', as: 'step'
-      get 'axi/:id', to: 'answers#axi', as: 'axi'
-      get 'axi_data/:id', to: 'answers#axi_data', as: 'axi_data'
-      get 'quiz_by_theme'
+      get "start", to: "answers#start"
+      get "step/:step", to: "answers#step", as: "step"
+      get "axi/:id", to: "answers#axi", as: "axi"
+      get "axi_data/:id", to: "answers#axi_data", as: "axi_data"
+      get "quiz_by_theme"
     end
   end
+
+  resources :result_quizzes, only: [ :index, :create ]
 
   # Defines the root path route ("/")
   # root "home#index"

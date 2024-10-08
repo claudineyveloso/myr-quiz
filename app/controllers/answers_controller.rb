@@ -14,43 +14,6 @@ class AnswersController < ApplicationController
     render json: { message: "Respostas salvas com sucesso!", average_score: average_score }, status: :ok
   end
 
-  # def createAAA
-  #   # Acessa os dados enviados no array JSON
-  #   responses = params.require(:_json)
-  #
-  #   total_maturity_score = 0
-  #   customer_id = nil
-  #   # maturity_id = nil
-  #
-  #   # Itera sobre as respostas e processa cada uma
-  #   responses.each do |response|
-  #     customer_id = response[:customer_id]
-  #     theme_id = response[:theme_id]
-  #     scenario_id = response[:scenario_id]
-  #
-  #     maturity_value_sum = Scenario.joins(:maturity)
-  #                                 .where(id: scenario_id)
-  #                                 .sum("maturities.value")
-  #     total_maturity_score += maturity_value_sum
-  #
-  #     # Aqui você pode criar ou processar cada resposta
-  #     Answer.create(customer_id: customer_id, theme_id: theme_id, scenario_id: scenario_id)
-  #   end
-  #
-  #   average_score = (total_maturity_score.to_f / 6)
-  #
-  #   maturity = Maturity.find_by("range_initial <= ? AND range_final >= ?", average_score, average_score)
-  #
-  #   ResultQuiz.create(customer_id: customer_id, maturity_id: maturity.id, average_score: average_score, axi_id: cookies[:axi_id])
-  #
-  #   ids = Axi.where("id > ?", cookies[:axi_id]).order(:id).pluck(:id)
-  #   next_axi_id = ids.first
-  #   cookies[:axi_id] = next_axi_id
-  #
-  #   render json: { message: "Respostas salvas com sucesso!" }, status: :ok
-  # end
-  #
-
   def start
     @axi = Axi.by_id(1).first
   end
