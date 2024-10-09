@@ -8,6 +8,8 @@ class ResultQuizzesController < ApplicationController
       @axi_ids = Axi.order(:id).pluck(:id)
       @results = []
       @messages = []
+      total_average_score = 0
+
 
       color_codes = {
       1 => "#F1F2D4",
@@ -15,14 +17,16 @@ class ResultQuizzesController < ApplicationController
       3 => "#E6CBE3"
     }
 
-
-
       @axi_ids.each do |axi_id|
         # Busca os resultados do quiz para o customer_id e axi_id
         results_for_axi = ResultQuiz.by_axi_customer(axi_id, customer_id)
+
         # Verifica se há resultados válidos antes de adicionar ao array
         unless results_for_axi.empty?
+
           first_result = results_for_axi[0]
+          total_average_score += first_result.average_score.to_f
+
           @results << {
             axi_id: axi_id,
             results: { average_score: format("%.2f", first_result.average_score), id: first_result.id }
@@ -40,9 +44,11 @@ class ResultQuizzesController < ApplicationController
         end
       end
 
+      average_score = (total_average_score/3)
+      maturity = Maturity.find_by("range_initial <= ? AND range_final >= ?", average_score, average_score)
       respond_to do |format|
         format.html # Renderiza a view index.html.erb
-        format.json { render json: @results, messages: @messages, status: :ok  } # Retorna os resultados em JSON
+        format.json { render json: { results: @results, messages: @messages, total_average_score: total_average_score, maturity_name: maturity.name }, status: :ok }
       end
 
     else
