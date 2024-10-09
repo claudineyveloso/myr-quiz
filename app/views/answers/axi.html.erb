@@ -1,6 +1,17 @@
 <div class="row py-3 align-items-center space-title-quiz" style="background-color: <%= @axi.background_color %>; margin: 0;">
   <div class="col-7">
-    <h1 class="display-4 <%= @axi.text_color_class %> fw-normal"><span class='fw-bold'><%= @axi.id%>.</span> <%= @axi.name%></h1>
+    <h1 class="display-4 <%= @axi.text_color_class %> fw-normal">
+        <%if @axi.id == 1 %>
+          <img src="/assets/icone-ambiental.png" alt="MyTech Logo" class="mb-2" width="50" data-slides-target="id"> <!-- Substitua pela logo correta -->
+        <% end %>
+        <%if @axi.id == 2 %>
+          <img src="/assets/icone-social.png" alt="MyTech Logo" class="mb-2" width="50" data-slides-target="id"> <!-- Substitua pela logo correta -->
+        <% end %>
+        <%if @axi.id == 3 %>
+          <img src="/assets/icone-governanca.png" alt="MyTech Logo" class="mb-2" width="50" data-slides-target="id"> <!-- Substitua pela logo correta -->
+        <% end %>
+      <%= @axi.name%>
+    </h1>
   </div>
   <div class="col-5 text-end">
     <h2 class="fw-bold <%= @axi.text_color_class %>" id='theme-current'><%= @axi.main_theme %></h2>

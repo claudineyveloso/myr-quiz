@@ -25,6 +25,48 @@ export default class extends Controller {
 
   next() {
     if (this.isAnswerSelected()) {
+      // Armazena a resposta se uma foi selecionada
+      this.storeAnswer();
+
+      // Incrementa o índice atual
+      this.currentThemeIndex = this.currentIndexValue;
+      this.currentIndexValue++;
+
+      // Previne que ultrapasse o limite de temas
+      if (this.currentIndexValue >= this.totalDots) {
+        this.currentIndexValue = this.questionTargets.length - 1; // Limita ao número total de temas
+      }
+
+      // Simula um evento para chamar o currentSlide
+      const simulatedEvent = {
+        currentTarget: {
+          dataset: {
+            slidesIndexParam: this.currentIndexValue + 1, // Ajuste conforme necessário
+            themeId: this.currentThemeIndex + 1, // Ajuste conforme necessário
+          },
+        },
+      };
+
+      // Chama o método currentSlide passando o evento simulado
+      this.currentSlide(simulatedEvent);
+    } else {
+      // Exibe alerta caso nenhuma resposta tenha sido selecionada
+      Swal.fire({
+        icon: "warning",
+        title: "Atenção",
+        text: "Por favor, selecione uma resposta antes de continuar.",
+        confirmButtonText: "Ok",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+      });
+      return;
+    }
+  }
+
+  next11() {
+    if (this.isAnswerSelected()) {
       this.currentThemeIndex = this.currentIndexValue;
       this.currentIndexValue++;
       if (this.currentIndexValue >= this.totalDots) {
@@ -63,22 +105,41 @@ export default class extends Controller {
   }
 
   currentScenario() {
-    const dotClasses = {
-      1: "dot-quiz-environmental-active",
-      2: "dot-quiz-social-active",
-      3: "dot-quiz-governance-active",
-    };
+    // Obtendo a classe ativa e inativa para cada eixo
+    let activeDotClass, inactiveDotClass;
+    debugger;
 
-    // Aqui, você pode dinamicamente escolher a classe correta baseada em algum valor, por exemplo, um ID de eixo
-    const activeDotClass = dotClasses[this.axiIdValue]; // Supondo que axiIdValue seja 1, 2 ou 3
+    if (parseInt(this.axiIdValue) === 1) {
+      activeDotClass = "dot-quiz-environmental-active";
+      inactiveDotClass = "dot-quiz-environmental";
+    } else if (parseInt(this.axiIdValue) === 2) {
+      activeDotClass = "dot-quiz-social-active";
+      inactiveDotClass = "dot-quiz-social";
+    } else if (parseInt(this.axiIdValue) === 3) {
+      activeDotClass = "dot-quiz-governance-active";
+      inactiveDotClass = "dot-quiz-governance";
+    }
 
-    // Seleciona o elemento dot com a classe ativa correta
+    // Tenta selecionar o elemento dot que possui a classe ativa
     let dotElement = document.querySelector(`.${activeDotClass}`);
 
+    // Se não encontrar o dot com a classe ativa, tenta o dot com a classe inativa
+    if (!dotElement) {
+      dotElement = document.querySelector(`.${inactiveDotClass}`);
+    }
+
+    // Verifica se o dot foi encontrado
     if (dotElement) {
+      // Se o dot estava com a classe inativa, alterna para ativa
+      if (dotElement.classList.contains(inactiveDotClass)) {
+        dotElement.classList.remove(inactiveDotClass);
+        dotElement.classList.add(activeDotClass);
+      }
+
+      // Armazena o ID do tema associado ao dot ativo
       this.themeCurrentId = dotElement.dataset.themeId;
     } else {
-      console.error("Elemento dot ativo não encontrado.");
+      console.error("Elemento dot não encontrado.");
     }
 
     // Seleciona o input da resposta marcada
@@ -94,23 +155,9 @@ export default class extends Controller {
     console.log("scenarioCurrentId:", this.scenarioCurrentId);
   }
 
-  currentScenario_old() {
-    const dotClasses = {
-      1: "dot-quiz-environmental-active",
-      2: "dot-quiz-social-active",
-      3: "dot-quiz-governance-active",
-    };
-    let dotElement = document.querySelector(".dot-quiz-environmental-active"); // Seleciona o elemento
-    this.themeCurrentId = dotElement.dataset.themeId;
-
-    let selectedInput = document.querySelector(
-      'input[name="question"]:checked',
-    );
-    this.scenarioCurrentId = selectedInput ? selectedInput.value : null;
-  }
-
   currentSlide(event) {
     const index = Number(event.currentTarget.dataset.slidesIndexParam);
+    const indexTheme = Number(event.currentTarget.dataset.themeId);
     console.log("Esse é o valor de index no currentSlide", index);
     this.currentThemeIndex = index - 1;
     if (this.isAnswerSelected()) {
@@ -129,7 +176,7 @@ export default class extends Controller {
 
       return;
     }
-    this.loadTheme(index);
+    this.loadTheme(indexTheme);
     if (index == this.totalDots) {
       this.nextButtonTarget.textContent = "Finalizar";
       this.nextButtonTarget.dataset.action = "click->quiz#saveQuiz";
@@ -150,7 +197,7 @@ export default class extends Controller {
 
   loadTheme(themeId) {
     fetch(
-      `/answers/quiz_by_theme?axi_id=${this.axiIdValue}&theme_id=${themeId}`,
+      `/answers/quiz_by_theme?axi_id=${parseInt(this.axiIdValue)}&theme_id=${themeId}`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -253,7 +300,6 @@ export default class extends Controller {
   }
 
   storeAnswer() {
-    debugger;
     const responseData = {
       customer_id: this.customerId,
       theme_id: this.themeCurrentId,
