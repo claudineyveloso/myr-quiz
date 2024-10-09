@@ -3,25 +3,35 @@ class ResultQuizzesController < ApplicationController
 
 
   def index
-    @chart_data = {
-      labels: %w[January February March April May June July],
-      datasets: [ {
-        label: "My First dataset",
-        backgroundColor: "transparent",
-        borderColor: "#3B82F6",
-        data: [ 37, 83, 78, 54, 12, 5, 99 ]
-      } ]
-    }
+    customer_id = 12 # params[:customer_id]
+    if customer_id.present?
+      @axi_ids = Axi.order(:id).pluck(:id)
+      @results = []
 
-    @chart_options = {
-      scales: {
-        yAxes: [ {
-          ticks: {
-            beginAtZero: true
+      @axi_ids.each do |axi_id|
+        # Busca os resultados do quiz para o customer_id e axi_id
+        results_for_axi = ResultQuiz.by_axi_customer(axi_id, customer_id)
+        # Verifica se há resultados válidos antes de adicionar ao array
+        unless results_for_axi.empty?
+          first_result = results_for_axi[0]
+          @results << {
+            axi_id: axi_id,
+            results: { average_score: format("%.2f", first_result.average_score), id: first_result.id }
           }
-        } ]
-      }
-    }
+        end
+      end
+
+      respond_to do |format|
+        format.html # Renderiza a view index.html.erb
+        format.json { render json: @results, status: :ok  } # Retorna os resultados em JSON
+      end
+
+    else
+      respond_to do |format|
+        format.html { redirect_to root_path, alert: "Customer ID não fornecido" }
+        format.json { render json: { error: "Customer ID não fornecido" }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def create

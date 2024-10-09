@@ -97,54 +97,128 @@
     <!-- Próximos Passos -->
 
     <div class="row mt-4">
-  <div class="col-12">
-    <div class="card shadow text-center">
-      <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20">Próximos Passos</h2>
-    </div>
-    <div class="card p-4 shadow">
-      <div class="row">
-        <!-- Card 1 -->
-        <div class="col-12 col-md-4">
-          <div class="card h-100">
-            <div class="card-body" style="background-color: #F1F2D4;">
-              <h5 class="card-title">Incipiente</h5>
-              <p class="card-text">Sua jornada social avança com a adoção de políticas de inclusão. Desenvolva programas de diversidade e invista em treinamento de colaboradores.</p>
+      <div class="col-12">
+      <div class="card shadow text-center">
+        <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20">Próximos Passos</h2>
+      </div>
+      <div class="card p-4 shadow">
+        <div class="row">
+          <!-- Card 1 -->
+          <div class="col-12 col-md-4">
+            <div class="card h-100">
+              <div class="card-body" style="background-color: #F1F2D4;">
+                <h5 class="card-title">Incipiente</h5>
+                <p class="card-text">Sua jornada social avança com a adoção de políticas de inclusão. Desenvolva programas de diversidade e invista em treinamento de colaboradores.</p>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="col-12 col-md-4">
-          <div class="card h-100">
-            <div class="card-body" style="background-color: #D6F0F2;">
-              <h5 class="card-title">Não integrado</h5>
-              <p class="card-text">Comece a apoiar o desenvolvimento regional de maneira estratégica. Conte com a expertise da MYRTECH para transformar suas iniciativas sociais.</p>
+          <!-- Card 2 -->
+          <div class="col-12 col-md-4">
+            <div class="card h-100">
+              <div class="card-body" style="background-color: #D6F0F2;">
+                <h5 class="card-title">Não integrado</h5>
+                <p class="card-text">Comece a apoiar o desenvolvimento regional de maneira estratégica. Conte com a expertise da MYRTECH para transformar suas iniciativas sociais.</p>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="col-12 col-md-4">
-          <div class="card h-100">
-            <div class="card-body" style="background-color: #E6CBE3;">
-              <h5 class="card-title">Estratégico</h5>
-              <p class="card-text">Invista em projetos que promovam a inclusão e o respeito à diversidade. Junte-se a nós nessa jornada de transformação social.</p>
+          <!-- Card 3 -->
+          <div class="col-12 col-md-4">
+            <div class="card h-100">
+              <div class="card-body" style="background-color: #E6CBE3;">
+                <h5 class="card-title">Estratégico</h5>
+                <p class="card-text">Invista em projetos que promovam a inclusão e o respeito à diversidade. Junte-se a nós nessa jornada de transformação social.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
 </div>
 
 
 <script>
+  // Função para buscar os dados via JSON
+  async function fetchResults(customerId) {
+    const response = await fetch(`/result_quizzes?customer_id=${customerId}`, {
+      headers: {
+        "Accept": "application/json" // Adiciona o cabeçalho para especificar que espera JSON
+      }
+    });
+
+    // Verifica se a resposta está ok
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const results = await response.json();
+    console.log('results', results); // Log dos resultados para depuração
+    return results;
+  }
+
+  // Função para gerar o gráfico
+  async function generateChart() {
+    const customerId = 12; // Substitua pelo ID correto do cliente
+
+    try {
+      const results = await fetchResults(customerId);
+
+      const labels = results.map(result => `Axi ${result.axi_id}`); // Rótulos do gráfico
+      const data = results.map(result => result.results.average_score); // Valores
+
+      // Gera o gráfico
+      new Chart(document.getElementById('myChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Resultado por Eixo',
+            data: data,
+            backgroundColor: ['rgba(219, 221, 133, 1)', 'rgba(2, 116, 127, 1)', 'rgba(155, 91, 148, 1)'],
+            borderColor: ['rgba(219, 221, 133, 1)', 'rgba(2, 116, 127, 1)', 'rgba(155, 91, 148, 1)'],
+            borderWidth: 1,
+            barThickness: 80
+          }]
+        },
+        options: {
+          responsive: false,
+          plugins: {
+            datalabels: { // Adiciona a configuração do plugin
+              color: '#fff', // Cor do texto dos rótulos
+              font: {
+                weight: 'bold'
+              },
+              formatter: (value, context) => {
+                return value; // Exibe o valor dentro da barra
+              }
+            }
+          },
+          scales: {
+            y: { beginAtZero: true },
+            x: { ticks: { display: false } }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
+    } catch (error) {
+      console.error('Error generating chart:', error);
+    }
+  }
+
+  // Chama a função para gerar o gráfico
+  generateChart();
+</script>
+
+
+
+<script>
   console.log(Date.now());
 
-  const ctxAxi = document.getElementById('myChart').getContext('2d');
+  const ctxAxi1 = document.getElementById('myChart1').getContext('2d');
 
-  new Chart(ctxAxi, {
+  new Chart(ctxAxi1, {
     type: 'bar',
     data: {
       labels: ['Ambiental', 'Social', 'Governança'], // Rótulos do eixo X

@@ -509,6 +509,18 @@ input::placeholder {
   max-width: 100%;
 }
 
+.custom-swal-popup {
+  background-color: #06363b; /* Altere para a cor desejada */
+  color: #fff; /* Cor do texto */
+}
+
+.bnt-pop-up {
+  background-color: #dbdd71;
+  border-radius: 55px;
+  color: #338f98;
+  width: 150px;
+}
+
 @media (max-width: 768px) {
   .chart-container {
     height: 300px;

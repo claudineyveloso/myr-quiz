@@ -308,7 +308,7 @@ export default class extends Controller {
     this.responses.push(responseData);
   }
 
-  saveQuiz() {
+  saveQuiz111() {
     console.log("Quiz finalizado! Salvando dados...");
     const responseData = {
       customer_id: this.customerId,
@@ -335,6 +335,118 @@ export default class extends Controller {
         //Swal.fire("Sucesso!", "Seu quiz foi salvo.", "success");
       } else {
         //Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
+      }
+    });
+  }
+
+  saveQuiz() {
+    console.log("Quiz finalizado! Salvando dados...");
+
+    if (!this.isAnswerSelected()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Atenção",
+        text: "Por favor, selecione uma resposta antes de continuar.",
+        confirmButtonText: "Ok",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+      });
+
+      return;
+    }
+
+    // Monta os dados da resposta atual
+    const responseData = {
+      customer_id: this.customerId,
+      theme_id: this.themeCurrentId,
+      scenario_id: this.scenarioCurrentId,
+      axi_id: this.axiIdValue,
+    };
+
+    // Adiciona a resposta à lista de respostas
+    this.responses.push(responseData);
+
+    // Envia as respostas via fetch
+    fetch("/answers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
+      },
+      body: JSON.stringify(this.responses),
+    }).then((response) => {
+      if (response.ok) {
+        // Calcula o próximo slide
+        let nextSlide = Number(this.axiIdValue) + 1;
+
+        // Se o próximo slide for <= 3, redireciona para o próximo slide
+        if (nextSlide <= 3) {
+          window.location.href = "/answers/start?slide=" + nextSlide;
+        }
+        // Quando não houver mais slides, abre o popup de avaliação de estrelas
+        else {
+          Swal.fire({
+            title: "Avaliação de Satisfação",
+            text: "Por favor, avalie sua experiência:",
+            icon: "question",
+            input: "radio",
+            inputOptions: {
+              1: "Muito Ruim",
+              2: "Ruim",
+              3: "Bom",
+              4: "Muito Bom",
+              5: "Excelente",
+            },
+            inputValidator: (value) => {
+              if (!value) {
+                return "Por favor, selecione uma quantidade de estrelas!";
+              }
+            },
+            confirmButtonText: "Enviar",
+            customClass: {
+              confirmButton: "btn btn-success btn-pop-up",
+              popup: "custom-swal-popup", // Adicione uma classe personalizada para o popup
+            },
+            buttonsStyling: false,
+            width: "600px", // Para usar os estilos personalizados do Bootstrap
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Pega a quantidade de estrelas selecionadas
+              let selectedStars = result.value;
+
+              // Faz uma requisição para salvar a quantidade de estrelas
+              fetch("/save_rating", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-CSRF-Token": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+                },
+                body: JSON.stringify({
+                  stars: selectedStars,
+                  customer_id: this.customerId,
+                }),
+              }).then((response) => {
+                if (response.ok) {
+                  // Redireciona para a página de resultados após o envio da avaliação
+                  window.location.href = "/result_quizzes";
+                } else {
+                  // Exibe um erro se a requisição falhar
+                  Swal.fire(
+                    "Erro!",
+                    "Houve um problema ao salvar sua avaliação.",
+                    "error",
+                  );
+                }
+              });
+            }
+          });
+        }
+      } else {
+        Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
       }
     });
   }
