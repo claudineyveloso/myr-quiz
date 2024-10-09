@@ -95,47 +95,27 @@
     </div>
   </div>
     <!-- Próximos Passos -->
-
-    <div class="row mt-4">
-      <div class="col-12">
+  <div class="row mt-4">
+    <div class="col-12">
       <div class="card shadow text-center">
         <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20">Próximos Passos</h2>
       </div>
       <div class="card p-4 shadow">
         <div class="row">
-          <!-- Card 1 -->
-          <div class="col-12 col-md-4">
-            <div class="card h-100">
-              <div class="card-body" style="background-color: #F1F2D4;">
-                <h5 class="card-title">Incipiente</h5>
-                <p class="card-text">Sua jornada social avança com a adoção de políticas de inclusão. Desenvolva programas de diversidade e invista em treinamento de colaboradores.</p>
+          <% @messages.each do |message_data| %>
+            <div class="col-12 col-md-4">
+              <div class="card h-100">
+                <div class="card-body" style="background-color: <%= message_data[:color_code] %>;">
+                  <h5 class="card-title"><%= message_data[:message].axi.name %></h5>
+                  <p class="card-text"><%= message_data[:message].message %></p>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- Card 2 -->
-          <div class="col-12 col-md-4">
-            <div class="card h-100">
-              <div class="card-body" style="background-color: #D6F0F2;">
-                <h5 class="card-title">Não integrado</h5>
-                <p class="card-text">Comece a apoiar o desenvolvimento regional de maneira estratégica. Conte com a expertise da MYRTECH para transformar suas iniciativas sociais.</p>
-              </div>
-            </div>
-          </div>
-          <!-- Card 3 -->
-          <div class="col-12 col-md-4">
-            <div class="card h-100">
-              <div class="card-body" style="background-color: #E6CBE3;">
-                <h5 class="card-title">Estratégico</h5>
-                <p class="card-text">Invista em projetos que promovam a inclusão e o respeito à diversidade. Junte-se a nós nessa jornada de transformação social.</p>
-              </div>
-            </div>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-
-
 </div>
 
 
@@ -282,7 +262,7 @@
       labels: ['Média', 'Restante'],
       datasets: [{
         label: 'Média de Desempenho',
-        data: [2.99, 15], // Média fixa de 3 e o restante até o total de 6
+        data: [2.99, 5], // Média fixa de 3 e o restante até o total de 6
         backgroundColor: [
           'rgba(75, 192, 192, 0.6)', // Cor para a média
           'rgba(192, 192, 192, 0.6)'  // Cor para o restante

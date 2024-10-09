@@ -7,6 +7,15 @@ class ResultQuizzesController < ApplicationController
     if customer_id.present?
       @axi_ids = Axi.order(:id).pluck(:id)
       @results = []
+      @messages = []
+
+      color_codes = {
+      1 => "#F1F2D4",
+      2 => "#D6F0F2",
+      3 => "#E6CBE3"
+    }
+
+
 
       @axi_ids.each do |axi_id|
         # Busca os resultados do quiz para o customer_id e axi_id
@@ -18,12 +27,22 @@ class ResultQuizzesController < ApplicationController
             axi_id: axi_id,
             results: { average_score: format("%.2f", first_result.average_score), id: first_result.id }
           }
+
+          maturity_messages = MaturityMessage.joins(:axi, :maturity)
+                                              .where(axi_id: first_result.axi_id, maturity_id: first_result.maturity_id)
+
+          maturity_messages.each do |message|
+            @messages << {
+              message: message,
+              color_code: color_codes[axi_id] # Define a cor com base no axi_id
+            }
+          end
         end
       end
 
       respond_to do |format|
         format.html # Renderiza a view index.html.erb
-        format.json { render json: @results, status: :ok  } # Retorna os resultados em JSON
+        format.json { render json: @results, messages: @messages, status: :ok  } # Retorna os resultados em JSON
       end
 
     else
