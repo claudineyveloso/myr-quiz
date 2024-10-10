@@ -80,5 +80,8 @@ test:
 production:
   <<: *default
   database: myr_quiz_db
-  username: "myr-quiz-user"
-  password: <%= ENV["MYR_QUIZ_DATABASE_PASSWORD"] %>
+  username: "myr-quiz-user" # Adicione seu nome de usuário para produção
+  password: "myr-quiz-password" # Adicione sua senha para produção
+  host: "52.207.69.202" # Certifique-se de que este é o host correto
+  port: 5432 # Verifique se a porta está correta, geralmente é 5432
+

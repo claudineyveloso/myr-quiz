@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get "result_quizzes/create"
-  get "answers/create"
+  # get "result_quizzes/create"
+  # get "answers/create"
   devise_for :users
   mount RailsAdmin::Engine => "/admin", as: "rails_admin"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :result_quizzes, only: [ :index, :create ]
+  put "answers/save_rating", to: "answers#save_rating"
 
   # Defines the root path route ("/")
   # root "home#index"
