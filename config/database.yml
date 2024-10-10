@@ -79,6 +79,7 @@ test:
 #
 production:
   <<: *default
+  url: postgres://myr-quiz-user:myr-quiz-password@52.207.69.202:5432/myr_quiz_db
   database: myr_quiz_db
   username: "claudiney" # Adicione seu nome de usuário para produção
   password: "$I393#fdkP.P0" # Adicione sua senha para produção
