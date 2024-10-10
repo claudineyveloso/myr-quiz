@@ -91,7 +91,9 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
+  # Adiciona hosts permitidos aqui
+  config.hosts << "myr-quiz.esgsolutions.com.br"
+  config.hosts << "52.207.69.202" # Caso você esteja usando um IP
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
