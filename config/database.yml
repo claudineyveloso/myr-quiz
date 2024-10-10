@@ -81,8 +81,8 @@ production:
   <<: *default
   url: postgres://myr-quiz-user:myr-quiz-password@52.207.69.202:5432/myr_quiz_db
   database: myr_quiz_db
-  username: "claudiney" # Adicione seu nome de usuário para produção
-  password: "$I393#fdkP.P0" # Adicione sua senha para produção
+  username: "myr-quiz-user" # Adicione seu nome de usuário para produção
+  password: "myr-quiz-password" # Adicione sua senha para produção
   host: "localhost" # Certifique-se de que este é o host correto
   port: 5432 # Verifique se a porta está correta, geralmente é 5432
 
