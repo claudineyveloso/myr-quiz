@@ -19,7 +19,6 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-
 development:
   <<: *default
   database: myr_quiz_development
@@ -80,6 +79,6 @@ test:
 #
 production:
   <<: *default
-  database: myr_quiz_production
-  username: myr_quiz
+  database: myr_quiz_db
+  username: "myr-quiz-user"
   password: <%= ENV["MYR_QUIZ_DATABASE_PASSWORD"] %>
