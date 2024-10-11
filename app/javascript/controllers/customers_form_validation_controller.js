@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 
-// Connects to data-controller="customers-form-validation"
+// Connects to data-controller="customers-frrm-validation"
 export default class extends Controller {
   static targets = [
     "name",
@@ -20,11 +20,12 @@ export default class extends Controller {
   }
 
   validate(event) {
-    console.log("Validação do formulário chamada"); // Deve ser impresso
-    let valid = true;
+    event.preventDefault(); // Sempre previne o submit para verificar tudo
 
     // Limpa mensagens de erro anteriores
     this.clearErrors();
+
+    let valid = true;
 
     // Validação para o campo 'name'
     if (this.nameTarget.value.trim() === "") {
@@ -44,22 +45,78 @@ export default class extends Controller {
     }
 
     if (this.phoneTarget.value.trim() === "") {
-      this.errorPhoneTarget.textContent = "Telefone é obrigatório";
+      this.errorPhoneTarget.textContent = "Telefone é obrigatório.";
       valid = false;
     }
 
     if (this.companyNameTarget.value.trim() === "") {
-      this.errorCompanyNameTarget.textContent = "Razão Social é obrigatório";
+      this.errorCompanyNameTarget.textContent = "Razão Social é obrigatório.";
       valid = false;
     }
 
-    // Impede o envio do formulário se houver erros
-    if (!valid) {
-      event.preventDefault();
+    if (valid) {
+      // Se o formulário for válido, agora verificamos o e-mail antes de submeter
+      this.checkEmail(event);
+    } else {
+      console.log("Erro na validação do formulário");
     }
   }
 
   checkEmail(event) {
+    const email = this.emailTarget.value.trim();
+
+    if (email === "") {
+      this.errorEmailTarget.textContent = "Email é obrigatório.";
+      return;
+    }
+
+    // Requisição AJAX para verificar se o e-mail já existe
+    fetch(`/customers/check_email?email=${email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "finished") {
+          this.showMessage(
+            "E-mail já utilizado",
+            "Este e-mail já finalizou o questionário.",
+            "error",
+          );
+        } else if (data.status === "not_finished") {
+          Swal.fire({
+            title: "Questionário não finalizado",
+            text: "O questionário não foi finalizado. Você pode prosseguir.",
+            icon: "info",
+            confirmButtonText: "Ok",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.fillCustomerData(data.customer);
+              document.getElementById("submitButton").textContent = "Continuar";
+              //window.location.href = "http://localhost:3000/answers/start";
+              event.preventDefault();
+              submitButton.addEventListener("click", () => {
+                window.location.href = "/answers/start"; // Redireciona ao clicar no botão "Continuar"
+              });
+            }
+          });
+        } else if (data.status === "not_found") {
+          // Se o e-mail não for encontrado, permitimos o envio do formulário
+          this.allowFormSubmit();
+        }
+      })
+      .catch((error) => {
+        console.error("Erro na verificação do email:", error);
+        this.errorEmailTarget.textContent =
+          "Erro ao verificar o email. Tente novamente mais tarde.";
+        this.emailTarget.focus();
+      });
+  }
+
+  allowFormSubmit() {
+    // Após a verificação do e-mail, agora permite que o formulário seja enviado
+    console.log("E-mail não encontrado, permitindo o cadastro.");
+    document.querySelector("form").submit(); // Envia o formulário manualmente
+  }
+
+  checkEmail333(event) {
     const email = this.emailTarget.value.trim();
     let valid = true;
 
@@ -90,7 +147,7 @@ export default class extends Controller {
               // Só executa o preenchimento dos campos após o usuário clicar "Ok"
               this.fillCustomerData(data.customer);
               document.getElementById("submitButton").textContent = "Continuar";
-              this.allowSubmit = false;
+              // this.allowSubmit = false;
             }
           });
         } else if (data.status === "not_found") {
@@ -153,20 +210,6 @@ export default class extends Controller {
     phone = phone.replace(/^(\d{2})(\d)/g, "($1) $2"); // Adiciona o parêntese no DDD
     phone = phone.replace(/(\d{5})(\d)/, "$1-$2"); // Adiciona o traço após os 5 primeiros números
     event.target.value = phone;
-  }
-
-  validate(event) {
-    // Verifica se o botão é "Continuar" antes de permitir o submit
-    const submitButton = document.getElementById("submitButton");
-
-    if (submitButton.textContent === "Continuar") {
-      event.preventDefault(); // Impede o submit do formulário
-
-      // Redireciona para a URL específica
-      window.location.href = "http://localhost:3000/answers/start";
-    } else if (!this.allowSubmit) {
-      event.preventDefault(); // Impede o submit se o cliente já existir e o questionário não estiver finalizado
-    }
   }
 
   showMessage(title, text, icon) {
