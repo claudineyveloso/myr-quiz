@@ -59,4 +59,17 @@ class AnswersController < ApplicationController
       render json: { error: "Axi not found" }, status: :not_found
     end
   end
+
+  def save_rating
+    customer_id = params[:customer_id]
+
+    # Localiza o cliente e atualiza o campo `finished_quiz`
+    customer = Customer.find_by(id: customer_id)
+
+    if customer&.update(finished_quiz: true)
+      render json: { message: "Quiz finalizado com sucesso." }, status: :ok
+    else
+      render json: { error: "Erro ao finalizar o quiz." }, status: :unprocessable_entity
+    end
+  end
 end

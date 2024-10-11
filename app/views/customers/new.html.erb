@@ -1,7 +1,7 @@
 <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100 bg-login">
     <div class="card-login p-5 text-white shadow">
       <div class="text-center mb-4">
-        <img src="/assets/marca-myr.png" alt="MyTech Logo" class="mb-2" width="150"> <!-- Substitua pela logo correta -->
+        <%= image_tag 'marca-myr.png', class: "mb-2", width: "150",  alt: "Myr-tech" %>
         <h4 class="fw-400">Cadastrar Cliente</h4>
       </div>
       <%= form_with(model: @customer, local: true, html: { data: { controller: "customers-form-validation", action: "submit->customers-form-validation#validate" } }) do |form| %>

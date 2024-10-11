@@ -23,7 +23,82 @@ export default class extends Controller {
     console.log(this.customerId); // Exibe o ID do cliente no console
   }
 
-  next() {
+  next(event) {
+    debugger;
+    const index = Number(event.currentTarget.dataset.slidesIndexParam);
+    const indexTheme = Number(event.currentTarget.dataset.themeId);
+    console.log("Esse é o valor de index no currentSlide", index);
+    this.currentThemeIndex = index - 1;
+    if (this.isAnswerSelected()) {
+      this.storeAnswer();
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Atenção",
+        text: "Por favor, selecione uma resposta antes de continuar.",
+        confirmButtonText: "Ok",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+      });
+
+      return;
+    }
+    this.loadTheme(indexTheme);
+    if (index == this.totalDots) {
+      this.nextButtonTarget.textContent = "Finalizar";
+      this.nextButtonTarget.dataset.action = "click->quiz#saveQuiz";
+      return;
+    } else {
+      this.nextButtonTarget.textContent = "Próxima";
+      this.nextButtonTarget.dataset.action = "click->quiz#next";
+    }
+  }
+
+  nextBBB() {
+    if (this.isAnswerSelected()) {
+      // Armazena a resposta se uma foi selecionada
+      this.storeAnswer();
+
+      // Incrementa o índice atual
+      this.currentThemeIndex = this.currentIndexValue; // Ajusta o índice atual ao índice do tema
+      this.currentIndexValue++; // Incrementa para o próximo índice
+
+      // Previne que ultrapasse o limite de temas
+      if (this.currentIndexValue >= this.totalDots) {
+        this.currentIndexValue = this.totalDots - 1; // Limita ao número total de temas
+      }
+
+      // Simula um evento para chamar o currentSlide
+      const simulatedEvent = {
+        currentTarget: {
+          dataset: {
+            slidesIndexParam: this.currentIndexValue + 1, // Próximo slide baseado no índice incrementado
+            themeId: this.currentThemeIndex + 1, // Atualiza o tema para o índice correto
+          },
+        },
+      };
+
+      // Chama o método currentSlide passando o evento simulado
+      this.currentSlide(simulatedEvent);
+    } else {
+      // Exibe alerta caso nenhuma resposta tenha sido selecionada
+      Swal.fire({
+        icon: "warning",
+        title: "Atenção",
+        text: "Por favor, selecione uma resposta antes de continuar.",
+        confirmButtonText: "Ok",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+      });
+      return;
+    }
+  }
+
+  nextAtual() {
     if (this.isAnswerSelected()) {
       // Armazena a resposta se uma foi selecionada
       this.storeAnswer();
@@ -387,63 +462,82 @@ export default class extends Controller {
         }
         // Quando não houver mais slides, abre o popup de avaliação de estrelas
         else {
-          Swal.fire({
-            title: "Avaliação de Satisfação",
-            text: "Por favor, avalie sua experiência:",
-            icon: "question",
-            input: "radio",
-            inputOptions: {
-              1: "Muito Ruim",
-              2: "Ruim",
-              3: "Bom",
-              4: "Muito Bom",
-              5: "Excelente",
+          fetch("/answers/save_rating", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-Token": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
             },
-            inputValidator: (value) => {
-              if (!value) {
-                return "Por favor, selecione uma quantidade de estrelas!";
-              }
-            },
-            confirmButtonText: "Enviar",
-            customClass: {
-              confirmButton: "btn btn-success btn-pop-up",
-              popup: "custom-swal-popup", // Adicione uma classe personalizada para o popup
-            },
-            buttonsStyling: false,
-            width: "600px", // Para usar os estilos personalizados do Bootstrap
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // Pega a quantidade de estrelas selecionadas
-              let selectedStars = result.value;
-
-              // Faz uma requisição para salvar a quantidade de estrelas
-              fetch("/save_rating", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "X-CSRF-Token": document
-                    .querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content"),
-                },
-                body: JSON.stringify({
-                  stars: selectedStars,
-                  customer_id: this.customerId,
-                }),
-              }).then((response) => {
-                if (response.ok) {
-                  // Redireciona para a página de resultados após o envio da avaliação
-                  window.location.href = "/result_quizzes";
-                } else {
-                  // Exibe um erro se a requisição falhar
-                  Swal.fire(
-                    "Erro!",
-                    "Houve um problema ao salvar sua avaliação.",
-                    "error",
-                  );
-                }
-              });
+            body: JSON.stringify({
+              customer_id: this.customerId,
+            }),
+          }).then((response) => {
+            if (response.ok) {
+              // Redireciona para a página de resultados após o envio da avaliação
+              window.location.href = "/result_quizzes";
             }
           });
+
+          // Swal.fire({
+          //   title: "Avaliação de Satisfação",
+          //   text: "Por favor, avalie sua experiência:",
+          //   icon: "question",
+          //   input: "radio",
+          //   inputOptions: {
+          //     1: "Muito Ruim",
+          //     2: "Ruim",
+          //     3: "Bom",
+          //     4: "Muito Bom",
+          //     5: "Excelente",
+          //   },
+          //   inputValidator: (value) => {
+          //     if (!value) {
+          //       return "Por favor, selecione uma quantidade de estrelas!";
+          //     }
+          //   },
+          //   confirmButtonText: "Enviar",
+          //   customClass: {
+          //     confirmButton: "btn btn-success btn-pop-up",
+          //     popup: "custom-swal-popup", // Adicione uma classe personalizada para o popup
+          //   },
+          //   buttonsStyling: false,
+          //   width: "600px", // Para usar os estilos personalizados do Bootstrap
+          // }).then((result) => {
+          //   if (result.isConfirmed) {
+          //     // Pega a quantidade de estrelas selecionadas
+          //     let selectedStars = result.value;
+          //
+          //     // Faz uma requisição para salvar a quantidade de estrelas
+          //     fetch("/save_rating", {
+          //       method: "POST",
+          //       headers: {
+          //         "Content-Type": "application/json",
+          //         "X-CSRF-Token": document
+          //           .querySelector('meta[name="csrf-token"]')
+          //           .getAttribute("content"),
+          //       },
+          //       body: JSON.stringify({
+          //         stars: selectedStars,
+          //         customer_id: this.customerId,
+          //       }),
+          //     }).then((response) => {
+          //       if (response.ok) {
+          //         // Redireciona para a página de resultados após o envio da avaliação
+          //         window.location.href = "/result_quizzes";
+          //       } else {
+          //         // Exibe um erro se a requisição falhar
+          //         Swal.fire(
+          //           "Erro!",
+          //           "Houve um problema ao salvar sua avaliação.",
+          //           "error",
+          //         );
+          //       }
+          //     });
+          //   }
+          // });
+          //
         }
       } else {
         Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
