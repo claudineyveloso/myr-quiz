@@ -75,19 +75,19 @@
           <!-- Gráfico 1 -->
           <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
             <div class="chart-container" style="position: relative;">
-              <canvas id="myChartTheme" style="width: 100%; height: 300px;"></canvas>
+              <canvas id="myChartEnvironmental" width="400" height="300"></canvas>
             </div>
           </div>
           <!-- Gráfico 2 -->
           <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
             <div class="chart-container" style="position: relative;">
-              <canvas id="myChartTheme1" style="width: 100%; height: 300px;"></canvas>
+              <canvas id="myChartSocial" width="400" height="300"></canvas>
             </div>
           </div>
           <!-- Gráfico 3 -->
           <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
             <div class="chart-container" style="position: relative;">
-              <canvas id="myChartTheme2" style="width: 100%; height: 300px;"></canvas>
+              <canvas id="myChartGovernance" width="400" height="300"></canvas>
             </div>
           </div>
         </div>
@@ -117,7 +117,6 @@
     </div>
   </div>
 </div>
-
 
 <script>
   // Função para buscar os dados via JSON
@@ -155,8 +154,7 @@
       document.getElementById('maturityDescription').textContent = results.maturity_description; // Atualiza o nome da maturidade
       document.getElementById('averageScoreDisplay').textContent = (results.total_average_score / 3).toFixed(2); // Atualiza o valor
 
-
-      const labels = results.results.map(result => `Axi ${result.axi_id}`); // Rótulos do gráfico
+      const labels = results.results.map(result => result.results.axi_name); // Rótulos do gráfico
       const data = results.results.map(result => result.results.average_score); // Valores
 
       // Gera o gráfico
@@ -272,185 +270,99 @@
 </script>
 
 <script>
-  console.log(Date.now());
+  // Passando os dados do Rails para o JavaScript como JSON
+  const axisEnvironmental = <%= @axis_environmental.to_json.html_safe %>;
+  const axisSocial = <%= @axis_social.to_json.html_safe %>;
+  const axisGovernance = <%= @axis_governance.to_json.html_safe %>;
 
-  const ctxTheme = document.getElementById('myChartTheme').getContext('2d');
+  function createChart(ctx, labels, datasetLabel, data, backgroundColors, borderColors) {
 
-  new Chart(ctxTheme, {
-    type: 'bar',
-    data: {
-      labels: ['Eficiência Energética', 'Recursos Hídricos', 'Economia Circular e Gestão de Resíduos', 'Emissão de Gases', 'Biodiversidade e Uso do Solo', 'Gestão Ambiental e Prevenção da Poluição'], // Rótulos do eixo X
-      datasets: [{
-        label: 'Resultado Ambiental', // Adiciona um rótulo para o conjunto de dados
-        data: [2.83, 3.16, 4, 3, 2, 1], // Valores no eixo Y
-        backgroundColor: [
-          'rgba(219, 221, 133, 1)',
-          'rgba(219, 221, 133, 1)',
-          'rgba(219, 221, 133, 1)',
-          'rgba(219, 221, 133, 1)',
-          'rgba(219, 221, 133, 1)',
-          'rgba(219, 221, 133, 1)',
-        ],
-        borderColor: [
-          'rgba(219, 221, 133, 1)',
-          'rgba(2, 116, 127, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-        ],
-        borderWidth: 1,
-        barThickness: 50 // Ajusta a largura das barras (em pixels)
-      }]
-    },
-    options: {
-      responsive: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: {
-            display: false // Remove todas as linhas de grade do eixo Y
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: datasetLabel,
+          data: data,
+          backgroundColor: backgroundColors,
+          borderColor: borderColors,
+          borderWidth: 1,
+          barThickness: 50
+        }]
+      },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: {
+            display: false // Oculta a legenda
           },
-          ticks: {
-            display: false // Remove os números do eixo Y
+          datalabels: {
+            anchor: 'center',
+            align: 'center',
+            color: '#fff',
+            font: {
+              weight: 'bold',
+            },
+            formatter: function(value, context) {
+              return value; // Exibe o valor diretamente nas barras
+            }
           }
         },
-        x: {
-          grid: {
-            display: false // Remove todas as linhas de grade do eixo X
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#000'
+            }
           },
-          ticks: {
-            display: false // Remove os números do eixo X
-          },
-          border: {
-            display: true // Exibe a linha de borda no rodapé
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              display: false
+            },
+            border: {
+              display: true
+            }
           }
         }
-      }
-    }
-  });
+      },
+      plugins: [ChartDataLabels] // Ativa o plugin de exibição de valores
+    });
+  }
+
+  // Labels para os temas (ajuste de acordo com o seu caso)
+  const labels = ['Tema 1', 'Tema 2', 'Tema 3', 'Tema 4', 'Tema 5', 'Tema 6'];
+
+  // Cores para os gráficos
+  const backgroundColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
+  const backgroundColorsSocial = ['rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)'];
+  const backgroundColorsGovernance = ['rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)'];
+
+
+  const borderColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
+  const borderColorsSocial = ['rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)'];
+  const borderColorsGovernance = ['rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)'];
+
+  // Criar gráficos para cada eixo (ambiental, social, governança)
+  
+  // Gráfico Ambiental
+  const ctxEnvironmental = document.getElementById('myChartEnvironmental').getContext('2d');
+  const environmentalScores = axisEnvironmental.map(theme => theme.average_score); // extrai os valores de `average_score`
+  createChart(ctxEnvironmental, labels, 'Resultado Ambiental', environmentalScores, backgroundColorsEnvironmental, borderColorsEnvironmental);
+
+  // Gráfico Social
+  const ctxSocial = document.getElementById('myChartSocial').getContext('2d');
+  const socialScores = axisSocial.map(theme => theme.average_score);
+  createChart(ctxSocial, labels, 'Resultado Social', socialScores, backgroundColorsSocial, borderColorsSocial);
+
+  // Gráfico Governança
+  const ctxGovernance = document.getElementById('myChartGovernance').getContext('2d');
+  const governanceScores = axisGovernance.map(theme => theme.average_score);
+  createChart(ctxGovernance, labels, 'Resultado Governança', governanceScores, backgroundColorsGovernance, borderColorsGovernance);
+
 </script>
-
-<script>
-  console.log(Date.now());
-
-  const ctxTheme1 = document.getElementById('myChartTheme1').getContext('2d');
-
-  new Chart(ctxTheme1, {
-    type: 'bar',
-    data: {
-      labels: ['Diálogo e Impacto Social', 'Desenvolvimento Profissional', 'Economia Circular e Gestão de Resíduos', 'Emissão de Gases', 'Biodiversidade e Uso do Solo', 'Gestão Ambiental e Prevenção da Poluição'], // Rótulos do eixo X
-      datasets: [{
-        label: 'Resultado Social', // Adiciona um rótulo para o conjunto de dados
-        data: [2, 3, 1, 2, 4, 2], // Valores no eixo Y
-        backgroundColor: [
-          'rgba(2, 116, 127, 1)',
-          'rgba(2, 116, 127, 1)',
-          'rgba(2, 116, 127, 1)',
-          'rgba(2, 116, 127, 1)',
-          'rgba(2, 116, 127, 1)',
-          'rgba(2, 116, 127, 1)',
-
-        ],
-        borderColor: [
-          'rgba(219, 221, 133, 1)',
-          'rgba(2, 116, 127, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-        ],
-        borderWidth: 1,
-        barThickness: 50 // Ajusta a largura das barras (em pixels)
-      }]
-    },
-    options: {
-      responsive: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: {
-            display: false // Remove todas as linhas de grade do eixo Y
-          },
-          ticks: {
-            display: false // Remove os números do eixo Y
-          }
-        },
-        x: {
-          grid: {
-            display: false // Remove todas as linhas de grade do eixo X
-          },
-          ticks: {
-            display: false // Remove os números do eixo X
-          },
-          border: {
-            display: true // Exibe a linha de borda no rodapé
-          }
-        }
-      }
-    }
-  });
-</script>
-
-<script>
-  console.log(Date.now());
-
-  const ctxTheme2 = document.getElementById('myChartTheme2').getContext('2d');
-
-  new Chart(ctxTheme2, {
-    type: 'bar',
-    data: {
-      labels: ['Diálogo e Impacto Social', 'Desenvolvimento Profissional', 'Economia Circular e Gestão de Resíduos', 'Emissão de Gases', 'Biodiversidade e Uso do Solo', 'Gestão Ambiental e Prevenção da Poluição'], // Rótulos do eixo X
-      datasets: [{
-        label: 'Resultaddo Governaça', // Adiciona um rótulo para o conjunto de dados
-        data: [2.83, 3.16, 4, 3, 2, 1], // Valores no eixo Y
-        backgroundColor: [
-
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-
-        ],
-        borderColor: [
-          'rgba(219, 221, 133, 1)',
-          'rgba(2, 116, 127, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-          'rgba(155, 91, 148, 1)',
-        ],
-        borderWidth: 1,
-        barThickness: 50 // Ajusta a largura das barras (em pixels)
-      }]
-    },
-    options: {
-      responsive: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: {
-            display: false // Remove todas as linhas de grade do eixo Y
-          },
-          ticks: {
-            display: false // Remove os números do eixo Y
-          }
-        },
-        x: {
-          grid: {
-            display: false // Remove todas as linhas de grade do eixo X
-          },
-          ticks: {
-            display: false // Remove os números do eixo X
-          },
-          border: {
-            display: true // Exibe a linha de borda no rodapé
-          }
-        }
-      }
-    }
-  });
-</script>
-

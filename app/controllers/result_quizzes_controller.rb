@@ -8,8 +8,11 @@ class ResultQuizzesController < ApplicationController
       @axi_ids = Axi.order(:id).pluck(:id)
       @results = []
       @messages = []
-      total_average_score = 0
+      @axis_environmental = []
+      @axis_social = []
+      @axis_governance = []
 
+      total_average_score = 0
 
       color_codes = {
       1 => "#F1F2D4",
@@ -29,12 +32,23 @@ class ResultQuizzesController < ApplicationController
 
           @results << {
             axi_id: axi_id,
-            results: { average_score: format("%.2f", first_result.average_score), id: first_result.id }
+            results: { average_score: format("%.2f", first_result.average_score), id: first_result.id, axi_name: first_result.axi.name }
           }
+
+          themes_for_axi = Answer.by_axis_by_customer(axi_id, customer_id)
+            themes_for_axi.each do |theme|
+            case axi_id
+            when 1
+              @axis_environmental << { theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value) }
+            when 2
+              @axis_social << { theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value) }
+            when 3
+              @axis_governance << { theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value) }
+            end
+          end
 
           maturity_messages = MaturityMessage.joins(:axi, :maturity)
                                               .where(axi_id: first_result.axi_id, maturity_id: first_result.maturity_id)
-
           maturity_messages.each do |message|
             @messages << {
               message: message,
