@@ -1,0 +1,575 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+h1 {
+  font-size: 40px !important;
+}
+
+h2 {
+  font-size: 30px !important;
+}
+
+.h-100 {
+  height: 100px;
+}
+
+.w-270 {
+  width: 270px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.lh-55 {
+  line-height: 55px;
+}
+
+.bg-login {
+  background-color: #06363b;
+}
+
+.bg-button-login {
+  background-color: #dbdd71 !important;
+  color: #338f98 !important;
+}
+
+.bg-title-result-quiz {
+  background-color: #1e494e;
+  color: #fff;
+}
+
+.fs-3rem {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.img-myr-tech-result-quiz {
+  height: 52px !important;
+  width: 170px;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fs-20 {
+  font-size: 20px !important;
+}
+
+.card-login {
+  border-radius: 12px;
+  max-width: 600px;
+}
+
+.btn {
+  border-radius: 30px;
+}
+
+input::placeholder {
+  color: #6c757d;
+  opacity: 1; /* Deixa a cor do placeholder visível */
+}
+
+@media (max-width: 768px) {
+  .card-login {
+    padding: 3rem 2rem;
+  }
+}
+.space-logo {
+  padding-left: 54px;
+  padding-top: 60px;
+}
+
+.image-bonsai-growth {
+  background-image: url(/assets/bonsai-growth.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.image-maturity {
+  background-image: url(/assets/img-maturity.jpg);
+  background-size: cover;
+  background-position: calc(0% - 50px) top;
+  background-repeat: no-repeat;
+  height: 100vh;
+  position: relative;
+}
+
+.bg-maturity {
+  background-color: #d3d800;
+  color: #02747f;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.gradient-text {
+  color: #fff;
+  font: normal normal bold 40px/64px Montserrat;
+  letter-spacing: 0px;
+}
+
+.space-title-quiz {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.color-environmental {
+  color: #787a0c;
+}
+
+.color-social {
+  color: #b6d7db;
+}
+
+.bg-green {
+  background-color: #00737f;
+  width: 405px;
+}
+
+.color-text-maturity {
+  color: #fff;
+  font-weight: 300;
+}
+
+.color-internship-maturity {
+  color: #d0da00;
+  font-weight: 700;
+}
+
+.bold-text {
+  font-weight: 700;
+}
+
+.color-governanca {
+  color: #f2c3ed;
+}
+
+.intro {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.intro-environmental {
+  background-image: url(/assets/bg-environmental.jpg);
+}
+
+.intro-social {
+  background-image: url(/assets/bg-social.jpg);
+}
+
+.intro-governanca {
+  background-image: url(/assets/bg-governanca.jpg);
+}
+
+.number-axis-environmental {
+  text-align: center;
+  font: normal normal bold 70px/86px Montserrat;
+  letter-spacing: 0px;
+  color: #787a0c;
+  opacity: 1;
+}
+
+.title-axis-environmental {
+  text-align: center;
+  font: normal normal 100 70px/86px Montserrat;
+  letter-spacing: 35px;
+  color: #787a0c;
+  opacity: 1;
+}
+
+.description-axis-environmental {
+  text-align: center;
+  font: normal normal 300 25px/37px Montserrat;
+  letter-spacing: 0px;
+  color: #787a0c;
+  opacity: 1;
+}
+
+.number-axis-social {
+  text-align: center;
+  font: normal normal bold 70px/86px Montserrat;
+  letter-spacing: 0px;
+  color: #b6d7db;
+  opacity: 1;
+}
+
+.title-axis-social {
+  text-align: center;
+  font: normal normal 100 70px/86px Montserrat;
+  letter-spacing: 35px;
+  color: #b6d7db;
+  opacity: 1;
+}
+
+.description-axis-social {
+  text-align: center;
+  font: normal normal 300 25px/37px Montserrat;
+  letter-spacing: 0px;
+  color: #b6d7db;
+  opacity: 1;
+}
+
+.number-axis-governanca {
+  text-align: center;
+  font: normal normal bold 70px/86px Montserrat;
+  letter-spacing: 0px;
+  color: #f2c3ed;
+  opacity: 1;
+}
+
+.title-axis-governanca {
+  text-align: center;
+  font: normal normal 100 70px/86px Montserrat;
+  letter-spacing: 35px;
+  color: #f2c3ed;
+  opacity: 1;
+}
+
+.description-axis-governanca {
+  text-align: center;
+  font: normal normal 300 25px/37px Montserrat;
+  letter-spacing: 0px;
+  color: #f2c3ed;
+  opacity: 1;
+}
+
+.title-axis {
+  letter-spacing: 4px;
+  opacity: 1;
+}
+
+.btn-step {
+  border-radius: 55px;
+  opacity: 1;
+  width: 110px;
+  height: 40px;
+  border: none;
+}
+
+.btn-previous-environmental {
+  background: #f1f2d4 0% 0% no-repeat padding-box;
+  color: #787a0c;
+}
+
+.btn-next-environmental {
+  background: #dbdd71 0% 0% no-repeat padding-box;
+  color: #787a0c;
+}
+
+.btn-previous-social {
+  background: #d6f0f2 0% 0% no-repeat padding-box;
+  color: #02747f;
+}
+
+.btn-next-social {
+  background: #02747f 0% 0% no-repeat padding-box;
+  color: #b6d7db;
+}
+
+.btn-previous-governanca {
+  background: #e6cbe3 0% 0% no-repeat padding-box;
+  color: #9b5b94;
+}
+
+.btn-next-governanca {
+  background: #9b5b94 0% 0% no-repeat padding-box;
+  color: #f2c3ed;
+}
+
+.btn-start {
+  width: 160px;
+  height: 44px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 55px;
+  border: 1px solid #707070;
+  opacity: 1;
+  display: inline-block;
+  text-align: center;
+  text-decoration: auto;
+  font: normal normal bold 15px/40px Montserrat;
+  transition: all 0.3s ease; /* Transição suave para o hover */
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Inicialmente sem sombra */
+}
+
+.btn-start:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra suave */
+  transform: translateY(-4px); /* Eleva ligeiramente o botão */
+}
+
+/* Efeito de "pressão" no clique */
+.btn-start:active {
+  transform: translateY(0); /* Remove a elevação no clique */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra menos intensa */
+}
+
+.btn-environmental {
+  color: #787a0c;
+}
+
+.btn-social {
+  color: #02747f;
+}
+
+.btn-governanca {
+  color: #9b5b94;
+}
+
+.dots {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.dot-quiz-environmental {
+  background-color: #f1f2d4 !important;
+}
+
+.dot-quiz-environmental-active {
+  background-color: #dbdd71 !important;
+}
+
+.dot-quiz-social {
+  background: #d6f0f2 !important;
+}
+
+.dot-quiz-social-active {
+  background: #02747f !important;
+}
+
+.dot-quiz-governance {
+  background: #e6cbe3 !important;
+}
+
+.dot-quiz-governance-active {
+  background: #9b5b94 !important;
+}
+
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 5px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.active {
+  background: #787a0c 0% 0% no-repeat padding-box;
+}
+
+.active-social {
+  background: #b6d7db 0% 0% no-repeat padding-box;
+}
+
+.active-governanca {
+  background: #600c56 0% 0% no-repeat padding-box;
+}
+
+.error-form-customer {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 87.5%;
+  color: #dbdd71;
+}
+
+.invalid-field {
+  border-color: #dbdd71 !important;
+  padding-right: calc(1.5em + 0.94rem);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23f56e6e'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23f56e6e' stroke='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.235rem) center;
+  background-size: calc(0.75em + 0.47rem) calc(0.75em + 0.47rem);
+}
+
+/* Begin Result Quizzes */
+/* Cores personalizadas */
+.bg-purple {
+  background-color: #6a1b9a; /* Cor roxa */
+}
+
+.bg-teal {
+  background-color: #008080; /* Cor teal */
+}
+
+/* Blocos de temas */
+.theme-results {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.theme-block {
+  flex: 1 1 30%; /* Ocupar cerca de 30% do espaço */
+  min-width: 150px; /* Largura mínima */
+  margin: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* fsdafdsafdsa */
+/* Cores customizadas */
+.bg-yellow {
+  background-color: #f0e68c; /* Amarelo */
+}
+
+.bg-teal {
+  background-color: #4682b4; /* Azul Teal */
+}
+
+.bg-purple {
+  background-color: #800080; /* Roxo */
+}
+
+/* Estilos da legenda */
+.legend-box {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+/* Barras do gráfico */
+.eixo-results {
+  width: 100%;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.eixo-bar {
+  width: 30%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: #eaeaea; /* Cor de fundo para toda a barra */
+  height: 100px; /* Altura máxima da barra */
+  border-radius: 8px; /* Deixa as bordas arredondadas */
+}
+
+.eixo-bar-fill {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.eixo-value {
+  position: absolute;
+  bottom: 100%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  z-index: 1;
+}
+
+/* Cores dos valores */
+.text-yellow {
+  color: #f0e68c;
+}
+
+.text-teal {
+  color: #4682b4;
+}
+
+.text-purple {
+  color: #800080;
+}
+
+.legend-box {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.bg-yellow {
+  background-color: rgb(219, 221, 133);
+}
+
+.bg-teal {
+  background-color: rgb(2, 116, 127);
+}
+
+.bg-purple {
+  background-color: rgb(155, 91, 148);
+}
+
+.chart-container {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    height: 300px;
+  }
+}
+/* End Result Quizzes */
+/* Responsividade */
+@media (max-width: 768px) {
+  .gauge {
+    width: 150px;
+    height: 75px;
+  }
+  .gauge-center {
+    width: 60px;
+    height: 60px;
+  }
+  .gauge-value {
+    font-size: 1.2rem;
+  }
+}
+/* End grafico */
+@media (max-width: 1400px) {
+  .image-maturity {
+    height: 90vh; /* Em telas menores, como notebooks */
+  }
+}
+@media (max-width: 1300px) {
+  .image-maturity {
+    height: 85vh; /* Em telas menores, como notebooks */
+  }
+}
+@media (max-width: 1200px) {
+  .image-maturity {
+    height: 70vh; /* Em telas menores, como notebooks */
+  }
+}
+@media (max-width: 768px) {
+  .image-maturity {
+    height: 50vh; /* Em dispositivos móveis ou tablets */
+  }
+}
+@media (max-width: 430px) {
+  .image-bonsai-growth {
+    background-image: url(/assets/bonsai-growth-mobile.jpg);
+  }
+  .image-maturity {
+    height: 50vh; /* Em dispositivos móveis ou tablets */
+  }
+  .space-logo {
+    padding-left: 35px;
+  }
+}
+.intro-screen {
+  background-color: #dbdd71;
+}
+
+body {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0; /* Adicional, se desejar remover a margem superior */
+  margin-bottom: 0; /* Adicional, se desejar remover a margem inferior */
+  padding: 0; /* Remove o padding, se necessário */
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.container-fluid {
+  --bs-gutter-x: 0 !important;
+}
