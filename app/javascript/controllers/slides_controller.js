@@ -5,16 +5,13 @@ export default class extends Controller {
   static targets = ["slide", "dot", "id", "title", "description"];
 
   connect() {
-    // this.currentSlideIndex = 1; // Inicia o slide atual
-    // this.showSlide(this.currentSlideIndex);
-    // this.loadAxiData(this.currentSlideIndex);
     const urlParams = new URLSearchParams(window.location.search);
     const slideParam = urlParams.get("slide"); // Verifica o parâme
 
     if (slideParam) {
       this.currentSlideIndex = parseInt(slideParam, 10); // Usa o slide passado na URL
     } else {
-      this.currentSlideIndex = 1; // Se não houver parâmetro, inicia com o primeiro slide
+      this.currentSlideIndex = 1;
     }
 
     this.showSlide(this.currentSlideIndex);
@@ -23,10 +20,8 @@ export default class extends Controller {
 
   async currentSlide(event) {
     const slideNumber = event.currentTarget.dataset.slidesIndexParam;
-    console.log("Current Slide Number:", slideNumber);
     this.showSlide(slideNumber);
-    console.log("Carregando dados do Axi para o slide:", slideNumber);
-    await this.loadAxiData(slideNumber); // Carrega os dados via AJAX
+    await this.loadAxiData(slideNumber);
   }
 
   showSlide(n) {
@@ -52,7 +47,6 @@ export default class extends Controller {
     try {
       const response = await fetch(`axi_data/${slideNumber}`);
       const data = await response.json();
-      console.log("Data received:", data); // Verifique a resposta
 
       const slide = this.slideTargets[slideNumber - 1]; // Defina a referência para o slide atual
 
@@ -63,18 +57,15 @@ export default class extends Controller {
       );
       if (titleTarget) {
         titleTarget.textContent = data.name; // Atualiza o título com o nome do Axi
-        console.log("Title updated to:", data.name);
       }
 
       // Atualiza o ID com os dados do Axi
       const idTarget = slide.querySelector('[data-slides-target="id"]');
       if (idTarget) {
         idTarget.textContent = data.id + "."; // Atualiza o ID do Axi
-        console.log("ID updated to:", data.id);
       }
       if (descriptionTarget) {
-        descriptionTarget.textContent = data.description; // Atualiza o título com o nome do Axi
-        console.log("Description updated to:", data.description);
+        descriptionTarget.textContent = data.description;
       }
     } catch (error) {
       console.error("Erro ao carregar os dados do Axi:", error);
