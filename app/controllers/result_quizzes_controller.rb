@@ -48,7 +48,7 @@ class ResultQuizzesController < ApplicationController
       maturity = Maturity.find_by("range_initial <= ? AND range_final >= ?", average_score, average_score)
       respond_to do |format|
         format.html # Renderiza a view index.html.erb
-        format.json { render json: { results: @results, messages: @messages, total_average_score: total_average_score, maturity_name: maturity.name }, status: :ok }
+        format.json { render json: { results: @results, messages: @messages, total_average_score: total_average_score, maturity_name: maturity.name, maturity_description: maturity.description }, status: :ok }
       end
 
     else
