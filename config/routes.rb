@@ -26,11 +26,11 @@ Rails.application.routes.draw do
       get "axi/:id", to: "answers#axi", as: "axi"
       get "axi_data/:id", to: "answers#axi_data", as: "axi_data"
       get "quiz_by_theme"
+      put "save_rating", to: "answers#save_rating"
     end
   end
 
   resources :result_quizzes, only: [ :index, :create ]
-  put "answers/save_rating", to: "answers#save_rating"
 
   # Defines the root path route ("/")
   # root "home#index"

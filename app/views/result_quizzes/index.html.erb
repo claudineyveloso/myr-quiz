@@ -140,13 +140,19 @@
 
   // Função para gerar o gráfico
   async function generateChart() {
-    const customerId = 12; // Substitua pelo ID correto do cliente
 
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    const customerId = getCookie('customer_id');
     try {
-      const results = await fetchResults(customerId);
+      const results = await fetchResults(parseInt(customerId));
       
       document.getElementById('maturityName').textContent = results.maturity_name; // Atualiza o nome da maturidade
-      document.getElementById('maturityDescription').textContent = results.maturity_name; // Atualiza o nome da maturidade
+      document.getElementById('maturityDescription').textContent = results.maturity_description; // Atualiza o nome da maturidade
       document.getElementById('averageScoreDisplay').textContent = (results.total_average_score / 3).toFixed(2); // Atualiza o valor
 
 
@@ -197,12 +203,20 @@
 </script>
 
 <script>
-  fetch('/result_quizzes.json?customer_id=12', {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
+  function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    const customerId = getCookie('customer_id');
+
+    fetch(`/result_quizzes.json?customer_id=${customerId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -439,5 +453,4 @@
     }
   });
 </script>
-
 
