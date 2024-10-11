@@ -2,7 +2,7 @@
   <div class="col-7">
     <h1 class="display-4 <%= @axi.text_color_class %> fw-normal">
         <%if @axi.id == 1 %>
-          <img src="/assets/icone-ambiental.png" alt="MyTech Logo" class="mb-2" width="50" data-slides-target="id"> <!-- Substitua pela logo correta -->
+          <%= image_tag 'icone-ambiental.png' alt: "MyTech Logo" class: "mb-2" width: "50" data-slides-target: "id" %>
         <% end %>
         <%if @axi.id == 2 %>
           <img src="/assets/icone-social.png" alt="MyTech Logo" class="mb-2" width="50" data-slides-target="id"> <!-- Substitua pela logo correta -->
@@ -61,7 +61,7 @@
         <!-- buttons aligned to the right -->
         <div class="col-12 col-md-5 text-end">
           <button type="button" class="btn-step <%= @axi.btn_previous_color_class %>" data-action="click->quiz#previous">anterior</button>
-          <button type="button" class="btn-step <%= @axi.btn_next_color_class %>" data-quiz-target="nextButton" data-action="click->quiz#next">próxima</button>
+          <button type="button" class="btn-step <%= @axi.btn_next_color_class %>" data-quiz-target="nextButton" data-action="click->quiz#next" data-slides-index-param="1">próxima</button>
         </div>
       </div>
     </div>
