@@ -177,7 +177,7 @@
             datalabels: { // Adiciona a configuração do plugin
               color: '#fff', // Cor do texto dos rótulos
               font: {
-                weight: 'bold'
+                weight: '400'
               },
               formatter: (value, context) => {
                 return value; // Exibe o valor dentro da barra
@@ -301,7 +301,7 @@
             align: 'center',
             color: '#fff',
             font: {
-              weight: 'bold',
+              weight: '400',
             },
             formatter: function(value, context) {
               return value; // Exibe o valor diretamente nas barras
@@ -331,12 +331,15 @@
           }
         }
       },
-      plugins: [ChartDataLabels] // Ativa o plugin de exibição de valores
+      plugins: [ChartDataLabels]
     });
   }
 
-  // Labels para os temas (ajuste de acordo com o seu caso)
-  const labels = ['Tema 1', 'Tema 2', 'Tema 3', 'Tema 4', 'Tema 5', 'Tema 6'];
+  // Labels para os temas (extraindo de axisEnvironmental, axisSocial e axisGovernance)
+  const labelsEnvironmental = axisEnvironmental.map(theme => theme.theme_name);
+  const labelsSocial = axisSocial.map(theme => theme.theme_name);
+  const labelsGovernance = axisGovernance.map(theme => theme.theme_name);
+
 
   // Cores para os gráficos
   const backgroundColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
@@ -353,16 +356,16 @@
   // Gráfico Ambiental
   const ctxEnvironmental = document.getElementById('myChartEnvironmental').getContext('2d');
   const environmentalScores = axisEnvironmental.map(theme => theme.average_score); // extrai os valores de `average_score`
-  createChart(ctxEnvironmental, labels, 'Resultado Ambiental', environmentalScores, backgroundColorsEnvironmental, borderColorsEnvironmental);
+  createChart(ctxEnvironmental, labelsEnvironmental, 'Resultado Ambiental', environmentalScores, backgroundColorsEnvironmental, borderColorsEnvironmental);
 
   // Gráfico Social
   const ctxSocial = document.getElementById('myChartSocial').getContext('2d');
   const socialScores = axisSocial.map(theme => theme.average_score);
-  createChart(ctxSocial, labels, 'Resultado Social', socialScores, backgroundColorsSocial, borderColorsSocial);
+  createChart(ctxSocial, labelsSocial, 'Resultado Social', socialScores, backgroundColorsSocial, borderColorsSocial);
 
   // Gráfico Governança
   const ctxGovernance = document.getElementById('myChartGovernance').getContext('2d');
   const governanceScores = axisGovernance.map(theme => theme.average_score);
-  createChart(ctxGovernance, labels, 'Resultado Governança', governanceScores, backgroundColorsGovernance, borderColorsGovernance);
+  createChart(ctxGovernance, labelsGovernance, 'Resultado Governança', governanceScores, backgroundColorsGovernance, borderColorsGovernance);
 
 </script>
