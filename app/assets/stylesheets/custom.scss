@@ -160,15 +160,15 @@ input::placeholder {
 }
 
 .intro-environmental {
-  background-image: url("/assets/bg-environmental.jpg");
+  background-image: image-url("bg-environmental.jpg");
 }
 
 .intro-social {
-  background-image: url("/assets/bg-social.jpg");
+  background-image: image-url("bg-social.jpg");
 }
 
 .intro-governanca {
-  background-image: url("/assets/bg-governanca.jpg");
+  background-image: image-url("bg-governanca.jpg");
 }
 
 .number-axis-environmental {
