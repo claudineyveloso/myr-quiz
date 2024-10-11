@@ -71,7 +71,7 @@ pt-BR:
     attributes:
       axi:
         name: "Nome"
-        description: "Descrição do resultado"
+        description: "Descrição"
       theme:
         name: "Nome"
         axi_id: "Eixo"

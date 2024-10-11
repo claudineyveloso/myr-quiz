@@ -9,12 +9,11 @@
         <span class="dot active-social" data-action="click->slides#currentSlide" data-slides-index-param="2"></span>
         <span class="dot" data-action="click->slides#currentSlide" data-slides-index-param="3"></span>
       </div>
-      <p class='description-axis-social mb-5'>
-<%= @axi.name %>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum bibendum dolor, nec ultrices turpis. Praesent pulvinar sit amet orci ac aliquet. Cras non ultrices mauris.
+      <p class='description-axis-social mb-5' data-slides-target="description">
+      <%= @axi.name %>
+        <%= @axi.description %>
       </p>
       <%= link_to "Começar", axi_answers_path(id: 2), class: "btn-start btn-social mt-5" %>
-
     </div>
   </div>
 </div>

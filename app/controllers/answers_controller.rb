@@ -54,7 +54,7 @@ class AnswersController < ApplicationController
     axi = Axi.by_id(params[:id]).first
 
     if axi
-      render json: { id: axi.id, name: axi.name }
+      render json: { id: axi.id, name: axi.name, description: axi.description }
     else
       render json: { error: "Axi not found" }, status: :not_found
     end

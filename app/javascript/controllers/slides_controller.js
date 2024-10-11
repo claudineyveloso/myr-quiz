@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="slides"
 export default class extends Controller {
-  static targets = ["slide", "dot", "id", "title"];
+  static targets = ["slide", "dot", "id", "title", "description"];
 
   connect() {
     // this.currentSlideIndex = 1; // Inicia o slide atual
@@ -58,6 +58,9 @@ export default class extends Controller {
 
       // Atualiza o título com o nome do Axi
       const titleTarget = slide.querySelector('[data-slides-target="title"]');
+      const descriptionTarget = slide.querySelector(
+        '[data-slides-target="description"]',
+      );
       if (titleTarget) {
         titleTarget.textContent = data.name; // Atualiza o título com o nome do Axi
         console.log("Title updated to:", data.name);
@@ -68,6 +71,10 @@ export default class extends Controller {
       if (idTarget) {
         idTarget.textContent = data.id + "."; // Atualiza o ID do Axi
         console.log("ID updated to:", data.id);
+      }
+      if (descriptionTarget) {
+        descriptionTarget.textContent = data.description; // Atualiza o título com o nome do Axi
+        console.log("Description updated to:", data.description);
       }
     } catch (error) {
       console.error("Erro ao carregar os dados do Axi:", error);
