@@ -303,9 +303,6 @@ input::placeholder {
 }
 
 .btn-start:hover {
-  //background-color: #707070; /* Muda a cor de fundo */
-  //color: #fff; /* Muda a cor do texto para branco */
-
   // border-color: #ffffff; /* Muda a cor da borda */
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra suave */
   transform: translateY(-4px); /* Eleva ligeiramente o botão */
@@ -521,6 +518,32 @@ input::placeholder {
   width: 150px;
 }
 
+.btn-result-quiz {
+  background-color: #1e494e !important;
+  color: #fff !important;
+  border-radius: 55px !important;
+  letter-spacing: 0.36px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.btn-result-quiz:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra suave */
+  transform: translateY(-4px); /* Eleva ligeiramente o botão */
+}
+
+.btn-result-quiz:active {
+  transform: translateY(0); /* Remove a elevação no clique */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra menos intensa */
+}
+
+.chart-axi {
+  width: 600px !important;
+  height: 300px !important;
+}
+
 @media (max-width: 768px) {
   .chart-container {
     height: 300px;
@@ -550,6 +573,21 @@ input::placeholder {
   .image-maturity {
     height: 90vh; /* Em telas menores, como notebooks */
   }
+
+  .chart-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chart-row > div {
+    margin-bottom: 20px; /* Adiciona espaçamento entre os gráficos */
+    width: 100%; /* Garante que cada gráfico ocupe toda a largura */
+  }
+
+  .line-chart {
+    border-bottom: 1px solid #ccc !important;
+  }
 }
 
 @media (max-width: 1300px) {
@@ -561,6 +599,14 @@ input::placeholder {
 @media (max-width: 1200px) {
   .image-maturity {
     height: 70vh; /* Em telas menores, como notebooks */
+  }
+}
+
+@media (max-width: 990px) {
+  .chart-axi {
+    width: 445px;
+    height: 270px;
+    background-color: yellow !important;
   }
 }
 
@@ -579,5 +625,11 @@ input::placeholder {
   }
   .space-logo {
     padding-left: 35px;
+  }
+
+  .chart-axi {
+    margin-top: 30px !important;
+    width: 360px !important;
+    height: 300px !important;
   }
 }

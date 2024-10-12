@@ -54,38 +54,35 @@
           <!-- Gráfico (col-8) -->
           <div class="col-12 col-md-8">
             <div class="chart-container" style="position: relative;">
-              <canvas id="myChart" style="width: 600px !important; height: 300px !important;"></canvas>
+              <canvas id="myChart" class="chart-axi"></canvas>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <!-- Resultado por Tema -->
-
-
   <div class="row mt-4">
     <div class="col-12">
       <div class="card shadow text-center">
         <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20">Resultado por Tema</h2>
       </div>
       <div class="card p-4 shadow">
-        <div class="row">
+        <div class="row chart-row">
           <!-- Gráfico 1 -->
-          <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
+          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
             <div class="chart-container" style="position: relative;">
               <canvas id="myChartEnvironmental" width="400" height="300"></canvas>
             </div>
           </div>
           <!-- Gráfico 2 -->
-          <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
+          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
             <div class="chart-container" style="position: relative;">
               <canvas id="myChartSocial" width="400" height="300"></canvas>
             </div>
           </div>
           <!-- Gráfico 3 -->
-          <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
+          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
             <div class="chart-container" style="position: relative;">
               <canvas id="myChartGovernance" width="400" height="300"></canvas>
             </div>
@@ -113,6 +110,27 @@
             </div>
           <% end %>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4 mb-4">
+    <div class="text-center d-flex justify-content-center chart-row">
+      <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
+        <button type="button" class="btn-result-quiz btn-sm">
+          Conheça mais sobre ESG e Sustentabilidade
+        </button>
+      </div>
+      <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
+        <button type="button" class="btn-result-quiz btn-sm">
+          Entre em contato conosco
+        </button>
+
+      </div>
+      <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
+        <button type="button" class="btn-result-quiz btn-sm">
+          Gerar PDF
+        </button>
       </div>
     </div>
   </div>
@@ -185,7 +203,11 @@
             }
           },
           scales: {
-            y: { beginAtZero: true },
+            y: { 
+              beginAtZero: true,
+              min: 0,
+              max: 5,
+            },
             x: { ticks: { display: false } }
           }
         },
@@ -311,6 +333,8 @@
         scales: {
           y: {
             beginAtZero: true,
+            min: 0,
+            max: 5,
             grid: {
               display: false
             },
