@@ -1,5 +1,5 @@
 <div class="row py-3 align-items-center space-title-quiz" style="background-color: <%= @axi.background_color %>; margin: 0;">
-  <div class="col-7">
+  <div class="col-12 col-lg-7">
     <h1 class="display-4 <%= @axi.text_color_class %> fw-normal">
         <%if @axi.id == 1 %>
           <%= image_tag 'icone-ambiental.png', alt: "icone-ambiental", class: "mb-2", width: "50", data: { slides_target: "id" } %>
@@ -13,7 +13,7 @@
       <%= @axi.name%>
     </h1>
   </div>
-  <div class="col-5 text-end">
+  <div class="col-12 col-lg-5 text-end">
     <h2 class="fw-bold <%= @axi.text_color_class %>" id='theme-current'><%= @axi.main_theme %></h2>
   </div>
 </div>

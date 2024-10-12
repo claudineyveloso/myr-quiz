@@ -614,6 +614,18 @@ input::placeholder {
   .image-maturity {
     height: 50vh; /* Em dispositivos móveis ou tablets */
   }
+
+  .title-axis-environmental {
+    letter-spacing: 20px;
+  }
+
+  .mb-5 {
+    margin-bottom: 2rem !important;
+  }
+
+  .mt-5 {
+    margin-top: initial !important;
+  }
 }
 
 @media (max-width: 430px) {

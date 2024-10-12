@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "/answers", to: redirect("/")
 
-  resources :customers do
+  resources :customers, only: [ :new, :create ] do
     collection do
       get "check_email", to: "customers#check_email"
     end
@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   end
 
   resources :result_quizzes, only: [ :index, :create ]
+
+  match "*unmatched", to: redirect("/"), via: :all
 
   # Defines the root path route ("/")
   # root "home#index"

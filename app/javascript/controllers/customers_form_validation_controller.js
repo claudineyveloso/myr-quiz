@@ -65,8 +65,25 @@ export default class extends Controller {
   checkEmail(event) {
     const email = this.emailTarget.value.trim();
 
+    if (this.emailAlreadyChecked) {
+      event.preventDefault(); // Impede a navegação para o próximo campo
+      return;
+    }
+
     if (email === "") {
       this.errorEmailTarget.textContent = "Email é obrigatório.";
+      return;
+    }
+    if (!this.isValidEmail(email)) {
+      Swal.fire({
+        title: "E-mail inválido",
+        text: "Por favor, insira um e-mail válido.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      }).then(() => {
+        this.emailTarget.focus();
+      });
+      event.preventDefault();
       return;
     }
 
@@ -80,6 +97,9 @@ export default class extends Controller {
             "Este e-mail já finalizou o questionário.",
             "error",
           );
+          event.preventDefault();
+          this.emailAlreadyChecked = true;
+          return;
         } else if (data.status === "not_finished") {
           Swal.fire({
             title: "Questionário não finalizado",
@@ -110,63 +130,14 @@ export default class extends Controller {
       });
   }
 
+  emailChanged(event) {
+    this.emailAlreadyChecked = false; // Reseta a flag ao alterar o e-mail
+  }
+
   allowFormSubmit() {
     // Após a verificação do e-mail, agora permite que o formulário seja enviado
     console.log("E-mail não encontrado, permitindo o cadastro.");
     document.querySelector("form").submit(); // Envia o formulário manualmente
-  }
-
-  checkEmail333(event) {
-    const email = this.emailTarget.value.trim();
-    let valid = true;
-
-    if (email === "") {
-      this.errorEmailTarget.textContent = "Email é obrigatório.";
-      return;
-    }
-
-    // Requisição AJAX para verificar se o e-mail já existe
-    fetch(`/customers/check_email?email=${email}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "finished") {
-          this.showMessage(
-            "E-mail já utilizado",
-            "Este e-mail já finalizou o questionário.",
-            "error",
-          );
-        } else if (data.status === "not_finished") {
-          // Mostra a mensagem e só continua após o usuário clicar em "Ok"
-          Swal.fire({
-            title: "Questionário não finalizado",
-            text: "O questionário não foi finalizado. Você pode prosseguir.",
-            icon: "info",
-            confirmButtonText: "Ok",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // Só executa o preenchimento dos campos após o usuário clicar "Ok"
-              this.fillCustomerData(data.customer);
-              document.getElementById("submitButton").textContent = "Continuar";
-              // this.allowSubmit = false;
-            }
-          });
-        } else if (data.status === "not_found") {
-          // this.showMessage(
-          //   "E-mail não encontrado",
-          //   "Você pode iniciar o questionário.",
-          //   "success",
-          // );
-          this.allowSubmit = true;
-        }
-      })
-      .catch((error) => {
-        console.error("Erro na verificação do email:", error);
-        this.errorEmailTarget.textContent =
-          "Erro ao verificar o email. Tente novamente mais tarde.";
-        this.emailTarget.focus();
-        valid = false;
-      });
-    return valid;
   }
 
   validateName() {

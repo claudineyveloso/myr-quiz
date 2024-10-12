@@ -15,7 +15,7 @@
         <div class="row mb-3">
           <div class="col-md-6 mb-3 mb-md-0">
             <%= form.label :email, class: 'form-label' %>
-            <%= form.email_field :email, placeholder: "Email", class: 'form-control', data: { customers_form_validation_target: "email", action: "blur->customers-form-validation#checkEmail" }, maxlength: 100 %>
+            <%= form.email_field :email, placeholder: "Email", class: 'form-control', data: { customers_form_validation_target: "email", action: "blur->customers-form-validation#checkEmail input->customers-form-validation#emailChanged" }, maxlength: 100 %>
             <div class="error-form-customer" data-customers-form-validation-target="errorEmail"></div>
           </div>
           <div class="col-md-6">
