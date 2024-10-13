@@ -72,19 +72,19 @@
           <!-- Gráfico 1 -->
           <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
             <div class="chart-container" style="position: relative;">
-              <canvas id="myChartEnvironmental" width="400" height="300"></canvas>
+              <canvas id="myChartEnvironmental" class="chart-by-themes"></canvas>
             </div>
           </div>
           <!-- Gráfico 2 -->
           <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
             <div class="chart-container" style="position: relative;">
-              <canvas id="myChartSocial" width="400" height="300"></canvas>
+              <canvas id="myChartSocial" class="chart-by-themes"></canvas>
             </div>
           </div>
           <!-- Gráfico 3 -->
           <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
             <div class="chart-container" style="position: relative;">
-              <canvas id="myChartGovernance" width="400" height="300"></canvas>
+              <canvas id="myChartGovernance" class="chart-by-themes"></canvas>
             </div>
           </div>
         </div>
@@ -100,7 +100,7 @@
       <div class="card p-4 shadow">
         <div class="row">
           <% @messages.each do |message_data| %>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4 mb-4">
               <div class="card h-100">
                 <div class="card-body" style="background-color: <%= message_data[:color_code] %>;">
                   <h5 class="card-title"><%= message_data[:message].axi.name %></h5>
@@ -170,7 +170,8 @@
       
       document.getElementById('maturityName').textContent = results.maturity_name; // Atualiza o nome da maturidade
       document.getElementById('maturityDescription').textContent = results.maturity_description; // Atualiza o nome da maturidade
-      document.getElementById('averageScoreDisplay').textContent = (results.total_average_score / 3).toFixed(2); // Atualiza o valor
+      document.getElementById('averageScoreDisplay').textContent = (Math.floor((results.total_average_score / 3) * 10) / 10).toFixed(1); // Atualiza o valor
+
 
       const labels = results.results.map(result => result.results.axi_name); // Rótulos do gráfico
       const data = results.results.map(result => result.results.average_score); // Valores

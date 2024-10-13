@@ -58,7 +58,7 @@ class ResultQuizzesController < ApplicationController
         end
       end
 
-      average_score = (total_average_score/3)
+      average_score = (total_average_score/3 * 10).floor / 10.0
       maturity = Maturity.find_by("range_initial <= ? AND range_final >= ?", average_score, average_score)
       respond_to do |format|
         format.html # Renderiza a view index.html.erb

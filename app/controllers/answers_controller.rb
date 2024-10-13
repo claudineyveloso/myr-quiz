@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :new, :create, :start, :axi_data, :step, :axi, :quiz_by_theme ]
+  skip_before_action :authenticate_user!, only: [ :new, :create, :start, :axi_data, :step, :axi, :quiz_by_theme, :save_rating ]
 
   def new
   end

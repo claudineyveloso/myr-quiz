@@ -35,6 +35,9 @@ gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+#
+gem "wicked_pdf", "~> 2.8", ">= 2.8.1"
+gem "wkhtmltopdf-binary", "~> 0.12.6.8"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -50,7 +53,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'byebug'
+  gem "byebug"
 end
 
 group :test do
@@ -67,4 +70,4 @@ gem "devise", "~> 4.9"
 
 gem "sassc-rails", "~> 2.1"
 
-gem "hotwire-livereload", "~> 1.4", :group => :development
+gem "hotwire-livereload", "~> 1.4", group: :development

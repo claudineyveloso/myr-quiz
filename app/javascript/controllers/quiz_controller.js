@@ -315,37 +315,6 @@ export default class extends Controller {
     this.responses.push(responseData);
   }
 
-  saveQuiz111() {
-    console.log("Quiz finalizado! Salvando dados...");
-    const responseData = {
-      customer_id: this.customerId,
-      theme_id: this.themeCurrentId,
-      scenario_id: this.scenarioCurrentId,
-      axi_id: this.axiIdValue,
-    };
-    this.responses.push(responseData);
-    fetch("/answers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
-      },
-      body: JSON.stringify(this.responses),
-    }).then((response) => {
-      if (response.ok) {
-        let nextSlide = Number(this.axiIdValue) + 1;
-        if (nextSlide <= 3) {
-          window.location.href = "/answers/start?slide=" + nextSlide;
-        } else {
-          window.location.href = "/result_quizzes";
-        }
-        //Swal.fire("Sucesso!", "Seu quiz foi salvo.", "success");
-      } else {
-        //Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
-      }
-    });
-  }
-
   saveQuiz() {
     console.log("Quiz finalizado! Salvando dados...");
 

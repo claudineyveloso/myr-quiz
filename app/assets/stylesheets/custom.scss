@@ -544,6 +544,11 @@ input::placeholder {
   height: 300px !important;
 }
 
+.chart-by-themes {
+  width: 400px;
+  height: 300px;
+}
+
 @media (max-width: 768px) {
   .chart-container {
     height: 300px;
@@ -606,7 +611,6 @@ input::placeholder {
   .chart-axi {
     width: 445px;
     height: 270px;
-    background-color: yellow !important;
   }
 }
 
@@ -665,5 +669,16 @@ input::placeholder {
   h2 {
     font-size: 20px !important;
     text-align: left !important;
+  }
+
+  .chart-axi {
+    margin-top: 30px !important;
+    width: 320px !important;
+    height: 280px !important;
+  }
+
+  .chart-by-themes {
+    width: 320px;
+    height: 245px;
   }
 }
