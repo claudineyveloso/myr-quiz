@@ -24,9 +24,11 @@ export default class extends Controller {
   }
 
   next(event) {
-    debugger;
-    const index = Number(event.currentTarget.dataset.slidesIndexParam);
-    const indexTheme = Number(event.currentTarget.dataset.themeId);
+    const nextThemeData = this.getNextThemeData(event);
+
+    const index = parseInt(nextThemeData.slidesIndexParam);
+    const indexTheme = parseInt(nextThemeData.themeId);
+
     console.log("Esse é o valor de index no currentSlide", index);
     this.currentThemeIndex = index - 1;
     if (this.isAnswerSelected()) {
@@ -46,6 +48,7 @@ export default class extends Controller {
       return;
     }
     this.loadTheme(indexTheme);
+
     if (index == this.totalDots) {
       this.nextButtonTarget.textContent = "Finalizar";
       this.nextButtonTarget.dataset.action = "click->quiz#saveQuiz";
@@ -56,110 +59,40 @@ export default class extends Controller {
     }
   }
 
-  nextBBB() {
-    if (this.isAnswerSelected()) {
-      // Armazena a resposta se uma foi selecionada
-      this.storeAnswer();
+  getNextThemeData(event) {
+    event.preventDefault(); // Evitar o comportamento padrão do evento
+    const activeDot = document.querySelector(
+      ".dot-quiz-environmental-active, .dot-quiz-social-active, .dot-quiz-governance-active",
+    );
 
-      // Incrementa o índice atual
-      this.currentThemeIndex = this.currentIndexValue; // Ajusta o índice atual ao índice do tema
-      this.currentIndexValue++; // Incrementa para o próximo índice
+    if (activeDot) {
+      const activeIndex = Number(activeDot.dataset.slidesIndexParam);
+      const nextIndex = activeIndex + 1;
+      const nextDot = document.querySelector(
+        `.dot-quiz-environmental[data-slides-index-param="${nextIndex}"], .dot-quiz-social[data-slides-index-param="${nextIndex}"], .dot-quiz-governance[data-slides-index-param="${nextIndex}"]`,
+      );
 
-      // Previne que ultrapasse o limite de temas
-      if (this.currentIndexValue >= this.totalDots) {
-        this.currentIndexValue = this.totalDots - 1; // Limita ao número total de temas
+      if (nextDot) {
+        const nextThemeId = nextDot.dataset.themeId;
+        const nextSlidesIndexParam = nextDot.dataset.slidesIndexParam; // Obter o próximo data-slides-index-param
+
+        console.log("Próximo tema ID:", nextThemeId);
+        console.log("Próximo slides index param:", nextSlidesIndexParam);
+
+        // Retornar um objeto com os dois valores
+        return {
+          themeId: nextThemeId,
+          slidesIndexParam: nextSlidesIndexParam,
+        };
+      } else {
+        console.log("Não há mais temas disponíveis.");
+        // Retornar null ou um objeto padrão para indicar que não há próximo tema
+        return null;
       }
-
-      // Simula um evento para chamar o currentSlide
-      const simulatedEvent = {
-        currentTarget: {
-          dataset: {
-            slidesIndexParam: this.currentIndexValue + 1, // Próximo slide baseado no índice incrementado
-            themeId: this.currentThemeIndex + 1, // Atualiza o tema para o índice correto
-          },
-        },
-      };
-
-      // Chama o método currentSlide passando o evento simulado
-      this.currentSlide(simulatedEvent);
     } else {
-      // Exibe alerta caso nenhuma resposta tenha sido selecionada
-      Swal.fire({
-        icon: "warning",
-        title: "Atenção",
-        text: "Por favor, selecione uma resposta antes de continuar.",
-        confirmButtonText: "Ok",
-        customClass: {
-          confirmButton: "btn btn-success",
-        },
-        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
-      });
-      return;
-    }
-  }
-
-  nextAtual() {
-    if (this.isAnswerSelected()) {
-      // Armazena a resposta se uma foi selecionada
-      this.storeAnswer();
-
-      // Incrementa o índice atual
-      this.currentThemeIndex = this.currentIndexValue;
-      this.currentIndexValue++;
-
-      // Previne que ultrapasse o limite de temas
-      if (this.currentIndexValue >= this.totalDots) {
-        this.currentIndexValue = this.questionTargets.length - 1; // Limita ao número total de temas
-      }
-
-      // Simula um evento para chamar o currentSlide
-      const simulatedEvent = {
-        currentTarget: {
-          dataset: {
-            slidesIndexParam: this.currentIndexValue + 1, // Ajuste conforme necessário
-            themeId: this.currentThemeIndex + 1, // Ajuste conforme necessário
-          },
-        },
-      };
-
-      // Chama o método currentSlide passando o evento simulado
-      this.currentSlide(simulatedEvent);
-    } else {
-      // Exibe alerta caso nenhuma resposta tenha sido selecionada
-      Swal.fire({
-        icon: "warning",
-        title: "Atenção",
-        text: "Por favor, selecione uma resposta antes de continuar.",
-        confirmButtonText: "Ok",
-        customClass: {
-          confirmButton: "btn btn-success",
-        },
-        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
-      });
-      return;
-    }
-  }
-
-  next11() {
-    if (this.isAnswerSelected()) {
-      this.currentThemeIndex = this.currentIndexValue;
-      this.currentIndexValue++;
-      if (this.currentIndexValue >= this.totalDots) {
-        this.currentIndexValue = this.questionTargets.length - 1; // Não ultrapassa o limite de temas
-      }
-      this.loadTheme(this.currentIndexValue);
-    } else {
-      Swal.fire({
-        icon: "warning",
-        title: "Atenção",
-        text: "Por favor, selecione uma resposta antes de continuar.",
-        confirmButtonText: "Ok",
-        customClass: {
-          confirmButton: "btn btn-success",
-        },
-        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
-      });
-      return;
+      console.log("Nenhuma dot ativa encontrada.");
+      // Retornar null ou um objeto padrão para indicar que não há dot ativa
+      return null;
     }
   }
 
@@ -182,7 +115,6 @@ export default class extends Controller {
   currentScenario() {
     // Obtendo a classe ativa e inativa para cada eixo
     let activeDotClass, inactiveDotClass;
-    debugger;
 
     if (parseInt(this.axiIdValue) === 1) {
       activeDotClass = "dot-quiz-environmental-active";
