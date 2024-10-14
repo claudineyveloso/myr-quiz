@@ -62,6 +62,13 @@ class ResultQuizzesController < ApplicationController
       maturity = Maturity.find_by("range_initial <= ? AND range_final >= ?", average_score, average_score)
       respond_to do |format|
         format.html # Renderiza a view index.html.erb
+
+        format.pdf do
+          render pdf: "relatorio_#{customer_id}", # Nome do arquivo PDF
+               template: "result_quizzes/index", # O template para o PDF
+               layout: "pdf.html", # Um layout específico para PDF (opcional)
+               locals: { results: @results, messages: @messages }
+        end
         format.json { render json: { results: @results, messages: @messages, total_average_score: total_average_score, maturity_name: maturity.name, maturity_description: maturity.description_result }, status: :ok }
       end
 

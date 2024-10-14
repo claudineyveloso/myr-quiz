@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório PDF</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .axis {
+      margin-bottom: 20px;
+    }
+    .messages {
+      margin-top: 30px;
+    }
+    .message {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Relatório de Resultados</h1>
+
+  <% @results.each do |result| %>
+    <div class="axis">
+      <h2><%= result[:results][:axi_name] %></h2>
+      <p>Média de Pontuação: <%= result[:results][:average_score] %></p>
+    </div>
+  <% end %>
+
+  <h2>Eixo Ambiental</h2>
+  <% @axis_environmental.each do |theme| %>
+    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
+  <% end %>
+
+  <h2>Eixo Social</h2>
+  <% @axis_social.each do |theme| %>
+    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
+  <% end %>
+
+  <h2>Eixo de Governança</h2>
+  <% @axis_governance.each do |theme| %>
+    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
+  <% end %>
+
+  <div class="messages">
+    <h3>Mensagens de Maturidade</h3>
+    <% @messages.each do |message_data| %>
+      <div class="message" style="background-color: <%= message_data[:color_code] %>;">
+        <p><%= message_data[:message].content %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <p>Média Total: <%= format("%.2f", (total_average_score / 3 * 10).floor / 10.0) %></p>
+
+  <p>Maturidade: <%= maturity.name %> - <%= maturity.description_result %></p>
+
+</body>
+</html>
+
