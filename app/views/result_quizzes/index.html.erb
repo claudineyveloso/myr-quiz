@@ -198,11 +198,16 @@
             },
             datalabels: { // Adiciona a configuração do plugin
               color: '#fff', // Cor do texto dos rótulos
+              anchor: 'center', // Posiciona os rótulos ao centro da barra
+              align: 'center', // Alinha os rótulos ao centro da barra
               font: {
                 weight: '400'
               },
               formatter: (value, context) => {
-                return value; // Exibe o valor dentro da barra
+                // const index = context.dataIndex; // Índice da barra
+                // const label = context.chart.data.labels[index]; // Descrição (label) correspondente
+                // return `${label}:\n${value}`; // Exibe o valor dentro da barra
+                return value;
               }
             }
           },
