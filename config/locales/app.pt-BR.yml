@@ -72,31 +72,45 @@ pt-BR:
       axi:
         name: "Nome"
         description: "Descrição"
+        themes: "Temas"
+        result_quizzes: "Resultado"
+        maturity_messages: "Mensagens da maturidade"
       theme:
         name: "Nome"
-        axi_id: "Eixo"
+        axi: "Eixo"
+        answer: "Respostas"
       maturity:
         name: "Nome"
         range_initial: "Faixa inicial"
         range_final: "Faixa final"
         description_result: "Descrição do resultado"
+        scenarios: "Cénarios"
+        result_quizzes: "Resultados do questionário"
+        maturity_messages: "Mensagens da maturidade"
       maturity_message:
         maturity: "Maturidade"
         message: "Mensagem"
       scenario:
         theme: "Tema"
         maturity: "Maturidade"
+        description: "Descrição"
+        answer: "Respostas"
       customer:
         name: "Nome"
         email: "Email"
         phone: "Telefone"
         company_name: "Razão Social"
         cnpj: "CNPJ"
+        finished_quiz: "Finalizado"
+        satisfaction_score: "Satisfação"
+        answer: "Respostas"
+        result_quizzes: "Resultados do questionário"
       answer:
         customer: "Cliente"
         theme: "Tema"
         maturity: "Maturidade"
         scenario: "Cenário"
+        axi: "Eixo"
       result_quiz:
         customer: "Cliente"
         axi: "Eixo"

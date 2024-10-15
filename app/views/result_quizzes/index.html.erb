@@ -170,7 +170,7 @@
       
       document.getElementById('maturityName').textContent = results.maturity_name; // Atualiza o nome da maturidade
       document.getElementById('maturityDescription').textContent = results.maturity_description; // Atualiza o nome da maturidade
-      document.getElementById('averageScoreDisplay').textContent = (Math.floor((results.total_average_score / 3) * 10) / 10).toFixed(1); // Atualiza o valor
+      document.getElementById('averageScoreDisplay').textContent = (Math.floor((results.total_average_score / 3) * 10) / 10).toFixed(1) + " / 5,0"; // Atualiza o valor
 
 
       const labels = results.results.map(result => result.results.axi_name); // Rótulos do gráfico
@@ -182,7 +182,7 @@
         data: {
           labels: labels,
           datasets: [{
-            label: 'Resultado por Eixo',
+            label: '',
             data: data,
             backgroundColor: ['rgba(219, 221, 133, 1)', 'rgba(2, 116, 127, 1)', 'rgba(155, 91, 148, 1)'],
             borderColor: ['rgba(219, 221, 133, 1)', 'rgba(2, 116, 127, 1)', 'rgba(155, 91, 148, 1)'],
@@ -193,6 +193,9 @@
         options: {
           responsive: false,
           plugins: {
+            legend: {
+              display: false
+            },
             datalabels: { // Adiciona a configuração do plugin
               color: '#fff', // Cor do texto dos rótulos
               font: {
@@ -256,7 +259,6 @@
     new Chart(ctxGeral, {
       type: 'doughnut',
       data: {
-        labels: ['Média', 'Restante'],
         datasets: [{
           label: 'Média de Desempenho',
           data: [(totalAverageScore/3).toFixed(2), remainingScore], // Usa os dados dinâmicos
@@ -310,10 +312,13 @@
           backgroundColor: backgroundColors,
           borderColor: borderColors,
           borderWidth: 1,
-          barThickness: 50
+          barThickness: 50,
+          barThickness: 30,
+          maxBarThickness: 20
         }]
       },
       options: {
+        indexAxis: 'y',
         responsive: false,
         plugins: {
           legend: {

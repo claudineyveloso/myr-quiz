@@ -61,12 +61,16 @@ class AnswersController < ApplicationController
   end
 
   def save_rating
-    customer_id = params[:customer_id]
+    customer_id = cookies[:customer_id].to_i
 
     # Localiza o cliente e atualiza o campo `finished_quiz`
     customer = Customer.find_by(id: customer_id)
 
-    if customer&.update(finished_quiz: true)
+    if customer&.update(
+      finished_quiz: true,
+      satisfaction_score: params[:satisfaction_score].to_i,
+      comment: params[:comment] # Atualiza o campo de comentário
+    )
       render json: { message: "Quiz finalizado com sucesso." }, status: :ok
     else
       render json: { error: "Erro ao finalizar o quiz." }, status: :unprocessable_entity

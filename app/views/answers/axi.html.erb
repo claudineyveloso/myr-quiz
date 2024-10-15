@@ -1,5 +1,5 @@
 <div class="row py-3 align-items-center space-title-quiz" style="background-color: <%= @axi.background_color %>; margin: 0;">
-  <div class="col-12 col-lg-7">
+  <div class="col-12 col-lg-4">
     <h1 class="display-4 <%= @axi.text_color_class %> fw-normal">
         <%if @axi.id == 1 %>
           <%= image_tag 'icone-ambiental.png', alt: "icone-ambiental", class: "mb-2", width: "50", data: { slides_target: "id" } %>
@@ -13,11 +13,13 @@
       <%= @axi.name%>
     </h1>
   </div>
-  <div class="col-12 col-lg-5 text-end">
+  <div class="col-12 col-lg-8 text-end">
     <h2 class="fw-bold <%= @axi.text_color_class %>" id='theme-current'><%= @axi.main_theme %></h2>
   </div>
 </div>
-
+<div class="container">
+  <p class="mt-4" style="font-weight: 500;">Selecione a opção que mais se aproxima da realidade de sua empresa</p>
+</div>
 
 <!-- form section -->
 <form class='container' data-controller="quiz" data-quiz-current-index-value="0" data-quiz-axi-id-param="<%= @axi.id %>">
@@ -67,4 +69,49 @@
     </div>
   </div>
 </form>
+<button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#ratingModal">
+  Avaliar
+</button>
+
+<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" data-controller="rating">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class='w-100 text-center'>
+          <%= image_tag 'marca-myr.png', class: "img-fluid h-100 mb-30 w-150", alt: "Myr-tech" %>
+          <h5 class="modal-title text-white" id="ratingModalLabel">Obrigado por participar</h5>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="px-3-2">
+          <p class="text-white">
+            Sua opinião é muito importante para nós. Por favor, avalie sua experiência ao responder nosso formulário de maturidade ESG e acesse o seu resultado.
+          </p>
+        </div>
+        <div class="px-3-2">
+          <label class="text-white mb-2" for="exampleFormControlTextarea1">Deixe seu comentário:</label>
+          <textarea class="form-control" id="comment" rows="3"></textarea>
+        </div>
+
+        <div class="stars mt-3">
+          <span class="star" data-value="1" data-action="click->rating#selectStar">&#9733;</span>
+          <span class="star" data-value="2" data-action="click->rating#selectStar">&#9733;</span>
+          <span class="star" data-value="3" data-action="click->rating#selectStar">&#9733;</span>
+          <span class="star" data-value="4" data-action="click->rating#selectStar">&#9733;</span>
+          <span class="star" data-value="5" data-action="click->rating#selectStar">&#9733;</span>
+          <div class="rating-line d-none"></div>
+        </div>
+        <p class="error-message text-danger" style="display: none;" data-rating-target="errorMessage">Por favor, marque sua resposta.</p>
+
+      </div>
+      <div class="modal-footer position-relative minus-15">
+        <div class="left-line d-none"></div>
+        <div class="right-line d-none"></div>
+        <button type="button" class="btn-send" data-action="rating#submitRating">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 

@@ -13,12 +13,29 @@ h2 {
   width: 270px;
 }
 
+.w-150 {
+  width: 150px;
+}
+
 .mb-30 {
   margin-bottom: 30px;
 }
 
+.mb-20 {
+  margin-bottom: 20px;
+}
+
 .lh-55 {
   line-height: 55px;
+}
+
+.px-3-2 {
+  padding-right: 3.2rem !important;
+  padding-left: 3.2rem !important;
+}
+
+.mt-4rem {
+  margin-top: 4rem;
 }
 
 .bg-login {
@@ -175,7 +192,7 @@ input::placeholder {
   text-align: center;
   font: normal normal bold 70px/86px Montserrat;
   letter-spacing: 0px;
-  color: #787a0c;
+  color: #fffcd8;
   opacity: 1;
 }
 
@@ -183,7 +200,7 @@ input::placeholder {
   text-align: center;
   font: normal normal 100 70px/86px Montserrat;
   letter-spacing: 35px;
-  color: #787a0c;
+  color: #fffcd8;
   opacity: 1;
 }
 
@@ -191,7 +208,7 @@ input::placeholder {
   text-align: center;
   font: normal normal 300 25px/37px Montserrat;
   letter-spacing: 0px;
-  color: #787a0c;
+  color: #fffcd8;
   opacity: 1;
 }
 
@@ -548,6 +565,119 @@ input::placeholder {
   width: 400px;
   height: 300px;
 }
+
+/* Popup*/
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.star {
+  font-size: 2rem;
+  color: #338f98;
+  cursor: pointer;
+  margin: 0 5px;
+  padding-top: 15px;
+}
+
+.star.selected {
+  color: gold;
+}
+
+.modal-header {
+  border-bottom: none !important;
+}
+
+.modal-footer {
+  border-top: none !important;
+  justify-content: center !important;
+  position: relative;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #06363b !important;
+}
+
+.modal-title {
+  text-align: center;
+  width: 100%;
+}
+
+.space-logo-popup {
+  margin-top: 20px;
+}
+
+.btn-close {
+  margin-top: -40px;
+  background-color: #fff;
+  font-size: 10px;
+}
+
+.btn-send {
+  background: #dbdd71 0% 0% no-repeat padding-box;
+  border-radius: 55px;
+  opacity: 1;
+  width: 422px;
+  height: 40px;
+  color: #338f98;
+  font-weight: 500;
+}
+
+.modal-body .rating-line {
+  position: absolute;
+  top: -20px; /* Ajusta a altura da linha */
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #fff;
+  width: calc(100% - 120px); /* Deixa um espaço de 10px de cada lado */
+  margin: 0 auto;
+}
+
+.modal-body .stars {
+  position: relative;
+  text-align: center;
+}
+
+.modal-footer .left-line,
+.modal-footer .right-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #fff;
+}
+
+.modal-footer .left-line {
+  left: 70px;
+  height: calc(100% - -55px);
+  position: absolute;
+  top: -113px;
+}
+
+.modal-footer .right-line {
+  right: 70px;
+  height: calc(100% - -55px);
+  position: absolute;
+  top: -113px;
+}
+
+.error-message {
+  position: relative;
+  left: 117px;
+}
+
+.minus-15 {
+  top: -15px;
+}
+
+/* Claudiney */
 
 @media (max-width: 768px) {
   .chart-container {

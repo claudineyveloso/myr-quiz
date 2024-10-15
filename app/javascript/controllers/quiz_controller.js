@@ -203,6 +203,31 @@ export default class extends Controller {
   }
 
   loadTheme(themeId) {
+    const themeResponse = this.responses.find(
+      (response) => parseInt(response.theme_id) === themeId,
+    );
+
+    if (themeResponse) {
+      console.log("Esse tema já foi respondido.");
+
+      this.customerId = themeResponse.customer_id;
+      this.themeCurrentId = themeResponse.theme_id;
+      this.scenarioCurrentId = themeResponse.scenario_id;
+
+      fetch(
+        `/answers/quiz_by_theme?axi_id=${parseInt(this.axiIdValue)}&theme_id=${themeId}`,
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.updateAnswers(data.answers, data.main_theme);
+          // Marca a resposta previamente selecionada
+          this.markSelectedAnswer(themeResponse.scenario_id);
+          this.updateProgress();
+        });
+
+      return; // Sai da função
+    }
+
     fetch(
       `/answers/quiz_by_theme?axi_id=${parseInt(this.axiIdValue)}&theme_id=${themeId}`,
     )
@@ -211,6 +236,13 @@ export default class extends Controller {
         this.updateAnswers(data.answers, data.main_theme);
         this.updateProgress();
       });
+  }
+
+  markSelectedAnswer(scenarioId) {
+    const answerRadio = document.querySelector(`input[value="${scenarioId}"]`);
+    if (answerRadio) {
+      answerRadio.checked = true; // Marca a resposta
+    }
   }
 
   updateAnswers(answers, mainTheme) {
@@ -232,6 +264,7 @@ export default class extends Controller {
       answersContainer.insertAdjacentHTML("beforeend", answerHTML);
     });
     this.updateActiveDot();
+    window.scrollTo(0, 0);
   }
 
   updateActiveDot() {
@@ -261,19 +294,6 @@ export default class extends Controller {
         }
       });
     }
-  }
-
-  updateActiveDot123() {
-    this.dotTargets.forEach((dot, index) => {
-      // Verifica qual dot deve estar ativo com base no índice atual
-      if (index === this.currentThemeIndex) {
-        dot.classList.add("dot-quiz-environmental-active");
-        dot.classList.remove("dot-quiz-environmental");
-      } else {
-        dot.classList.add("dot-quiz-environmental");
-        dot.classList.remove("dot-quiz-environmental-active");
-      }
-    });
   }
 
   updateProgress() {
@@ -307,17 +327,35 @@ export default class extends Controller {
   }
 
   storeAnswer() {
-    const responseData = {
-      customer_id: this.customerId,
-      theme_id: this.themeCurrentId,
-      scenario_id: this.scenarioCurrentId,
-    };
-    this.responses.push(responseData);
+    const existingResponse = this.responses.find(
+      (response) =>
+        response.customer_id === this.customerId &&
+        response.theme_id === this.themeCurrentId,
+    );
+
+    if (existingResponse) {
+      if (existingResponse.scenario_id !== this.scenarioCurrentId) {
+        console.log("Atualizando scenario_id existente.");
+        existingResponse.scenario_id = this.scenarioCurrentId;
+      } else {
+        // Se todos os valores forem iguais, não faz nada
+        console.log(
+          "Resposta já existente com os mesmos valores. Nenhuma ação necessária.",
+        );
+      }
+    } else {
+      const responseData = {
+        customer_id: this.customerId,
+        theme_id: this.themeCurrentId,
+        scenario_id: this.scenarioCurrentId,
+      };
+      this.responses.push(responseData);
+    }
   }
 
   saveQuiz() {
     console.log("Quiz finalizado! Salvando dados...");
-
+    debugger;
     if (!this.isAnswerSelected()) {
       Swal.fire({
         icon: "warning",
@@ -363,82 +401,10 @@ export default class extends Controller {
         }
         // Quando não houver mais slides, abre o popup de avaliação de estrelas
         else {
-          fetch("/answers/save_rating", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRF-Token": document
-                .querySelector('meta[name="csrf-token"]')
-                .getAttribute("content"),
-            },
-            body: JSON.stringify({
-              customer_id: this.customerId,
-            }),
-          }).then((response) => {
-            if (response.ok) {
-              // Redireciona para a página de resultados após o envio da avaliação
-              window.location.href = "/result_quizzes";
-            }
-          });
-
-          // Swal.fire({
-          //   title: "Avaliação de Satisfação",
-          //   text: "Por favor, avalie sua experiência:",
-          //   icon: "question",
-          //   input: "radio",
-          //   inputOptions: {
-          //     1: "Muito Ruim",
-          //     2: "Ruim",
-          //     3: "Bom",
-          //     4: "Muito Bom",
-          //     5: "Excelente",
-          //   },
-          //   inputValidator: (value) => {
-          //     if (!value) {
-          //       return "Por favor, selecione uma quantidade de estrelas!";
-          //     }
-          //   },
-          //   confirmButtonText: "Enviar",
-          //   customClass: {
-          //     confirmButton: "btn btn-success btn-pop-up",
-          //     popup: "custom-swal-popup", // Adicione uma classe personalizada para o popup
-          //   },
-          //   buttonsStyling: false,
-          //   width: "600px", // Para usar os estilos personalizados do Bootstrap
-          // }).then((result) => {
-          //   if (result.isConfirmed) {
-          //     // Pega a quantidade de estrelas selecionadas
-          //     let selectedStars = result.value;
-          //
-          //     // Faz uma requisição para salvar a quantidade de estrelas
-          //     fetch("/save_rating", {
-          //       method: "POST",
-          //       headers: {
-          //         "Content-Type": "application/json",
-          //         "X-CSRF-Token": document
-          //           .querySelector('meta[name="csrf-token"]')
-          //           .getAttribute("content"),
-          //       },
-          //       body: JSON.stringify({
-          //         stars: selectedStars,
-          //         customer_id: this.customerId,
-          //       }),
-          //     }).then((response) => {
-          //       if (response.ok) {
-          //         // Redireciona para a página de resultados após o envio da avaliação
-          //         window.location.href = "/result_quizzes";
-          //       } else {
-          //         // Exibe um erro se a requisição falhar
-          //         Swal.fire(
-          //           "Erro!",
-          //           "Houve um problema ao salvar sua avaliação.",
-          //           "error",
-          //         );
-          //       }
-          //     });
-          //   }
-          // });
-          //
+          const ratingModal = new bootstrap.Modal(
+            document.getElementById("ratingModal"),
+          );
+          ratingModal.show();
         }
       } else {
         Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
