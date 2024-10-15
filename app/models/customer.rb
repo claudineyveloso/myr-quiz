@@ -1,5 +1,5 @@
 class Customer < ApplicationRecord
-  has_one :answer, dependent: :destroy
+  has_many :answer, dependent: :destroy
   has_many :result_quizzes, dependent: :destroy
 
   validates :name,
