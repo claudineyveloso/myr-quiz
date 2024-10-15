@@ -105,6 +105,7 @@ pt-BR:
         satisfaction_score: "Satisfação"
         answer: "Respostas"
         result_quizzes: "Resultados do questionário"
+        comment: "Comentário"
       answer:
         customer: "Cliente"
         theme: "Tema"

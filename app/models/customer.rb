@@ -1,6 +1,6 @@
 class Customer < ApplicationRecord
-  has_one :answer
-  has_many :result_quizzes
+  has_one :answer, dependent: :destroy
+  has_many :result_quizzes, dependent: :destroy
 
   validates :name,
             :email,
@@ -12,6 +12,4 @@ class Customer < ApplicationRecord
             :cnpj,
             length: { maximum: 20 },
             presence: true
-
-
 end
