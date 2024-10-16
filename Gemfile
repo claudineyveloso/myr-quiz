@@ -38,6 +38,8 @@ gem "bootsnap", require: false
 #
 gem "wicked_pdf", "~> 2.8", ">= 2.8.1"
 gem "wkhtmltopdf-binary", "~> 0.12.6.8"
+gem "ostruct", "~> 0.6.0"
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
