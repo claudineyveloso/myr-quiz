@@ -128,9 +128,7 @@
 
       </div>
       <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
-        <button type="button" class="btn-result-quiz btn-sm">
-          Gerar PDF
-        </button>
+        <%= button_to "Gerar PDF", result_quizzes_path(@result, format: :pdf), method: :get, class: "btn-result-quiz btn-sm" %>
       </div>
     </div>
   </div>
