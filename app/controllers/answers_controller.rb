@@ -26,7 +26,7 @@ class AnswersController < ApplicationController
     @axi = Axi.find(params[:id])
 
     # Corrigido para carregar todos os temas relacionados ao axi
-    @themes = Theme.where(axi_id: @axi.id)
+    @themes = Theme.where(axi_id: @axi.id).order(:id)
 
     Rails.logger.info "Themes encontrados: #{@themes.inspect}" # Isso agora vai funcionar corretamente
 
