@@ -307,7 +307,7 @@ export default class extends Controller {
     }
 
     fetch(
-      `/answers/quiz_by_theme?axi_id=${parseInt(this.axiIdValue)}&theme_id=${themeId}`,
+      `/answers/quiz_by_theme?axi_id=${parseInt(this.axiIdValue)}&theme_id=${parseInt(themeId)}`,
     )
       .then((response) => response.json())
       .then((data) => {
