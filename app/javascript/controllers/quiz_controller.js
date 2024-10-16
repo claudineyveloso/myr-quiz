@@ -22,6 +22,7 @@ export default class extends Controller {
     this.progressTextTarget.textContent = `1 de ${this.totalDots}`;
     this.themeCurrentId = 0;
     this.scenarioCurrentId = 0;
+    this.currentIndexSlide = 1;
     this.checkIfFirstTheme();
   }
 
@@ -243,6 +244,23 @@ export default class extends Controller {
   currentSlide(event) {
     const index = Number(event.currentTarget.dataset.slidesIndexParam);
     const indexTheme = Number(event.currentTarget.dataset.themeId);
+    if (this.currentIndexSlide + 1 === index) {
+      this.currentIndexSlide = index;
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Atenção",
+        text: "Há respostas em branco, por favor, confira suas respostas antes de continuar.",
+        confirmButtonText: "Ok",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+      });
+
+      return;
+    }
+
     console.log("Esse é o valor de index no currentSlide", index);
     this.currentThemeIndex = index - 1;
     if (this.isAnswerSelected()) {
