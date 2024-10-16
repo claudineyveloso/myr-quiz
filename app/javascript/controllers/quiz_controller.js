@@ -2,7 +2,13 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="quiz"
 export default class extends Controller {
-  static targets = ["question", "dot", "progressText", "nextButton"];
+  static targets = [
+    "question",
+    "dot",
+    "progressText",
+    "previousButton",
+    "nextButton",
+  ];
   static values = { currentIndex: Number };
 
   connect() {
@@ -16,6 +22,7 @@ export default class extends Controller {
     this.progressTextTarget.textContent = `1 de ${this.totalDots}`;
     this.themeCurrentId = 0;
     this.scenarioCurrentId = 0;
+    this.checkIfFirstTheme();
   }
 
   initialize() {
@@ -23,9 +30,24 @@ export default class extends Controller {
     console.log(this.customerId); // Exibe o ID do cliente no console
   }
 
+  checkIfFirstTheme() {
+    const activeDot = document.querySelector(
+      ".dot-quiz-environmental-active, .dot-quiz-social-active, .dot-quiz-governance-active",
+    );
+
+    if (activeDot) {
+      const activeIndex = Number(activeDot.dataset.slidesIndexParam);
+
+      if (activeIndex === 1) {
+        this.previousButtonTarget.setAttribute("disabled", "disabled"); // Desabilita o botão
+      } else {
+        this.previousButtonTarget.removeAttribute("disabled"); // Habilita o botão
+      }
+    }
+  }
+
   next(event) {
     const nextThemeData = this.getNextThemeData(event);
-
     const index = parseInt(nextThemeData.slidesIndexParam);
     const indexTheme = parseInt(nextThemeData.themeId);
 
@@ -85,7 +107,7 @@ export default class extends Controller {
           slidesIndexParam: nextSlidesIndexParam,
         };
       } else {
-        console.log("Não há mais temas disponíveis.");
+        console.log("Não h+á mais temas disponíveis.");
         // Retornar null ou um objeto padrão para indicar que não há próximo tema
         return null;
       }
@@ -96,14 +118,70 @@ export default class extends Controller {
     }
   }
 
-  previous() {
+  previous(event) {
+    this.checkIfFirstTheme();
     console.log("Clicou no botão anterior!");
+    const previousThemeData = this.getPreviousThemeData(event);
 
-    // this.currentIndexValue--;
-    // if (this.currentIndexValue < 0) {
-    //   this.currentIndexValue = 0;
-    // }
-    // this.updateView();
+    const index = parseInt(previousThemeData.slidesIndexParam);
+    const indexTheme = parseInt(previousThemeData.themeId);
+
+    console.log("Esse é o valor de index no currentSlide", index);
+    this.currentThemeIndex = index - 1;
+    if (this.isAnswerSelected()) {
+      this.storeAnswer();
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Atenção",
+        text: "Por favor, selecione uma resposta antes de continuar.",
+        confirmButtonText: "Ok",
+        customClass: {
+          confirmButton: "btn btn-success",
+        },
+        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+      });
+
+      return;
+    }
+    this.loadTheme(indexTheme);
+  }
+
+  getPreviousThemeData(event) {
+    event.preventDefault();
+    const activeDot = document.querySelector(
+      ".dot-quiz-environmental-active, .dot-quiz-social-active, .dot-quiz-governance-active",
+    );
+
+    if (activeDot) {
+      const activeIndex = Number(activeDot.dataset.slidesIndexParam);
+      const previousIndex = activeIndex - 1;
+      const previousDot = document.querySelector(
+        `.dot-quiz-environmental[data-slides-index-param="${previousIndex}"], .dot-quiz-social[data-slides-index-param="${previousIndex}"], .dot-quiz-governance[data-slides-index-param="${previousIndex}"]`,
+      );
+
+      if (previousDot) {
+        const previousThemeId = previousDot.dataset.themeId;
+        const previousSlidesIndexParam = previousDot.dataset.slidesIndexParam; // Obter o próximo data-slides-index-param
+
+        console.log("Anterior tema ID:", previousThemeId);
+        console.log("Anterior slides index param:", previousSlidesIndexParam);
+
+        // Retornar um objeto com os dois valores
+        return {
+          themeId: previousThemeId,
+          slidesIndexParam: previousSlidesIndexParam,
+        };
+      } else {
+        console.log("Não há mais temas disponíveis.");
+        // Retornar null ou um objeto padrão para indicar que não há próximo tema
+        return null;
+      }
+    } else {
+      console.log("Nenhuma dot ativa encontrada.");
+      // Retornar null ou um objeto padrão para indicar que não há dot ativa
+      return null;
+    }
   }
 
   selectDot(event) {
@@ -294,6 +372,8 @@ export default class extends Controller {
         }
       });
     }
+
+    this.checkIfFirstTheme();
   }
 
   updateProgress() {
@@ -355,7 +435,6 @@ export default class extends Controller {
 
   saveQuiz() {
     console.log("Quiz finalizado! Salvando dados...");
-    debugger;
     if (!this.isAnswerSelected()) {
       Swal.fire({
         icon: "warning",

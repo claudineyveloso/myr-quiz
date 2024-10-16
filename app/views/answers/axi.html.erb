@@ -62,7 +62,7 @@
         </div>
         <!-- buttons aligned to the right -->
         <div class="col-12 col-md-5 text-end">
-          <button type="button" class="btn-step <%= @axi.btn_previous_color_class %>" data-action="click->quiz#previous">anterior</button>
+          <button type="button" class="btn-step <%= @axi.btn_previous_color_class %>" data-action="click->quiz#previous" data-quiz-target="previousButton">anterior</button>
           <button type="button" class="btn-step <%= @axi.btn_next_color_class %>" data-quiz-target="nextButton" data-action="click->quiz#next" data-slides-index-param="1">próxima</button>
         </div>
       </div>
