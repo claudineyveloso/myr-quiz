@@ -117,17 +117,17 @@
   <div class="row mt-4 mb-4">
     <div class="text-center d-flex justify-content-center chart-row">
       <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
-        <button type="button" class="btn-result-quiz btn-sm">
+        <button type="button" class="btn-result-quiz btn-sm" onclick="window.open('https://grupomyr.com.br/blog/', '_blank')">
           Conheça mais sobre ESG e Sustentabilidade
         </button>
       </div>
       <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
-        <button type="button" class="btn-result-quiz btn-sm">
+        <button type="button" class="btn-result-quiz btn-sm" onclick="window.open('https://grupomyr.com.br/contato/', '_blank')">
           Entre em contato conosco
         </button>
 
       </div>
-      <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
+      <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center d-none">
         <%= button_to "Gerar PDF", result_quizzes_path(@result, format: :pdf), method: :get, class: "btn-result-quiz btn-sm" %>
       </div>
     </div>
