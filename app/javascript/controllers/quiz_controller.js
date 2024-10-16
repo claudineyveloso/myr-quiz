@@ -256,7 +256,7 @@ export default class extends Controller {
         customClass: {
           confirmButton: "btn btn-success",
         },
-        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+        buttonsStyling: false,
       });
 
       return;
