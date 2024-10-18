@@ -28,6 +28,10 @@ class CustomersController < ApplicationController
 
     if customer
       if customer.finished_quiz
+        unless cookies[:customer_id]
+          # Se o cookie não existir, cria o cookie com o ID do customer
+          cookies[:customer_id] = { value: customer.id, expires: 1.day.from_now } # Defina o tempo de expiração conforme necessário
+        end
         render json: { status: "finished", message: "Este e-mail já finalizou o questionário." }
       else
         render json: {
