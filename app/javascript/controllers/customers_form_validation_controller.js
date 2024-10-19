@@ -92,11 +92,26 @@ export default class extends Controller {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "finished") {
-          this.showMessage(
-            "E-mail já utilizado",
-            "Este e-mail já finalizou o questionário.",
-            "error",
-          );
+          Swal.fire({
+            icon: "error",
+            title: "E-mail já utilizado",
+            text: "Este e-mail já finalizou o questionário.",
+            showCancelButton: true,
+            confirmButtonText: "Ver Resultado",
+            cancelButtonText: "Ok",
+            customClass: {
+              confirmButton: "btn btn-success me-2", // Classe customizada para o botão Ver Resultado
+              cancelButton: "btn btn-secondary", // Classe customizada para o botão Ok
+            },
+            buttonsStyling: false, // Para usar os estilos customizados
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Se o usuário clicar em "Ver Resultado", redireciona para a URL
+              window.location.href = "http://localhost:3000/result_quizzes";
+            }
+            // Se o usuário clicar em "Ok", o modal será fechado automaticamente
+          });
+
           event.preventDefault();
           this.emailAlreadyChecked = true;
           return;
