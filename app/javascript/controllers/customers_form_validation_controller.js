@@ -107,13 +107,14 @@ export default class extends Controller {
           }).then((result) => {
             if (result.isConfirmed) {
               // Se o usuário clicar em "Ver Resultado", redireciona para a URL
-              window.location.href = "http://localhost:3000/result_quizzes";
+              window.location.href = "/result_quizzes";
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              // Se o usuário clicar em "Ok", redireciona para a página inicial
+              window.location.href = "/";
             }
             // Se o usuário clicar em "Ok", o modal será fechado automaticamente
           });
 
-          event.preventDefault();
-          this.emailAlreadyChecked = true;
           return;
         } else if (data.status === "not_finished") {
           Swal.fire({
