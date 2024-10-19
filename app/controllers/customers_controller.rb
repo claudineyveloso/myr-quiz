@@ -9,7 +9,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
-      cookies[:customer_id] = @customer.id
+      cookies[:customer_id] = { value: @customer.id, expires: 1.day.from_now }
       Rails.logger.info "Cookie set: #{cookies[:customer_id]}"
       # Redireciona para a ação 'index' ou outra página de sua escolha
       redirect_to start_answers_path, notice: "Cliente criado com sucesso."
@@ -46,7 +46,8 @@ class CustomersController < ApplicationController
         # Destroy all Answer of Customer
         Answer.where(customer_id: customer.id).destroy_all
         ResultQuiz.where(customer_id: customer.id).destroy_all
-        cookies[:customer_id] = customer.id
+        cookies[:customer_id] = { value: customer.id, expires: 1.day.from_now } # Defina o tempo de expiração conforme necessário
+
       end
     else
       render json: { status: "not_found", message: "E-mail não encontrado. Você pode iniciar o questionário." }
