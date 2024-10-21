@@ -1,6 +1,5 @@
 class ResultQuizzesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :index, :create ]
-
+  skip_before_action :authenticate_user!, only: [:index, :create]
 
   def index
     customer_id = cookies[:customer_id].to_i
@@ -15,10 +14,10 @@ class ResultQuizzesController < ApplicationController
       total_average_score = 0
 
       color_codes = {
-      1 => "#F1F2D4",
-      2 => "#D6F0F2",
-      3 => "#E6CBE3"
-    }
+        1 => "#F1F2D4",
+        2 => "#D6F0F2",
+        3 => "#E6CBE3"
+      }
 
       @axi_ids.each do |axi_id|
         # Busca os resultados do quiz para o customer_id e axi_id
@@ -32,23 +31,23 @@ class ResultQuizzesController < ApplicationController
 
           @results << {
             axi_id: axi_id,
-            results: { average_score: format("%.2f", first_result.average_score), id: first_result.id, axi_name: first_result.axi.name }
+            results: {average_score: format("%.2f", first_result.average_score), id: first_result.id, axi_name: first_result.axi.name}
           }
 
           themes_for_axi = Answer.by_axis_by_customer(axi_id, customer_id)
-            themes_for_axi.each do |theme|
+          themes_for_axi.each do |theme|
             case axi_id
             when 1
-              @axis_environmental << { theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value) }
+              @axis_environmental << {theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value)}
             when 2
-              @axis_social << { theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value) }
+              @axis_social << {theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value)}
             when 3
-              @axis_governance << { theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value) }
+              @axis_governance << {theme_id: theme.id, theme_name: theme.theme.name, average_score: format("%.2f", theme.maturity_value)}
             end
           end
 
           maturity_messages = MaturityMessage.joins(:axi, :maturity)
-                                              .where(axi_id: first_result.axi_id, maturity_id: first_result.maturity_id)
+            .where(axi_id: first_result.axi_id, maturity_id: first_result.maturity_id)
           maturity_messages.each do |message|
             @messages << {
               message: message,
@@ -58,30 +57,30 @@ class ResultQuizzesController < ApplicationController
         end
       end
 
-      average_score = (total_average_score/3 * 10).floor / 10.0
+      average_score = (total_average_score / 3 * 10).floor / 10.0
       maturity = Maturity.find_by("range_initial <= ? AND range_final >= ?", average_score, average_score)
       respond_to do |format|
         format.html # Renderiza a view index.html.erb
         format.pdf do
           render pdf: "relatorio_#{customer_id}", # Nome do arquivo PDF
-            template: "result_quizzes/index.html.erb", # O template para o PDF
-               layout: false,
-               locals: { results: @results, messages: @messages }
+            template: "result_quizzes/index.html.erb" # O template para o PDF
+          # layout: false,
+          # locals: {results: @results, messages: @messages}
         end
-        format.json { render json: { results: @results, messages: @messages, total_average_score: total_average_score, maturity_name: maturity.name, maturity_description: maturity.description_result }, status: :ok }
+        format.json { render json: {results: @results, messages: @messages, total_average_score: total_average_score, maturity_name: maturity.name, maturity_description: maturity.description_result}, status: :ok }
       end
 
     else
       respond_to do |format|
         format.html { redirect_to root_path, alert: "Customer ID não fornecido" }
-        format.json { render json: { error: "Customer ID não fornecido" }, status: :unprocessable_entity }
+        format.json { render json: {error: "Customer ID não fornecido"}, status: :unprocessable_entity }
       end
     end
   end
 
   def create
     customer_id = params[:customer_id]
-    maturity_id = params[:maturity_id]
+    params[:maturity_id]
     axi_id = params[:axi_id]
     average_score = params[:average_score]
 
@@ -96,7 +95,7 @@ class ResultQuizzesController < ApplicationController
     if result_quiz.save
       redirect_to axi_answers_path(id: 2), notice: "Resultado do quiz salvo com sucesso!"
     else
-      render json: { error: "Erro ao salvar o resultado do quiz" }, status: :unprocessable_entity
+      render json: {error: "Erro ao salvar o resultado do quiz"}, status: :unprocessable_entity
     end
   end
 end

@@ -246,21 +246,7 @@ export default class extends Controller {
     const indexTheme = Number(event.currentTarget.dataset.themeId);
     if (this.currentIndexSlide + 1 === index) {
       this.currentIndexSlide = index;
-    } else {
-      Swal.fire({
-        icon: "warning",
-        title: "Atenção",
-        text: "Há respostas em branco, por favor, confira suas respostas antes de continuar.",
-        confirmButtonText: "Ok",
-        customClass: {
-          confirmButton: "btn btn-success",
-        },
-        buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
-      });
-
-      return;
     }
-
     console.log("Esse é o valor de index no currentSlide", index);
     this.currentThemeIndex = index - 1;
     if (this.isAnswerSelected()) {
@@ -452,12 +438,67 @@ export default class extends Controller {
   }
 
   saveQuiz() {
-    console.log("Quiz finalizado! Salvando dados...");
-    if (!this.isAnswerSelected()) {
+    if (this.responses.length >= 5) {
+      if (!this.isAnswerSelected()) {
+        Swal.fire({
+          icon: "warning",
+          title: "Atenção",
+          text: "Por favor, selecione uma resposta antes de continuar.",
+          confirmButtonText: "Ok",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+          buttonsStyling: false, // Para usar os estilos personalizados do Bootstrap
+        });
+
+        return;
+      }
+      // Monta os dados da resposta atual
+      const responseData = {
+        customer_id: this.customerId,
+        theme_id: this.themeCurrentId,
+        scenario_id: this.scenarioCurrentId,
+        axi_id: this.axiIdValue,
+      };
+
+      // Adiciona a resposta à lista de respostas
+      this.responses.push(responseData);
+
+      // Envia as respostas via fetch
+      fetch("/answers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
+        },
+        body: JSON.stringify(this.responses),
+      }).then((response) => {
+        if (response.ok) {
+          // Calcula o próximo slide
+          let nextSlide = Number(this.axiIdValue) + 1;
+
+          // Se o próximo slide for <= 3, redireciona para o próximo slide
+          if (nextSlide <= 3) {
+            window.location.href = "/answers/start?slide=" + nextSlide;
+          }
+          // Quando não houver mais slides, abre o popup de avaliação de estrelas
+          else {
+            const ratingModal = new bootstrap.Modal(
+              document.getElementById("ratingModal"),
+            );
+            ratingModal.show();
+          }
+        } else {
+          Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
+        }
+      });
+    } else {
+      console.log("Valor de currentIndexSlide", this.currentIndexSlide);
+
       Swal.fire({
         icon: "warning",
         title: "Atenção",
-        text: "Por favor, selecione uma resposta antes de continuar.",
+        text: "Há resposta em branco, por favor confira suas respostas antes de finalizar.",
         confirmButtonText: "Ok",
         customClass: {
           confirmButton: "btn btn-success",
@@ -467,46 +508,7 @@ export default class extends Controller {
 
       return;
     }
-
-    // Monta os dados da resposta atual
-    const responseData = {
-      customer_id: this.customerId,
-      theme_id: this.themeCurrentId,
-      scenario_id: this.scenarioCurrentId,
-      axi_id: this.axiIdValue,
-    };
-
-    // Adiciona a resposta à lista de respostas
-    this.responses.push(responseData);
-
-    // Envia as respostas via fetch
-    fetch("/answers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
-      },
-      body: JSON.stringify(this.responses),
-    }).then((response) => {
-      if (response.ok) {
-        // Calcula o próximo slide
-        let nextSlide = Number(this.axiIdValue) + 1;
-
-        // Se o próximo slide for <= 3, redireciona para o próximo slide
-        if (nextSlide <= 3) {
-          window.location.href = "/answers/start?slide=" + nextSlide;
-        }
-        // Quando não houver mais slides, abre o popup de avaliação de estrelas
-        else {
-          const ratingModal = new bootstrap.Modal(
-            document.getElementById("ratingModal"),
-          );
-          ratingModal.show();
-        }
-      } else {
-        Swal.fire("Erro!", "Houve um problema ao salvar o quiz.", "error");
-      }
-    });
+    console.log("Quiz finalizado! Salvando dados...");
   }
 
   getCookie(name) {

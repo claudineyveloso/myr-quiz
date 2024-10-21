@@ -1,62 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Relatório PDF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Desempenho</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    .axis {
-      margin-bottom: 20px;
-    }
-    .messages {
-      margin-top: 30px;
-    }
-    .message {
-      padding: 10px;
-      margin-bottom: 10px;
+    /* Ajuste o tamanho do gráfico para caber no PDF */
+    canvas {
+      width: 400px;
+      height: 400px;
     }
   </style>
 </head>
 <body>
-  <h1>Relatório de Resultados</h1>
+  <h1>Relatório de Desempenho</h1>
 
-  <% @results.each do |result| %>
-    <div class="axis">
-      <h2><%= result[:results][:axi_name] %></h2>
-      <p>Média de Pontuação: <%= result[:results][:average_score] %></p>
-    </div>
-  <% end %>
-
-  <h2>Eixo Ambiental</h2>
-  <% @axis_environmental.each do |theme| %>
-    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
-  <% end %>
-
-  <h2>Eixo Social</h2>
-  <% @axis_social.each do |theme| %>
-    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
-  <% end %>
-
-  <h2>Eixo de Governança</h2>
-  <% @axis_governance.each do |theme| %>
-    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
-  <% end %>
-
-  <div class="messages">
-    <h3>Mensagens de Maturidade</h3>
-    <% @messages.each do |message_data| %>
-      <div class="message" style="background-color: <%= message_data[:color_code] %>;">
-        <p><%= message_data[:message].content %></p>
-      </div>
-    <% end %>
+  <div>
+    <canvas id="myDoughnutChart"></canvas>
   </div>
 
-  <p>Média Total: <%= format("%.2f", (total_average_score / 3 * 10).floor / 10.0) %></p>
-
-  <p>Maturidade: <%= maturity.name %> - <%= maturity.description_result %></p>
-
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const ctxGeral = document.getElementById('myDoughnutChart').getContext('2d');
+      new Chart(ctxGeral, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            label: 'Média de Desempenho',
+            data: [<%= (@total_average_score / 3).round(2) %>, <%= @remaining_score %>], // Usa os dados do servidor
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.6)', // Cor para a média
+              'rgba(192, 192, 192, 0.6)'  // Cor para o restante
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+              'rgba(192, 192, 192, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: false,
+          maintainAspectRatio: false
+        }
+      });
+    });
+  </script>
 </body>
 </html>
 
