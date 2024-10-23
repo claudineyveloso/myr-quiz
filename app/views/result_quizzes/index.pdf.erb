@@ -1,52 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Relatório de Desempenho</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Relatório PDF</title>
   <style>
-    /* Ajuste o tamanho do gráfico para caber no PDF */
-    canvas {
-      width: 400px;
-      height: 400px;
+    body {
+      font-family: Arial, sans-serif;
     }
+    .axis {
+      margin-bottom: 20px;
+    }
+    .messages {
+      margin-top: 30px;
+    }
+    .message {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .text-center {
+      text-align: center;
+      width: 100%;
+    }
+    .page-break {
+      page-break-before: always; /* Adiciona a quebra de página antes da seção */
+      margin-top: 20px; /* Espaço acima da seção, se desejado */
+    }
+
+    .customer-info {
+      margin-bottom: 20px; /* Espaço abaixo do bloco de informações do cliente */
+    }
+
+    .customer-name {
+      margin: 0; /* Remove a margem padrão do h2 */
+      font-size: 1.5em; /* Ajusta o tamanho da fonte, se necessário */
+    }
+
+    .company-name {
+      display: block; 
+      margin-top: 5px; 
+      font-size: 10px !important; 
+      color: #666; 
+    }
+
   </style>
 </head>
 <body>
-  <h1>Relatório de Desempenho</h1>
-
-  <div>
-    <canvas id="myDoughnutChart"></canvas>
+  <h1 class="text-center">Relatório de Resultados</h1>
+  <div class="customer-info">
+    <h2 class="customer-name"> Cliente: <%= @customer.first.customer.name %> </h2>
+    <small> Nome da empresa - <%= @customer.first.customer.company_name %></small>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const ctxGeral = document.getElementById('myDoughnutChart').getContext('2d');
-      new Chart(ctxGeral, {
-        type: 'doughnut',
-        data: {
-          datasets: [{
-            label: 'Média de Desempenho',
-            data: [<%= (@total_average_score / 3).round(2) %>, <%= @remaining_score %>], // Usa os dados do servidor
-            backgroundColor: [
-              'rgba(75, 192, 192, 0.6)', // Cor para a média
-              'rgba(192, 192, 192, 0.6)'  // Cor para o restante
-            ],
-            borderColor: [
-              'rgba(75, 192, 192, 1)',
-              'rgba(192, 192, 192, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: false,
-          maintainAspectRatio: false
-        }
-      });
-    });
-  </script>
+  <% @results.each do |result| %>
+    <div class="axis">
+      <h2><%= result[:results][:axi_name] %></h2>
+      <p>Média de Pontuação: <%= result[:results][:average_score] %></p>
+    </div>
+  <% end %>
+
+  <h2>Eixo Ambiental</h2>
+  <% @axis_environmental.each do |theme| %>
+    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
+  <% end %>
+
+  <h2>Eixo Social</h2>
+  <% @axis_social.each do |theme| %>
+    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
+  <% end %>
+
+  <h2>Eixo de Governança</h2>
+  <% @axis_governance.each do |theme| %>
+    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
+  <% end %>
+
+  <div class="page-break"></div>
+
+  <div class="messages">
+    <h3>Próximos passos</h3>
+    <% @messages.each do |message_data| %>
+      <div class="message" style="background-color: <%= message_data[:color_code] %>;">
+        <p><%= message_data[:message].message %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <p>Média Total: <%= format("%.2f", (total_average_score / 3 * 10).floor / 10.0) %></p>
+
+  <p>Maturidade: <%= maturity.name %> - <%= maturity.description_result %></p>
+
 </body>
 </html>
 
