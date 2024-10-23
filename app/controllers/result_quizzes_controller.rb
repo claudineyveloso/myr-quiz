@@ -10,6 +10,7 @@ class ResultQuizzesController < ApplicationController
       @axis_environmental = []
       @axis_social = []
       @axis_governance = []
+      @customer = []
 
       total_average_score = 0
 
@@ -22,7 +23,7 @@ class ResultQuizzesController < ApplicationController
       @axi_ids.each do |axi_id|
         # Busca os resultados do quiz para o customer_id e axi_id
         results_for_axi = ResultQuiz.by_axi_customer(axi_id, customer_id)
-
+        @customer = results_for_axi
         # Verifica se há resultados válidos antes de adicionar ao array
         unless results_for_axi.empty?
 
@@ -63,9 +64,7 @@ class ResultQuizzesController < ApplicationController
         format.html # Renderiza a view index.html.erb
         format.pdf do
           render pdf: "relatorio_#{customer_id}", # Nome do arquivo PDF
-            template: "result_quizzes/index.html.erb" # O template para o PDF
-          # layout: false,
-          # locals: {results: @results, messages: @messages}
+            locals: {results: @results, messages: @messages, total_average_score: total_average_score, maturity: maturity, customer: @customer}
         end
         format.json { render json: {results: @results, messages: @messages, total_average_score: total_average_score, maturity_name: maturity.name, maturity_description: maturity.description_result}, status: :ok }
       end

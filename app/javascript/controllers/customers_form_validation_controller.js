@@ -126,7 +126,6 @@ export default class extends Controller {
             if (result.isConfirmed) {
               this.fillCustomerData(data.customer);
               document.getElementById("submitButton").textContent = "Continuar";
-              //window.location.href = "http://localhost:3000/answers/start";
               event.preventDefault();
               submitButton.addEventListener("click", () => {
                 window.location.href = "/answers/start"; // Redireciona ao clicar no botão "Continuar"
