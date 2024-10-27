@@ -5,3 +5,4 @@
 //= link application.bootstrap.scss
 //= link application.bootstrap.css
 //= link rails_admin/src/rails_admin/base.js
+//= link custom.css
