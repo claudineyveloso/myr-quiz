@@ -12,8 +12,6 @@ class ApplicationController < ActionController::Base
     # Pega o domínio (host) da URL
     current_host = request.host.sub(/^www\./, "")
 
-    @test = current_host
-
     @show_logos = case current_host
     when "esgsolutions.com.br"
       false  # Exibe as logos no domínio esgsolutions.com.br
@@ -28,7 +26,7 @@ class ApplicationController < ActionController::Base
     Rails.logger.info("show_logos: #{@show_logos}")
 
     # Verifica se o usuário está na página de novo cliente
-    if !@show_logos && request.path != new_customer_path
+    if @show_logos && request.path != new_customer_path
       Rails.logger.info("Redirecting to new_customer_url")
       redirect_to new_customer_url
     end
