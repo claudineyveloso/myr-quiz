@@ -46,6 +46,14 @@ h2 {
   margin-top: 4rem;
 }
 
+.mt-10 {
+  margin-top: -10px !important;
+}
+
+.mt-40 {
+  margin-top: 40px;
+}
+
 .bg-login {
   background-color: #06363b;
 }
@@ -99,6 +107,11 @@ input::placeholder {
 @media (max-width: 768px) {
   .card-login {
     padding: 3rem 2rem;
+  }
+
+  .image-maturity,
+  .business-advantages {
+    background-position: bottom;
   }
 }
 
@@ -823,11 +836,129 @@ input::placeholder {
   padding-top: 3.5rem;
 }
 
+.business-advantages11 {
+  background-image: url(/assets/bg-people.jpg);
+  background-size: cover;
+  background-position: center; /* Removendo o calc */
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw; /* Garante que ocupe toda a largura da viewport */
+  overflow: hidden; /* Evita possíveis barras de rolagem */
+  position: relative;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.business-advantages {
+  background-image: url("/assets/bg-people.jpg");
+  /*background-size: contain;*/
+  background-position: right top;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 80vh;
+}
+
+.bg-advantages {
+  background-color: #00737f;
+  border-radius: 14px;
+  height: 65px;
+  text-align: right;
+  padding: 20px 5px;
+  margin-left: -82px;
+}
+
+.bg-advantages h4 {
+  margin-right: 3rem;
+}
+
+.bg-advantages p {
+  font-size: 14px;
+}
+
+.text-advantages {
+  color: #3a3a3a;
+  font-size: 14px;
+}
+
+.text-advantages span {
+  font-weight: 600;
+}
+
+.items-advantages {
+  color: #3a3a3a;
+  font-size: 14px;
+}
+
+.items-advantages li::marker {
+  color: #00737f;
+}
+
+.quiz-objective {
+  background-color: #e7e7e7;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 150px;
+  min-height: 80vh;
+}
+
+.objective h2 {
+  color: #00737f;
+  font-weight: 600b;
+}
+
+.objective p {
+  color: #3a3a3a;
+}
+
+.objective span {
+  font-weight: 600;
+}
+
+.img-axi {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px; /* Ajuste conforme necessário */
+  height: auto;
+  opacity: 0.8; /* Opacidade para mesclar com o conteúdo, ajuste conforme desejado */
+}
+
+.bg-footer {
+  background-color: #004248;
+}
+
+.img-footer {
+  width: 120px;
+  height: auto;
+}
+
+.group-myr {
+  color: #dbdd71;
+  text-decoration: none;
+  margin-top: 35px;
+  font-weight: 700;
+}
+
 /* End home index */
 
 /* Claudiney */
 
+@media (min-width: 1450px) {
+  .mt-10 {
+    margin-top: 15px !important;
+  }
+
+  .bg-advantages {
+    margin-left: -82px;
+  }
+}
+
 @media (max-width: 1300px) {
+  .space-logo {
+    padding-top: 260px;
+  }
   .d-none-custom {
     display: none !important;
   }
@@ -840,13 +971,31 @@ input::placeholder {
     width: 100%;
   }
 
+  .agenda-esg-card {
+    min-height: 530px;
+  }
+
+  .image-bonsai-growth {
+    background-image: url(/assets/bonsai-growth-mobile.jpg);
+    background-position: bottom;
+  }
+
   .image-maturity {
     background-image: url(/assets/img-maturity-mobile.jpg);
     background-size: cover;
-    background-position: calc(0% - 50px) top;
+    background-position: bottom;
     background-repeat: no-repeat;
     height: 100vh;
     position: relative;
+  }
+
+  .business-advantages {
+    background-image: url("/assets/bg-people-mobile.jpg");
+    background-position: bottom;
+  }
+
+  .image-maturity {
+    background-position: bottom;
   }
 }
 
@@ -874,17 +1023,17 @@ input::placeholder {
 
   .image-bonsai-growth {
     background-image: url("/assets/bonsai-growth-mobile.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
+    background-position: bottom;
+  }
+
+  .business-advantages {
+    background-image: url("/assets/bg-people-mobile.jpg");
+    background-position: bottom;
   }
 
   .image-maturity {
     background-image: url(/assets/img-maturity-mobile.jpg);
-    background-size: cover;
-    background-position: top;
-    background-repeat: no-repeat;
+    background-position: bottom;
     height: 100vh;
     position: relative;
   }
@@ -1012,6 +1161,10 @@ input::placeholder {
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
+  }
+
+  .business-advantages {
+    background-image: url("/assets/bg-people-mobile.jpg");
   }
 
   h2 {

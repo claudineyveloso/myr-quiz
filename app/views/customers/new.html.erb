@@ -1,12 +1,18 @@
 <div class="container-fluid d-flex flex-column justify-content-center align-items-center min-vh-100 bg-login">
-    <div class="card-login p-5 text-white shadow">
+  <div class="card-login p-5 text-white shadow">
       <div class="text-center mb-4">
         <div class="d-flex flex-column flex-md-row justify-content-center mb-4">
-          <%= image_tag 'esg-na-pratica.png', class: "mb-2 ms-4 me-4 h-logo-form", alt: "Myr-tech" %>
-          <%= image_tag 'ccbc.png', class: "mb-2 ms-4 h-logo-form", alt: "Myr-tech" %>
+          <% if @show_logos %>
+            <%= image_tag 'esg-na-pratica.png', class: "mb-2 ms-4 me-4 h-logo-form", alt: "Myr-tech" %>
+            <%= image_tag 'ccbc.png', class: "mb-2 ms-4 h-logo-form", alt: "Myr-tech" %>
+          <% else %>
+            <%= image_tag 'marca-myr.png', class: "mb-2", width: "150",  alt: "Myr-tech" %>
+          <% end %>
+
         </div>
         <h4 class="fw-400">Cadastrar Cliente</h4>
       </div>
+
       <%= form_with(model: @customer, local: true, html: { data: { controller: "customers-form-validation", action: "submit->customers-form-validation#validate" } }) do |form| %>
         <div class="row mb-3">
           <div class="col-12">
@@ -43,11 +49,13 @@
           <button type="submit" class="btn bg-button-login w-100 fw-bold" id="submitButton">Cadastrar</button>
         </div>
       <% end %>
-    </div>
+      </div>
+      <% if @show_logos %>
       <div class="w-100 text-center mt-4">
         <p class="text-white">powered by</p>
         <%= image_tag 'marca-myr.png', class: "mb-2", width: "150",  alt: "Myr-tech" %>
       </div>
+      <% end %>
 
   </div>
 

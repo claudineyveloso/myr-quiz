@@ -35,6 +35,6 @@ Rails.application.routes.draw do
   match "*unmatched", to: redirect("/"), via: :all
 
   # Defines the root path route ("/")
-  # root "home#index"
-  root "customers#new"
+  root "home#index"
+  #  root "customers#new"
 end

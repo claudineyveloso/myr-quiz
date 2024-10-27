@@ -1,5 +1,5 @@
 class CustomersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :new, :create, :show, :check_email ]
+  skip_before_action :authenticate_user!, only: [:new, :create, :show, :check_email]
 
   def new
     @customer = Customer.new # Inicializa um novo objeto Customer
@@ -9,7 +9,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(customer_params)
 
     if @customer.save
-      cookies[:customer_id] = { value: @customer.id, expires: 1.day.from_now }
+      cookies[:customer_id] = {value: @customer.id, expires: 1.day.from_now}
       Rails.logger.info "Cookie set: #{cookies[:customer_id]}"
       # Redireciona para a ação 'index' ou outra página de sua escolha
       redirect_to start_answers_path, notice: "Cliente criado com sucesso."
@@ -30,9 +30,9 @@ class CustomersController < ApplicationController
       if customer.finished_quiz
         unless cookies[:customer_id]
           # Se o cookie não existir, cria o cookie com o ID do customer
-          cookies[:customer_id] = { value: customer.id, expires: 1.day.from_now } # Defina o tempo de expiração conforme necessário
+          cookies[:customer_id] = {value: customer.id, expires: 1.day.from_now} # Defina o tempo de expiração conforme necessário
         end
-        render json: { status: "finished", message: "Este e-mail já finalizou o questionário." }
+        render json: {status: "finished", message: "Este e-mail já finalizou o questionário."}
       else
         render json: {
           status: "not_finished",
@@ -46,11 +46,11 @@ class CustomersController < ApplicationController
         # Destroy all Answer of Customer
         Answer.where(customer_id: customer.id).destroy_all
         ResultQuiz.where(customer_id: customer.id).destroy_all
-        cookies[:customer_id] = { value: customer.id, expires: 1.day.from_now } # Defina o tempo de expiração conforme necessário
+        cookies[:customer_id] = {value: customer.id, expires: 1.day.from_now} # Defina o tempo de expiração conforme necessário
 
       end
     else
-      render json: { status: "not_found", message: "E-mail não encontrado. Você pode iniciar o questionário." }
+      render json: {status: "not_found", message: "E-mail não encontrado. Você pode iniciar o questionário."}
     end
   end
 
