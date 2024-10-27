@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
     # Pega o domínio (host) da URL
     current_host = request.host.sub(/^www\./, "")
 
+    @test = current_host
+
     @show_logos = case current_host
     when "esgsolutions.com.br"
       false  # Exibe as logos no domínio esgsolutions.com.br
