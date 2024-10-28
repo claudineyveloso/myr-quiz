@@ -20,10 +20,11 @@
 <div class="image-maturity py-5">
   <div class="container">
     <div class="row align-items-center g-md-5 g-4">
-      <div class="col-12 d-none-sustainability-card">
+
+      <div class="col-12 d-lg-none">
         <div class="mb-5">
           <div class="d-flex justify-content-end align-items-end">
-            <div class="bg-green rounded-5 text-center p-5 color-text-maturity shadow-lg">
+            <div class="bg-green rounded-5 text-center p-5 color-text-maturity shadow-lg w-100">
               <p>
                 Em um mundo onde a <span class="bold-text">sustentabilidade</span> e a <span class="bold-text">responsabilidade corporativa</span>
                 são cada vez mais valorizadas, a jornada ESG se tornou essencial para empresas que buscam não apenas o sucesso financeiro, mas também prosperidade e um impacto positivo no mundo ao seu redor.
@@ -35,10 +36,10 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-12 d-none-custom ms-auto">
+      <div class="col-12 d-none d-lg-block ms-auto">
         <div class="mb-5">
           <div class="d-flex justify-content-end align-items-end">
-            <div class="bg-green rounded-5 text-center p-5 color-text-maturity shadow-lg">
+            <div class="bg-green rounded-5 text-center p-5 color-text-maturity shadow-lg w-text-maturity">
               <p>
                 Em um mundo onde a <span class="bold-text">sustentabilidade</span> e a <span class="bold-text">responsabilidade corporativa</span>
                 são cada vez mais valorizadas, a jornada ESG se tornou essencial para empresas que buscam não apenas o sucesso financeiro, mas também prosperidade e um impacto positivo no mundo ao seu redor.
@@ -54,26 +55,26 @@
   </div>
 </div>
 
-<div class="section agenda-esg py-5">
+<div class="agenda-esg py-5">
   <div class="container">
     <div class="row mx-lg-auto mb-5 mb-sm-7 mb-lg-10">
-      <div class="col-lg-3 col-12">
+      <div class="col-lg-4 col-12 d-flex justify-content-md-end">
         <p class="agenda-esg-text">Agenda ESG: <br /> Entenda o conceito <br />e sua importância!</p>
       </div>
-      <div class="col-lg-9 col-12 spacing-next-section">
+      <div class="col-lg-8 col-12 spacing-next-section d-flex justify-content-center">
         <p class="pt-3-rem">
           O termo <span>ESG</span>, que em inglês significa <span>“environmental, social and governance”</span> (ambiental, <br /> social e governança – ASG), é composto por três pilares fundamentais:
         </p>
       </div>
     </div>
     <div class="position-relative spacing-agenda-esg">
-      <div class="row mb-5">
-        <div class="col-lg-4 mb-4 mb-lg-0">
+      <div class="row mb-5 justify-content-center">
+        <div class="col-lg-3 mb-4 mb-lg-0">
           <div class="card-body agenda-esg-card">
             <div class="esg-card-header">
               <%= image_tag('ic-ambiental.png') %>
             </div>
-            <div class="mb-3 color-text-card pt-80">
+            <div class="mb-3 color-text-card">
               <h4 class="mb-1 text-center card-color-environmental font-bold font-size-40">E</h4>
               <p class="text-center">(Ambiental)</p>
               <p class="ps-5 pe-5 color-text-card">
@@ -83,12 +84,12 @@
           </div>
           <div class="esg-card-footer card-color-footer-environmental effect-footer mb-5 spacing-next-section"></div>
         </div>
-        <div class="col-lg-4 mb-4 mb-lg-0 spacing-top-section">
+        <div class="col-lg-3 mb-4 mb-lg-0 spacing-top-section">
           <div class="card-body agenda-esg-card">
             <div class="esg-card-header">
               <%= image_tag('ic-social.png') %>
             </div>
-            <div class="mb-3 color-text-card pt-80">
+            <div class="mb-3 color-text-card">
               <h4 class="mb-1 text-center color-social card-color-social font-bold font-size-40">S</h4>
               <p class="text-center">(Social)</p>
               <p class="ps-5 pe-5 color-text-card">
@@ -98,12 +99,12 @@
           </div>
           <div class="esg-card-footer card-color-footer-social effect-footer mb-5 spacing-next-section"></div>
         </div>
-        <div class="col-lg-4 mb-4 mb-lg-0 spacing-top-section">
+        <div class="col-lg-3 mb-4 mb-lg-0 spacing-top-section">
           <div class="card-body agenda-esg-card">
             <div class="esg-card-header">
               <%= image_tag('ic-governanca.png') %>
             </div>
-            <div class="mb-3 color-text-card pt-80">
+            <div class="mb-3 color-text-card">
               <h4 class="mb-1 text-center card-color-governance font-bold font-size-40">G</h4>
               <p class="text-center">(Governança)</p>
               <p class="ps-5 pe-5 color-text-card">
@@ -118,6 +119,12 @@
     <div class="section-intro mb-5">
       Esses três pilares são amplamente utilizados como critérios por investidores para avaliar se uma empresa adota práticas sustentáveis e gera impactos positivos nos aspectos financeiro, social e ambiental, tornando-a uma opção de investimento atraente, na medida em que os riscos são minimizados com a corporação comprometida com a Agenda ESG.
     </div>
+    <div class="d-flex justify-content-end color-learn-more">
+      <p>>>> Saiba mais em: 
+        <a href="https://grupomyr.com.br/blog/" class="custom-link">https://grupomyr.com.br/blog/</a>
+      </p>
+    </div>
+      
   </div>
 </div>
 
@@ -125,20 +132,22 @@
   <div class="container">
     <div class="row align-items-center g-md-5 g-4 mt-10">
       <div class="col-12 col-md-6 text-md-start text-start">
-        <div class="bg-advantages mb-4">
+        <div class="bg-advantages mb-4 position-absolute w-50 mb-3" style="left: 0;">
           <h4>Vantagens para o seu negócio!</h4>
         </div>
-        <p class="text-advantages">
-          Com a implementação da Agenda ESG, a sua empresa obtém inúmeras <span>vantagens competitivas</span> no mercado, tais como:
-        </p>
-        <ul class="items-advantages">
-          <li>Atração de investimentos e financiamentos sustentáveis</li>
-          <li>Aumento da reputação da empresa </li>
-          <li>Acesso a novos mercados e oportunidades de negócios </li>
-          <li>Retenção e atração de talentos </li>
-          <li>Redução e mitigação de riscos </li>
-          <li>Redução do impacto ambiental e contribuição para o desenvolvimento sustentável.</li>
-        </ul>
+        <div class="mt-advantages">
+          <p class="text-advantages w-title-advantages">
+            Com a implementação da Agenda ESG, a sua empresa obtém inúmeras <span>vantagens competitivas</span> no mercado, tais como:
+          </p>
+          <ul class="items-advantages">
+            <li>Atração de investimentos e financiamentos sustentáveis</li>
+            <li>Aumento da reputação da empresa </li>
+            <li>Acesso a novos mercados e oportunidades de negócios </li>
+            <li>Retenção e atração de talentos </li>
+            <li>Redução e mitigação de riscos </li>
+            <li>Redução do impacto ambiental e contribuição para o <br />desenvolvimento sustentável.</li>
+          </ul>
+        </div>
     </div>
     </div>
   </div>

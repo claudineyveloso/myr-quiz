@@ -134,7 +134,7 @@ input::placeholder {
   background-size: cover;
   background-position: calc(0% - 50px) top;
   background-repeat: no-repeat;
-  height: 100vh;
+  height: 85vh;
   position: relative;
 }
 
@@ -734,6 +734,7 @@ input::placeholder {
 
 .agenda-esg {
   background-color: #00737f;
+  color: #fff;
 }
 
 .agenda-esg-text {
@@ -760,7 +761,7 @@ input::placeholder {
   border-radius: 20px;
   opacity: 1;
   position: relative;
-  min-height: 400px;
+  min-height: 520px !important;
 }
 
 .font-size-40 {
@@ -785,20 +786,16 @@ input::placeholder {
 }
 
 .esg-card-header {
-  /*
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  */
-  position: absolute;
+  display: flex; /* Permite centralizar com Flexbox */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  padding: 20px; /* Ajuste o padding conforme necessário */
 }
 
 .esg-card-header img {
   width: 150px;
   height: auto;
-  position: relative;
-  top: -100px;
-  left: 75%;
+  margin-top: -80px;
 }
 
 .esg-card-footer {
@@ -822,8 +819,8 @@ input::placeholder {
 .effect-footer {
   position: relative;
   top: -1px;
-  right: -13px;
-  width: 94%;
+  right: -18px;
+  width: 88%;
   border-bottom: 3px solid #fff;
 }
 
@@ -877,6 +874,11 @@ input::placeholder {
 .items-advantages {
   color: #3a3a3a;
   font-size: 14px;
+  padding-left: 15px;
+}
+
+.items-advantages li {
+  padding-bottom: 10px;
 }
 
 .items-advantages li::marker {
@@ -936,6 +938,27 @@ input::placeholder {
   font-weight: 600;
 }
 
+.color-learn-more {
+  color: #CFDA00; /* Faz o link herdar a cor do texto */
+}
+
+.custom-link {
+  text-decoration: none; /* Remove o sublinhado padrão */
+  color: #CFDA00; /* Faz o link herdar a cor do texto */
+}
+
+.custom-link:hover {
+  text-decoration: underline; /* Adiciona o sublinhado ao passar o mouse */
+}
+
+.mt-advantages {
+  margin-top: 6.5rem
+}
+
+.w-title-advantages {
+  width: 450px;
+}
+
 /* End home index */
 
 /* Claudiney */
@@ -962,7 +985,7 @@ input::placeholder {
     display: block;
   }
 
-  .bg-green {
+  .bg-green11 {
     width: 100%;
   }
 
@@ -975,7 +998,7 @@ input::placeholder {
     background-position: bottom;
   }
 
-  .image-maturity {
+  .image-maturity22 {
     background-image: url('<%= asset_path('img-maturity-mobile.jpg') %>'); 
     background-size: cover;
     background-position: bottom;
@@ -989,9 +1012,22 @@ input::placeholder {
     background-position: bottom;
   }
 
-  .image-maturity {
+  .image-maturity333 {
     background-position: bottom;
   }
+}
+
+@media (max-width: 1024px) {
+  .bg-green {
+    width: 100% !important;
+    margin: 0; /* remove margem caso precise ocupar 100% */
+  }
+
+  .w-text-maturity {
+    width: 100% !important;
+    height: 300px;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -1004,6 +1040,56 @@ input::placeholder {
 
 /* Responsividade */
 @media (max-width: 768px) {
+  .gauge {
+    width: 150px;
+    height: 75px;
+  }
+  .gauge-center {
+    width: 60px;
+    height: 60px;
+  }
+  .gauge-value {
+    font-size: 1.2rem;
+  }
+
+  .image-bonsai-growth {
+    background-image: url('<%= asset_path('bonsai-growth-mobile.jpg') %>'); 
+    background-position: bottom;
+  }
+
+  .business-advantages {
+    background-image: url('<%= asset_path('bg-people-mobile.jpg') %>'); 
+    background-position: bottom;
+  }
+
+  .image-maturity {
+    background-image: url('<%= asset_path('img-maturity-mobile.jpg') %>'); 
+    background-position: bottom;
+    height: 100vh;
+    position: relative;
+  }
+
+  .bg-advantages {
+    width: 75% !important;
+  }
+
+}
+
+@media (max-width: 767.98px) { /* Para telas menores que md */
+  .bg-advantages {
+    width: 100%;
+  }
+
+  .w-title-advantages {
+    width: 350px;
+  }
+
+  .business-advantages {
+    min-height: 100vh !important;
+  }
+}
+
+@media (max-width: 1024px) {
   .gauge {
     width: 150px;
     height: 75px;
