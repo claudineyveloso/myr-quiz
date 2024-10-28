@@ -34,7 +34,15 @@ Rails.application.routes.draw do
 
   match "*unmatched", to: redirect("/"), via: :all
 
+  constraints(host: "esgsolutions.com.br") do
+    root to: "home#index"
+  end
+
+  constraints(host: "esgtest.com.br") do
+    root to: "customers#new"
+  end
+
   # Defines the root path route ("/")
-  root "home#index"
-  #  root "customers#new"
+  # root "home#index"
+  # root "customers#new"
 end
