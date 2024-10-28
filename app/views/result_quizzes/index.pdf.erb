@@ -33,6 +33,11 @@
     .customer-name {
       margin: 0; /* Remove a margem padrão do h2 */
       font-size: 1.5em; /* Ajusta o tamanho da fonte, se necessário */
+      }
+
+    .media-total {
+      display: flex;
+      justify-content: center;
     }
 
     .company-name {
@@ -40,15 +45,31 @@
       margin-top: 5px; 
       font-size: 10px !important; 
       color: #666; 
+      }
+
+    .img-small {
+      width: 80px;
+      height: auto;
     }
 
   </style>
 </head>
 <body>
+
+
+  <div class="text-center">
+    <%= image_tag wicked_pdf_asset_base64("esg-na-pratica-pdf.png"), class: "img-small" %>
+  </div>
+
+
   <h1 class="text-center">Relatório de Resultados</h1>
   <div class="customer-info">
     <h2 class="customer-name"> Cliente: <%= @customer.first.customer.name %> </h2>
     <small> Nome da empresa - <%= @customer.first.customer.company_name %></small>
+  </div>
+  <div>
+    <p><b>Média Total:</b> <%= format("%.2f", (total_average_score / 3 * 10).floor / 10.0) %></p>
+    <p><b>Maturidade:</b> <%= maturity.name %> - <%= maturity.description_result %></p>
   </div>
 
   <% @results.each do |result| %>
