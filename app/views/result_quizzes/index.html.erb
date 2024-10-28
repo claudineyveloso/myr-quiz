@@ -117,9 +117,15 @@
   <div class="row mt-4 mb-4">
     <div class="text-center d-flex justify-content-center chart-row">
       <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
-        <button type="button" class="btn-result-quiz btn-sm h-54 w-350" onclick="window.open('https://grupomyr.com.br/blog/', '_blank')">
-          Conheça mais sobre a Comissão <br> de Compliance e ESG
-        </button>
+        <% if @show_logos %>
+          <button type="button" class="btn-result-quiz btn-sm h-54 w-350" onclick="window.open('https://materiais.ccbc.org.br/ccesg', '_blank')">
+            Conheça mais sobre a Comissão <br> de Compliance e ESG
+          </button>
+        <% else %>
+          <button type="button" class="btn-result-quiz btn-sm h-54 w-350" onclick="window.open('https://grupomyr.com.br/blog/', '_blank')">
+            Conheça mais sobre ESG e Sustentabilidade
+          </button>
+        <% end %>
       </div>
       <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
         <button type="button" class="btn-result-quiz btn-sm h-54 w-350" onclick="window.open('https://grupomyr.com.br/contato/', '_blank')">

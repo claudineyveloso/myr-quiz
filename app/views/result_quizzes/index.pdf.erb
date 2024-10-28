@@ -58,7 +58,11 @@
 
 
   <div class="text-center">
-    <%= image_tag wicked_pdf_asset_base64("esg-na-pratica-pdf.png"), class: "img-small" %>
+    <% if @show_logos %>
+      <%= image_tag wicked_pdf_asset_base64("esg-na-pratica-pdf.png"), class: "img-small" %>
+    <% else %>
+      <%= image_tag wicked_pdf_asset_base64("marca-myr.png"), class: "img-small" %>
+    <% end %>
   </div>
 
 
