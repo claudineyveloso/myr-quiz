@@ -48,9 +48,22 @@
       }
 
     .img-small {
-      width: 80px;
-      height: auto;
+      width: auto;
+      height: 50px;
     }
+    
+    .space-image {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
+    .line {
+      width: 100%;          /* Define a largura da linha */
+      height: 2px;          /* Define a altura da linha */
+      background-color: #000; /* Define a cor da linha (aqui, preto) */
+      margin: 20px 0;       /* Espaçamento acima e abaixo da linha */
+    }
+
 
   </style>
 </head>
@@ -59,9 +72,9 @@
 
   <div class="text-center">
     <% if @show_logos %>
-      <%= image_tag wicked_pdf_asset_base64("esg-na-pratica-pdf.png"), class: "img-small" %>
+      <%= image_tag wicked_pdf_asset_base64("esg-na-pratica-pdf.png"), class: "img-small" %> <%= image_tag wicked_pdf_asset_base64("ccbc-pdf.png"), class: "img-small" %>
     <% else %>
-      <%= image_tag wicked_pdf_asset_base64("marca-myr.png"), class: "img-small" %>
+      <%= image_tag wicked_pdf_asset_base64("marca-myr-pdf.jpeg"), class: "img-small space-image" %> <%= image_tag wicked_pdf_asset_base64("ccbc-pdf.jpeg"), class: "img-small space-image" %> <%= image_tag wicked_pdf_asset_base64("esg-na-pratica-pdf.jpeg"), class: "img-small" %>
     <% end %>
   </div>
 
@@ -69,36 +82,32 @@
   <h1 class="text-center">Relatório de Resultados</h1>
   <div class="customer-info">
     <h2 class="customer-name"> Cliente: <%= @customer.first.customer.name %> </h2>
-    <small> Nome da empresa - <%= @customer.first.customer.company_name %></small>
+    <h4 style="margin-top: 5px;"> Nome da empresa: <%= @customer.first.customer.company_name %></h4>
   </div>
   <div>
     <p><b>Média Total:</b> <%= format("%.2f", (total_average_score / 3 * 10).floor / 10.0) %></p>
     <p><b>Maturidade:</b> <%= maturity.name %> - <%= maturity.description_result %></p>
   </div>
 
-  <% @results.each do |result| %>
+  <% @results.each_with_index do |result, index| %>
     <div class="axis">
-      <h2><%= result[:results][:axi_name] %></h2>
-      <p>Média de Pontuação: <%= result[:results][:average_score] %></p>
+      <h2 style="display: inline; margin-right: 10px;"><%= result[:results][:axi_name] %></h2>
+      <p style="display: inline;">(Média de Pontuação: <%= result[:results][:average_score] %>)</p>
+
+      <% themes = case index
+        when 0 then @axis_environmental
+        when 1 then @axis_social
+        when 2 then @axis_governance
+      end %>
+
+      <% themes.each do |theme| %>
+        <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
+      <% end %>
+      <div class="line"/>
     </div>
   <% end %>
 
-  <h2>Eixo Ambiental</h2>
-  <% @axis_environmental.each do |theme| %>
-    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
-  <% end %>
-
-  <h2>Eixo Social</h2>
-  <% @axis_social.each do |theme| %>
-    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
-  <% end %>
-
-  <h2>Eixo de Governança</h2>
-  <% @axis_governance.each do |theme| %>
-    <p><strong><%= theme[:theme_name] %>:</strong> <%= theme[:average_score] %></p>
-  <% end %>
-
-  <div class="page-break"></div>
+    <div class="page-break"></div>
 
   <div class="messages">
     <h3>Próximos passos</h3>
