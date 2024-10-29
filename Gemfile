@@ -41,6 +41,9 @@ gem "wkhtmltopdf-binary", "~> 0.12.6.8"
 gem "chartkick", "~> 5.1", ">= 5.1.1"
 gem "ostruct", "~> 0.6.0"
 
+gem "whenever", "~> 1.0", require: false
+gem "sidekiq", "~> 7.3", ">= 7.3.4"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
