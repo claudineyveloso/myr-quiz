@@ -71,7 +71,6 @@ export default class extends Controller {
       return;
     }
     this.loadTheme(indexTheme);
-
     if (index == this.totalDots) {
       this.nextButtonTarget.textContent = "Finalizar";
       this.nextButtonTarget.dataset.action = "click->quiz#saveQuiz";
@@ -416,7 +415,6 @@ export default class extends Controller {
         response.customer_id === this.customerId &&
         response.theme_id === this.themeCurrentId,
     );
-
     if (existingResponse) {
       if (existingResponse.scenario_id !== this.scenarioCurrentId) {
         console.log("Atualizando scenario_id existente.");
@@ -454,16 +452,17 @@ export default class extends Controller {
         return;
       }
       // Monta os dados da resposta atual
-      const responseData = {
-        customer_id: this.customerId,
-        theme_id: this.themeCurrentId,
-        scenario_id: this.scenarioCurrentId,
-        axi_id: this.axiIdValue,
-      };
+      if (this.responses.length < 6) {
+        const responseData = {
+          customer_id: this.customerId,
+          theme_id: this.themeCurrentId,
+          scenario_id: this.scenarioCurrentId,
+          axi_id: this.axiIdValue,
+        };
 
-      // Adiciona a resposta à lista de respostas
-      this.responses.push(responseData);
-
+        // Adiciona a resposta à lista de respostas
+        this.responses.push(responseData);
+      }
       // Envia as respostas via fetch
       fetch("/answers", {
         method: "POST",

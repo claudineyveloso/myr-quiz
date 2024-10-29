@@ -7,7 +7,7 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.new(customer_params)
-
+    @customer.access_url = @current_host
     if @customer.save
       cookies[:customer_id] = {value: @customer.id, expires: 1.day.from_now}
       Rails.logger.info "Cookie set: #{cookies[:customer_id]}"
@@ -57,6 +57,6 @@ class CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:name, :email, :phone, :company_name, :cnpj)
+    params.require(:customer).permit(:name, :email, :phone, :company_name, :cnpj, :access_url)
   end
 end
