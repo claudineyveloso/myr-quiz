@@ -2,7 +2,13 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-6 col-12">
-        <%= image_tag 'marca-myr.png', class: "img-fluid h-100 mb-4 w-270 img-myr-tech-result-quiz mt-4", data: { aos: "fade-down", aos_duration: "1000" }, alt: "Myr-tech" %>
+        <% if @show_logos %>
+          <%= image_tag 'marca-myr.png', class: "img-fluid height-50 mb-4 mt-4 me-2", alt: "Myr-tech" %>
+          <%= image_tag 'ccbc.png', class: "img-fluid mb-4 mt-4 height-50 me-2", alt: "Myr-tech" %>
+          <%= image_tag 'esg-na-pratica.png', class: "img-fluid mb-4 mt-4 height-50", alt: "Myr-tech" %>
+        <% else %>
+          <%= image_tag 'marca-myr.png', class: "img-fluid h-100 mb-4 w-270 img-myr-tech-result-quiz mt-4", data: { aos: "fade-down", aos_duration: "1000" }, alt: "Myr-tech" %>
+        <% end %>
       </div>
       <div class="col-md-6 col-12 text-end fs-20">
         <h4>Calculadora ESG</h4>
