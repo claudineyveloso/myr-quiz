@@ -36,7 +36,7 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 #
-gem "wicked_pdf", "~> 2.8", ">= 2.8.1"
+gem "wicked_pdf", "~> 2.8"
 gem "wkhtmltopdf-binary", "~> 0.12.6.8"
 gem "chartkick", "~> 5.1", ">= 5.1.1"
 gem "ostruct", "~> 0.6.0"
