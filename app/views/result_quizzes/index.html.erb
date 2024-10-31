@@ -179,7 +179,7 @@
       
       document.getElementById('maturityName').textContent = results.maturity_name; // Atualiza o nome da maturidade
       document.getElementById('maturityDescription').textContent = results.maturity_description; // Atualiza o nome da maturidade
-      document.getElementById('averageScoreDisplay').textContent = (Math.floor((results.total_average_score / 3) * 10) / 10).toFixed(1) + " / 5.0"; // Atualiza o valor
+      document.getElementById('averageScoreDisplay').textContent = (Math.floor((results.total_average_score / 3) * 10) / 10).toFixed(2) + " / 5.0"; // Atualiza o valor
 
 
       const labels = results.results.map(result => result.results.axi_name); // Rótulos do gráfico
@@ -275,7 +275,7 @@
       data: {
         datasets: [{
           label: 'Média de Desempenho',
-          data: [(totalAverageScore/3).toFixed(2), remainingScore], // Usa os dados dinâmicos
+          data: [(Math.floor((totalAverageScore / 3 ) * 10) / 10).toFixed(2), remainingScore], // Usa os dados dinâmicos
           backgroundColor: [
             'rgba(75, 192, 192, 0.6)', // Cor para a média
             'rgba(192, 192, 192, 0.6)'  // Cor para o restante
