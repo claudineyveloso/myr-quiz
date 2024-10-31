@@ -15,8 +15,8 @@ class QuizProcessor
       scenario_id = response[:scenario_id]
 
       maturity_value_sum = Scenario.joins(:maturity)
-                                   .where(id: scenario_id)
-                                   .sum("maturities.value")
+        .where(id: scenario_id)
+        .sum("maturities.value")
 
       @total_maturity_score += maturity_value_sum
 

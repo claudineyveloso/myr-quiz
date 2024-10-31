@@ -1,17 +1,16 @@
 class AnswersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :new, :create, :start, :axi_data, :step, :axi, :quiz_by_theme, :save_rating ]
+  skip_before_action :authenticate_user!, only: [:new, :create, :start, :axi_data, :step, :axi, :quiz_by_theme, :save_rating]
 
   def new
   end
 
   def create
     responses = params.require(:_json)
-
     # Processa o quiz e retorna a pontuação média
     processor = QuizProcessor.new(responses)
     average_score = processor.process
 
-    render json: { message: "Respostas salvas com sucesso!", average_score: average_score }, status: :ok
+    render json: {message: "Respostas salvas com sucesso!", average_score: average_score}, status: :ok
   end
 
   def start
@@ -47,16 +46,16 @@ class AnswersController < ApplicationController
     answers = Scenario.quiz_by_axis(axi_id, theme_id)
 
     # Retorna as respostas no formato JSON
-    render json: { answers: answers, main_theme: answers.first.theme_name }
+    render json: {answers: answers, main_theme: answers.first.theme_name}
   end
 
   def axi_data
     axi = Axi.by_id(params[:id]).first
 
     if axi
-      render json: { id: axi.id, name: axi.name, description: axi.description }
+      render json: {id: axi.id, name: axi.name, description: axi.description}
     else
-      render json: { error: "Axi not found" }, status: :not_found
+      render json: {error: "Axi not found"}, status: :not_found
     end
   end
 
@@ -71,9 +70,9 @@ class AnswersController < ApplicationController
       satisfaction_score: params[:satisfaction_score].to_i,
       comment: params[:comment] # Atualiza o campo de comentário
     )
-      render json: { message: "Quiz finalizado com sucesso." }, status: :ok
+      render json: {message: "Quiz finalizado com sucesso."}, status: :ok
     else
-      render json: { error: "Erro ao finalizar o quiz." }, status: :unprocessable_entity
+      render json: {error: "Erro ao finalizar o quiz."}, status: :unprocessable_entity
     end
   end
 end

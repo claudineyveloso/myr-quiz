@@ -145,6 +145,9 @@ export default class extends Controller {
       return;
     }
     this.loadTheme(indexTheme);
+    if (index === 5 && this.nextButtonTarget.textContent === "Finalizar") {
+      this.nextButtonTarget.textContent = "Próximo";
+    }
   }
 
   getPreviousThemeData(event) {
@@ -430,6 +433,7 @@ export default class extends Controller {
         customer_id: this.customerId,
         theme_id: this.themeCurrentId,
         scenario_id: this.scenarioCurrentId,
+        axi_id: this.axiIdValue,
       };
       this.responses.push(responseData);
     }
@@ -459,10 +463,12 @@ export default class extends Controller {
           scenario_id: this.scenarioCurrentId,
           axi_id: this.axiIdValue,
         };
-
         // Adiciona a resposta à lista de respostas
         this.responses.push(responseData);
       }
+      this.responses.sort((a, b) => {
+        return a.theme_id - b.theme_id;
+      });
       // Envia as respostas via fetch
       fetch("/answers", {
         method: "POST",
