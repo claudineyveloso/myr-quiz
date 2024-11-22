@@ -38,7 +38,7 @@ gem "bootsnap", require: false
 #
 gem "wicked_pdf", "~> 2.8", ">= 2.8.1"
 gem "wkhtmltopdf-binary", "~> 0.12.6.8"
-gem "chartkick", "~> 5.1", ">= 5.1.1"
+gem "chartkick", "~> 5.1"
 gem "ostruct", "~> 0.6.0"
 
 gem "whenever", "~> 1.0", require: false
