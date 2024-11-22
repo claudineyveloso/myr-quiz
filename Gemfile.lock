@@ -359,8 +359,9 @@ GEM
     websocket-extensions (0.1.5)
     whenever (1.0.0)
       chronic (>= 0.6.3)
-    wicked_pdf (2.8.1)
+    wicked_pdf (2.8.2)
       activesupport
+      ostruct
     wkhtmltopdf-binary (0.12.6.8)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -403,7 +404,7 @@ DEPENDENCIES
   tzinfo-data
   web-console
   whenever (~> 1.0)
-  wicked_pdf (~> 2.8, >= 2.8.1)
+  wicked_pdf (~> 2.8)
   wkhtmltopdf-binary (~> 0.12.6.8)
 
 BUNDLED WITH
