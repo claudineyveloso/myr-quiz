@@ -3,7 +3,7 @@ class CreateMaturityMessages < ActiveRecord::Migration[7.2]
     create_table :maturity_messages, if_not_exists: true do |t|
       t.references :axi, null: false, foreign_key: true
       t.references :maturity, null: false, foreign_key: true
-      t.text :message, null: false, default: ""
+      t.text :message, null: false
 
       t.timestamps
     end
