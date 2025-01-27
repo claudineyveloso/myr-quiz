@@ -10,10 +10,12 @@
         <span class="dot" data-slides-index-param="3"></span>
       </div>
       <p class='description-axis-social mb-5' data-slides-target="description">
+      <% if @axi.present? && @axi.name.present? %>
       <%= @axi.name %>
         <%= @axi.description %>
       </p>
       <%= link_to "Começar", axi_answers_path(id: 2), class: "btn-start btn-social mt-5" %>
+    <% end %>
     </div>
   </div>
 </div>

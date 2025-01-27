@@ -10,7 +10,8 @@
         <span class="dot active-governanca" data-slides-index-param="3"></span>
       </div>
       <p class='description-axis-governanca mb-5' data-slides-target="description">
-        <%= @axi.description %>
+        <%= @axi.present? ? @axi.description : '' %>
+
       </p>
       <%= link_to "Começar", axi_answers_path(id: 3), class: "btn-start btn-governanca mt-5" %>
     </div>
