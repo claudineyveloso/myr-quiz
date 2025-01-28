@@ -11,10 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2024_10_29_011817) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "answers", force: :cascade do |t|
+  create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "customer_id", null: false
     t.bigint "theme_id", null: false
     t.bigint "scenario_id", null: false
@@ -25,15 +22,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_011817) do
     t.index ["theme_id"], name: "index_answers_on_theme_id"
   end
 
-  create_table "axis", force: :cascade do |t|
+  create_table "axis", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 100, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "description", default: "", null: false
+    t.text "description", null: false
     t.index ["name"], name: "index_axis_on_name", unique: true
   end
 
-  create_table "customers", force: :cascade do |t|
+  create_table "customers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 100, null: false
     t.string "email", limit: 100, null: false
     t.string "phone", limit: 20, null: false
@@ -48,7 +45,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_011817) do
     t.index ["email"], name: "index_customers_on_email", unique: true
   end
 
-  create_table "maturities", force: :cascade do |t|
+  create_table "maturities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 100, null: false
     t.decimal "value", precision: 2, scale: 1, null: false
     t.datetime "created_at", null: false
@@ -59,21 +56,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_011817) do
     t.index ["name"], name: "index_maturities_on_name", unique: true
   end
 
-  create_table "maturity_messages", force: :cascade do |t|
+  create_table "maturity_messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "axi_id", null: false
     t.bigint "maturity_id", null: false
-    t.text "message", default: "", null: false
+    t.text "message", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["axi_id"], name: "index_maturity_messages_on_axi_id"
     t.index ["maturity_id"], name: "index_maturity_messages_on_maturity_id"
   end
 
-  create_table "result_quizzes", force: :cascade do |t|
+  create_table "result_quizzes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "customer_id", null: false
     t.bigint "axi_id", null: false
     t.bigint "maturity_id", null: false
-    t.decimal "average_score", default: "0.0", null: false
+    t.decimal "average_score", precision: 10, default: "0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["axi_id"], name: "index_result_quizzes_on_axi_id"
@@ -81,7 +78,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_011817) do
     t.index ["maturity_id"], name: "index_result_quizzes_on_maturity_id"
   end
 
-  create_table "scenarios", force: :cascade do |t|
+  create_table "scenarios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "theme_id", null: false
     t.bigint "maturity_id", null: false
     t.text "description", null: false
@@ -91,7 +88,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_011817) do
     t.index ["theme_id"], name: "index_scenarios_on_theme_id"
   end
 
-  create_table "themes", force: :cascade do |t|
+  create_table "themes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "axi_id", null: false
     t.string "name", limit: 100, null: false
     t.datetime "created_at", null: false
@@ -100,7 +97,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_011817) do
     t.index ["name"], name: "index_themes_on_name", unique: true
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.boolean "is_active", default: true, null: false
@@ -110,7 +107,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_011817) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
