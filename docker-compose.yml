@@ -26,7 +26,6 @@ services:
     environment:
       DATABASE_URL: mysql2://rails_user:05092004@db:3306/g_prod_development
     volumes:
-      #      - .:/var/www/g-prod
       - .:/app
 volumes:
   db_data:
