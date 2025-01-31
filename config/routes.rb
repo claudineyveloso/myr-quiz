@@ -32,8 +32,6 @@ Rails.application.routes.draw do
 
   resources :result_quizzes, only: [:index, :create]
 
-  match "*unmatched", to: redirect("/"), via: :all
-
   constraints(host: ["esgsolutions.com.br", "localhost"]) do
     get "/", to: "home#index", as: "esgsolutions_root"
   end
@@ -42,7 +40,6 @@ Rails.application.routes.draw do
     get "/", to: "customers#new", as: "esgtest_root"
   end
 
-  # Defines the root path route ("/")
-  # root "home#index"
-  # root "customers#new"
+  match "*unmatched", to: redirect("/"), via: :all
+
 end

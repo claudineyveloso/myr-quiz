@@ -181,6 +181,10 @@ pt-BR:
         title: Histórico para %{model_label} '%{object_label}'
         menu: Histórico
         breadcrumb: Histórico
+      customer_chart:
+        title: Gráficos para %{model_label_plural}
+        menu: Gráficos
+        breadcrumb: Gráficos
     form:
       cancel: Cancelar
       basic_info: Informações básicas

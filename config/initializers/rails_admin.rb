@@ -1,3 +1,4 @@
+require Rails.root.join('lib', 'rails_admin', 'customer_chart_action.rb')
 RailsAdmin.config do |config|
   config.asset_source = :importmap
 
@@ -35,8 +36,33 @@ RailsAdmin.config do |config|
     delete
     show_in_app
 
-    ## With an audit adapter, you can add:
+
+    customer_chart do
+      only ['Customer']  # Disponível APENAS no modelo Customer
+    end
+
+    # Adiciona a ação personalizada
+    # customer_chart do
+    #   only ['Customer'] # Apenas para o modelo Customer
+    # end
+    #
+    # ## With an audit adapter, you can add:
     # history_index
     # history_show
   end
+  config.model 'Customer' do
+    list do
+      field :id
+      field :name
+      field :email
+      field :created_at
+
+      field :customer_chart do
+        formatted_value do
+          bindings[:view].link_to 'Ver Gráfico', bindings[:view].customer_chart_path(model_name: 'customer', id: bindings[:object].id)
+        end
+      end
+    end
+  end
 end
+
