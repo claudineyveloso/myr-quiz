@@ -1,2 +1,383 @@
-<h1>Gráfico do Cliente: <%= @customer.name %></h1>
-<h3>Id do Cliente: <%= @axi_ids %></h3>
+<%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/chart.js', 'https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels', 'data-turbolinks-track': 'reload' %>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card shadow text-center">
+      <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0" style="font-size: 20px;">Nível Geral</h2>
+    </div>
+
+    <div class="card p-4 shadow">
+      <h3 class="mt-3 fs-20 text-center" id="maturityName">Estágio 2 | Não Integrado</h3>
+      <p class="mt-3 text-center fs-1rem" id="maturityDescription"></p>
+      <p class="text-center fs-3rem" id="averageScoreDisplay">2.9</p>
+      <div class="text-center d-flex justify-content-center">
+        <canvas id="myDoughnutChart" width="350" height="215"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card shadow text-center">
+      <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0" style="font-size: 20px;">Resultado por Eixo</h2>
+    </div>
+
+    <div class="card p-4 shadow">
+      <div class="row">
+        <!-- Legenda (E, S, G) -->
+        <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
+          <div class="d-flex flex-column align-items-start">
+            <div class="d-flex align-items-center mb-2 fs-1rem">
+              <span class="legend-box bg-yellow me-2"></span> Ambiental
+            </div>
+            <div class="d-flex align-items-center mb-2 fs-1rem">
+              <span class="legend-box bg-teal me-2"></span> Social
+            </div>
+            <div class="d-flex align-items-center fs-1rem">
+              <span class="legend-box bg-purple me-2"></span> Governaça
+            </div>
+          </div>
+        </div>
+        <!-- Gráfico (col-8) -->
+        <div class="col-12 col-md-8">
+          <div class="chart-container" style="position: relative;">
+            <canvas id="myChart" class="chart-axi"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card shadow text-center">
+        <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20" style="font-size: 20px;">Resultado por Tema</h2>
+      </div>
+      <div class="card p-4 shadow">
+        <div class="row chart-row">
+          <!-- Gráfico 1 -->
+          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
+            <div class="chart-container" style="position: relative;">
+              <canvas id="myChartEnvironmental" class="chart-by-themes"></canvas>
+            </div>
+          </div>
+          <!-- Gráfico 2 -->
+          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
+            <div class="chart-container" style="position: relative;">
+              <canvas id="myChartSocial" class="chart-by-themes"></canvas>
+            </div>
+          </div>
+          <!-- Gráfico 3 -->
+          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
+            <div class="chart-container" style="position: relative;">
+              <canvas id="myChartGovernance" class="chart-by-themes"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Próximos Passos -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card shadow text-center">
+        <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20" style="font-size: 20px;">Próximos Passos</h2>
+      </div>
+      <div class="card p-4 shadow">
+        <div class="row">
+          <% @messages.each do |message_data| %>
+            <div class="col-12 col-md-4 mb-4">
+              <div class="card h-100">
+                <div class="card-body" style="background-color: <%= message_data[:color_code] %>;">
+                  <h5 class="card-title"><%= message_data[:message].axi.name %></h5>
+                  <p class="card-text"><%= message_data[:message].message %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  async function fetchResultsPie(customerId) {
+    const response = await fetch(`/result_quizzes?customer_id=${customerId}`, {
+      headers: {
+        "Accept": "application/json" // Adiciona o cabeçalho para especificar que espera JSON
+      }
+    });
+
+    // Verifica se a resposta está ok
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const results = await response.json();
+    console.log('results', results); // Log dos resultados para depuração
+    return results;
+  }
+
+  async function generateChartPie() {
+    const customerId = <%= @customer[0].customer_id%>;
+    try{
+      const results = await fetchResultsPie(customerId);
+      console.log('esse é o resultado de results', results)
+      console.log('total average score', results.total_average_score);
+      const totalAverageScore = results.total_average_score; // Obtém a soma das médias do JSON
+      const remainingScore = 5; // Ajuste conforme necessário
+
+      const maturityName = document.getElementById("maturityName").textContent;
+      console.log('Nome da maturidade', maturityName);
+
+      const ctxGeral = document.getElementById('myDoughnutChart').getContext('2d');
+      if (!ctxGeral) {
+        console.error("Elemento 'myDoughnutChart' não encontrado!");
+      }
+
+      new Chart(ctxGeral, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            label: 'Média de Desempenho',
+            data: [(Math.floor((totalAverageScore / 3) * 10) / 10).toFixed(2), remainingScore],
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.6)', 
+              'rgba(192, 192, 192, 0.6)'
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+              'rgba(192, 192, 192, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(tooltipItem) {
+                  return tooltipItem.label + ': ' + tooltipItem.raw;
+                }
+              }
+            }
+          }
+        }
+      });
+
+    } catch(error)
+      {console.error(error)}
+  }
+  generateChartPie();
+
+</script>
+
+<script>
+  // Função para buscar os dados via JSON
+  async function fetchResults(customerId) {
+    const response = await fetch(`/result_quizzes?customer_id=${customerId}`, {
+      headers: {
+        "Accept": "application/json" // Adiciona o cabeçalho para especificar que espera JSON
+      }
+    });
+
+    // Verifica se a resposta está ok
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const results = await response.json();
+    console.log('results', results); // Log dos resultados para depuração
+    return results;
+  }
+
+  // Função para gerar o gráfico
+  async function generateChart() {
+
+    // const customerId = getCookie('customer_id');
+      const customerId = <%= @customer[0].customer_id%>;
+
+    try {
+      const results = await fetchResults(parseInt(customerId));
+      
+      document.getElementById('maturityName').textContent = results.maturity_name; // Atualiza o nome da maturidade
+      document.getElementById('maturityDescription').textContent = results.maturity_description; // Atualiza o nome da maturidade
+      document.getElementById('averageScoreDisplay').textContent = (Math.floor((results.total_average_score / 3) * 10) / 10).toFixed(2) + " / 5.0"; // Atualiza o valor
+
+
+      const labels = results.results.map(result => result.results.axi_name); // Rótulos do gráfico
+      const data = results.results.map(result => result.results.average_score); // Valores
+
+      // Gera o gráfico
+      new Chart(document.getElementById('myChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '',
+            data: data,
+            backgroundColor: ['rgba(219, 221, 133, 1)', 'rgba(2, 116, 127, 1)', 'rgba(155, 91, 148, 1)'],
+            borderColor: ['rgba(219, 221, 133, 1)', 'rgba(2, 116, 127, 1)', 'rgba(155, 91, 148, 1)'],
+            borderWidth: 1,
+            barThickness: 80
+          }]
+        },
+        options: {
+          responsive: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            datalabels: { // Adiciona a configuração do plugin
+              color: '#fff', // Cor do texto dos rótulos
+              anchor: 'center', // Posiciona os rótulos ao centro da barra
+              align: 'center', // Alinha os rótulos ao centro da barra
+              font: {
+                weight: '400'
+              },
+              formatter: (value, context) => {
+                // const index = context.dataIndex; // Índice da barra
+                // const label = context.chart.data.labels[index]; // Descrição (label) correspondente
+                // return `${label}:\n${value}`; // Exibe o valor dentro da barra
+                return value;
+              }
+            }
+          },
+          scales: {
+            y: { 
+              beginAtZero: true,
+              min: 0,
+              max: 5,
+            },
+            x: { ticks: { display: false } }
+          }
+        },
+        plugins: [ChartDataLabels]
+      });
+    } catch (error) {
+      console.error('Error generating chart:', error);
+    }
+  }
+
+  // Chama a função para gerar o gráfico
+  generateChart();
+</script>
+
+<script>
+  // Passando os dados do Rails para o JavaScript como JSON
+  const axisEnvironmental = <%= @axis_environmental.to_json.html_safe %>;
+  const axisSocial = <%= @axis_social.to_json.html_safe %>;
+  const axisGovernance = <%= @axis_governance.to_json.html_safe %>;
+
+  console.log('axisEnvironmental', axisEnvironmental);
+  console.log('axisSocial', axisSocial);
+  console.log('axisGovernance', axisGovernance);
+
+  // Função para criar o gráfico
+
+  function createChart(ctx, labels, datasetLabel, data, backgroundColors, borderColors) {
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: datasetLabel,
+          data: data,
+          backgroundColor: backgroundColors,
+          borderColor: borderColors,
+          borderWidth: 1,
+          barThickness: 50,
+          barThickness: 30,
+          maxBarThickness: 20
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: false,
+        plugins: {
+          legend: {
+            display: false // Oculta a legenda
+          },
+          datalabels: {
+            anchor: 'center',
+            align: 'center',
+            color: '#fff',
+            font: {
+              weight: '400',
+            },
+            formatter: function(value, context) {
+              return value; // Exibe o valor diretamente nas barras
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 5,
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: '#000'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              display: false
+            },
+            border: {
+              display: true
+            }
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+  }
+
+  // Labels para os temas (extraindo de axisEnvironmental, axisSocial e axisGovernance)
+  console.log('Veloso Veloso')
+  const labelsEnvironmental = axisEnvironmental.map(theme => theme.theme_name);
+  const labelsSocial = axisSocial.map(theme => theme.theme_name);
+  const labelsGovernance = axisGovernance.map(theme => theme.theme_name);
+
+
+  // Cores para os gráficos
+  const backgroundColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
+  const backgroundColorsSocial = ['rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)'];
+  const backgroundColorsGovernance = ['rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)'];
+
+
+  const borderColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
+  const borderColorsSocial = ['rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)'];
+  const borderColorsGovernance = ['rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)'];
+
+  // Criar gráficos para cada eixo (ambiental, social, governança)
+  
+  // Gráfico Ambiental
+  const ctxEnvironmental = document.getElementById('myChartEnvironmental').getContext('2d');
+  const environmentalScores = axisEnvironmental.map(theme => theme.average_score); // extrai os valores de `average_score`
+  createChart(ctxEnvironmental, labelsEnvironmental, 'Resultado Ambiental', environmentalScores, backgroundColorsEnvironmental, borderColorsEnvironmental);
+
+  // Gráfico Social
+  const ctxSocial = document.getElementById('myChartSocial').getContext('2d');
+  const socialScores = axisSocial.map(theme => theme.average_score);
+  createChart(ctxSocial, labelsSocial, 'Resultado Social', socialScores, backgroundColorsSocial, borderColorsSocial);
+
+  // Gráfico Governança
+  const ctxGovernance = document.getElementById('myChartGovernance').getContext('2d');
+  const governanceScores = axisGovernance.map(theme => theme.average_score);
+  createChart(ctxGovernance, labelsGovernance, 'Resultado Governança', governanceScores, backgroundColorsGovernance, borderColorsGovernance);
+
+</script>
+
+
