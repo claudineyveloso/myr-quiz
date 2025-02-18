@@ -8,7 +8,12 @@ RUN apt-get update -qq && apt-get install -y \
     libreadline-dev \
     zlib1g-dev \
     libxml2-dev \
-    libffi-dev
+    libffi-dev \
+    default-libmysqlclient-dev \
+    nodejs \
+    yarn \
+    netcat-traditional \
+    && rm -rf /var/lib/apt/lists/*
 
 
 # Crie e defina o diretório de trabalho

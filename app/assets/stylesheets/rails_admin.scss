@@ -1,2 +1,49 @@
 $fa-font-path: ".";
 @import "rails_admin/src/rails_admin/styles/base";
+
+.bg-title-result-quiz {
+  background-color: #1e494e;
+}
+
+.fs-1rem {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.fs {
+  font-size: 20px;
+}
+
+.fs-3rem {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.legend-box {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.bg-teal {
+  background-color: rgba(2, 116, 127, 1);
+}
+
+.bg-yellow {
+  background-color: rgba(219, 221, 133, 1);
+}
+
+.bg-purple {
+  background-color: rgba(155, 91, 148, 1);
+}
+
+.chart-axi {
+  width: 600px !important;
+  height: 300px !important;
+}
+
+.chart-by-themes {
+  width: 400px;
+  height: 300px;
+}
