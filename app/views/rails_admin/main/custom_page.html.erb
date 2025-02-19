@@ -50,57 +50,57 @@
   </div>
 </div>
 
-  <div class="row mt-4">
-    <div class="col-12">
-      <div class="card shadow text-center">
-        <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20" style="font-size: 20px;">Resultado por Tema</h2>
-      </div>
-      <div class="card p-4 shadow">
-        <div class="row chart-row">
-          <!-- Gráfico 1 -->
-          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
-            <div class="chart-container" style="position: relative;">
-              <canvas id="myChartEnvironmental" class="chart-by-themes"></canvas>
-            </div>
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card shadow text-center">
+      <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20" style="font-size: 20px;">Resultado por Tema</h2>
+    </div>
+    <div class="card p-4 shadow">
+      <div class="row chart-row">
+        <!-- Gráfico 1 -->
+        <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
+          <div class="chart-container" style="position: relative;">
+            <canvas id="myChartEnvironmental" class="chart-by-themes"></canvas>
           </div>
-          <!-- Gráfico 2 -->
-          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
-            <div class="chart-container" style="position: relative;">
-              <canvas id="myChartSocial" class="chart-by-themes"></canvas>
-            </div>
+        </div>
+        <!-- Gráfico 2 -->
+        <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
+          <div class="chart-container" style="position: relative;">
+            <canvas id="myChartSocial" class="chart-by-themes"></canvas>
           </div>
-          <!-- Gráfico 3 -->
-          <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
-            <div class="chart-container" style="position: relative;">
-              <canvas id="myChartGovernance" class="chart-by-themes"></canvas>
-            </div>
+        </div>
+        <!-- Gráfico 3 -->
+        <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center line-chart">
+          <div class="chart-container" style="position: relative;">
+            <canvas id="myChartGovernance" class="chart-by-themes"></canvas>
           </div>
         </div>
       </div>
     </div>
   </div>
-    <!-- Próximos Passos -->
-  <div class="row mt-4">
-    <div class="col-12">
-      <div class="card shadow text-center">
-        <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20" style="font-size: 20px;">Próximos Passos</h2>
-      </div>
-      <div class="card p-4 shadow">
-        <div class="row">
-          <% @messages.each do |message_data| %>
-            <div class="col-12 col-md-4 mb-4">
-              <div class="card h-100">
-                <div class="card-body" style="background-color: <%= message_data[:color_code] %>;">
-                  <h5 class="card-title"><%= message_data[:message].axi.name %></h5>
-                  <p class="card-text"><%= message_data[:message].message %></p>
-                </div>
+</div>
+  <!-- Próximos Passos -->
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card shadow text-center">
+      <h2 class="text-white bg-title-result-quiz px-3 py-2 m-0 fs-20" style="font-size: 20px;">Próximos Passos</h2>
+    </div>
+    <div class="card p-4 shadow">
+      <div class="row">
+        <% @messages.each do |message_data| %>
+          <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100">
+              <div class="card-body" style="background-color: <%= message_data[:color_code] %>;">
+                <h5 class="card-title"><%= message_data[:message].axi.name %></h5>
+                <p class="card-text"><%= message_data[:message].message %></p>
               </div>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
+</div>
 
 
 <script>
@@ -116,7 +116,6 @@
       throw new Error('Network response was not ok');
     }
     const results = await response.json();
-    console.log('results', results); // Log dos resultados para depuração
     return results;
   }
 
@@ -124,13 +123,10 @@
     const customerId = <%= @customer[0].customer_id%>;
     try{
       const results = await fetchResultsPie(customerId);
-      console.log('esse é o resultado de results', results)
-      console.log('total average score', results.total_average_score);
       const totalAverageScore = results.total_average_score; // Obtém a soma das médias do JSON
       const remainingScore = 5; // Ajuste conforme necessário
 
       const maturityName = document.getElementById("maturityName").textContent;
-      console.log('Nome da maturidade', maturityName);
 
       const ctxGeral = document.getElementById('myDoughnutChart').getContext('2d');
       if (!ctxGeral) {
@@ -144,7 +140,7 @@
             label: 'Média de Desempenho',
             data: [(Math.floor((totalAverageScore / 3) * 10) / 10).toFixed(2), remainingScore],
             backgroundColor: [
-              'rgba(75, 192, 192, 0.6)', 
+              'rgba(75, 192, 192, 0.6)',
               'rgba(192, 192, 192, 0.6)'
             ],
             borderColor: [
@@ -173,7 +169,6 @@
       {console.error(error)}
   }
   generateChartPie();
-
 </script>
 
 <script>
@@ -191,7 +186,6 @@
     }
 
     const results = await response.json();
-    console.log('results', results); // Log dos resultados para depuração
     return results;
   }
 
@@ -203,7 +197,7 @@
 
     try {
       const results = await fetchResults(parseInt(customerId));
-      
+
       document.getElementById('maturityName').textContent = results.maturity_name; // Atualiza o nome da maturidade
       document.getElementById('maturityDescription').textContent = results.maturity_description; // Atualiza o nome da maturidade
       document.getElementById('averageScoreDisplay').textContent = (Math.floor((results.total_average_score / 3) * 10) / 10).toFixed(2) + " / 5.0"; // Atualiza o valor
@@ -248,7 +242,7 @@
             }
           },
           scales: {
-            y: { 
+            y: {
               beginAtZero: true,
               min: 0,
               max: 5,
@@ -262,25 +256,69 @@
       console.error('Error generating chart:', error);
     }
   }
-
   // Chama a função para gerar o gráfico
   generateChart();
 </script>
 
 <script>
-  // Passando os dados do Rails para o JavaScript como JSON
-  const axisEnvironmental = <%= @axis_environmental.to_json.html_safe %>;
-  const axisSocial = <%= @axis_social.to_json.html_safe %>;
-  const axisGovernance = <%= @axis_governance.to_json.html_safe %>;
+  async function fetch_axis() {
+    const axisEnvironmental = <%= @axis_environmental.to_json.html_safe %>;
+    const axisSocial = <%= @axis_social.to_json.html_safe %>;
+    const axisGovernance = <%= @axis_governance.to_json.html_safe %>;
 
-  console.log('axisEnvironmental', axisEnvironmental);
-  console.log('axisSocial', axisSocial);
-  console.log('axisGovernance', axisGovernance);
+    // Labels para os temas (extraindo de axisEnvironmental, axisSocial e axisGovernance)
+    const labelsEnvironmental = axisEnvironmental.map(theme => theme.theme_name);
+    const labelsSocial = axisSocial.map(theme => theme.theme_name);
+    const labelsGovernance = axisGovernance.map(theme => theme.theme_name);
 
-  // Função para criar o gráfico
+    // Valores das barras
+    const environmentalScores = axisEnvironmental.map(theme => theme.average_score);
+    const socialScores = axisSocial.map(theme => theme.average_score);
+    const governanceScores = axisGovernance.map(theme => theme.average_score);
 
-  function createChart(ctx, labels, datasetLabel, data, backgroundColors, borderColors) {
+    // Configuração de cores (exemplo)
+    const backgroundColors = ['rgba(54, 162, 235, 0.5)'];
+    const borderColors = ['rgba(54, 162, 235, 1)'];
 
+    // Cores para os gráficos
+    const backgroundColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
+    const backgroundColorsSocial = ['rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)'];
+    const backgroundColorsGovernance = ['rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)'];
+
+    const borderColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
+    const borderColorsSocial = ['rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)'];
+    const borderColorsGovernance = ['rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)'];
+
+    // Criando gráficos
+    generateChartAxis(
+      document.getElementById('myChartEnvironmental').getContext('2d'),
+      labelsEnvironmental,
+      'Resultado Ambiental',
+      environmentalScores,
+      backgroundColorsEnvironmental,
+      borderColorsEnvironmental
+    );
+
+    generateChartAxis(
+      document.getElementById('myChartSocial').getContext('2d'),
+      labelsSocial,
+      'Resultado Social',
+      socialScores,
+      backgroundColorsSocial,
+      borderColorsSocial
+    );
+
+    generateChartAxis(
+      document.getElementById('myChartGovernance').getContext('2d'),
+      labelsGovernance,
+      'Resultado Governança',
+      governanceScores,
+      backgroundColorsGovernance,
+      borderColorsGovernance
+    );
+  }
+
+  function generateChartAxis(ctx, labels, datasetLabel, data, backgroundColors, borderColors) {
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -291,8 +329,6 @@
           backgroundColor: backgroundColors,
           borderColor: borderColors,
           borderWidth: 1,
-          barThickness: 50,
-          barThickness: 30,
           maxBarThickness: 20
         }]
       },
@@ -307,12 +343,8 @@
             anchor: 'center',
             align: 'center',
             color: '#fff',
-            font: {
-              weight: '400',
-            },
-            formatter: function(value, context) {
-              return value; // Exibe o valor diretamente nas barras
-            }
+            font: { weight: '400' },
+            formatter: (value) => value // Exibe o valor diretamente nas barras
           }
         },
         scales: {
@@ -320,23 +352,13 @@
             beginAtZero: true,
             min: 0,
             max: 5,
-            grid: {
-              display: false
-            },
-            ticks: {
-              color: '#000'
-            }
+            grid: { display: false },
+            ticks: { color: '#000' }
           },
           x: {
-            grid: {
-              display: false
-            },
-            ticks: {
-              display: false
-            },
-            border: {
-              display: true
-            }
+            grid: { display: false },
+            ticks: { display: false },
+            border: { display: true }
           }
         }
       },
@@ -344,40 +366,6 @@
     });
   }
 
-  // Labels para os temas (extraindo de axisEnvironmental, axisSocial e axisGovernance)
-  console.log('Veloso Veloso')
-  const labelsEnvironmental = axisEnvironmental.map(theme => theme.theme_name);
-  const labelsSocial = axisSocial.map(theme => theme.theme_name);
-  const labelsGovernance = axisGovernance.map(theme => theme.theme_name);
-
-
-  // Cores para os gráficos
-  const backgroundColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
-  const backgroundColorsSocial = ['rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)'];
-  const backgroundColorsGovernance = ['rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)'];
-
-
-  const borderColorsEnvironmental = ['rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)', 'rgba(219, 221, 133, 1)'];
-  const borderColorsSocial = ['rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)', 'rgba(2, 116, 127, 1)'];
-  const borderColorsGovernance = ['rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)', 'rgba(155, 91, 148, 1)'];
-
-  // Criar gráficos para cada eixo (ambiental, social, governança)
-  
-  // Gráfico Ambiental
-  const ctxEnvironmental = document.getElementById('myChartEnvironmental').getContext('2d');
-  const environmentalScores = axisEnvironmental.map(theme => theme.average_score); // extrai os valores de `average_score`
-  createChart(ctxEnvironmental, labelsEnvironmental, 'Resultado Ambiental', environmentalScores, backgroundColorsEnvironmental, borderColorsEnvironmental);
-
-  // Gráfico Social
-  const ctxSocial = document.getElementById('myChartSocial').getContext('2d');
-  const socialScores = axisSocial.map(theme => theme.average_score);
-  createChart(ctxSocial, labelsSocial, 'Resultado Social', socialScores, backgroundColorsSocial, borderColorsSocial);
-
-  // Gráfico Governança
-  const ctxGovernance = document.getElementById('myChartGovernance').getContext('2d');
-  const governanceScores = axisGovernance.map(theme => theme.average_score);
-  createChart(ctxGovernance, labelsGovernance, 'Resultado Governança', governanceScores, backgroundColorsGovernance, borderColorsGovernance);
-
+  // Inicia o processo de criação dos gráficos
+  fetch_axis();
 </script>
-
-

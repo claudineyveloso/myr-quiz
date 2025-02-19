@@ -3,6 +3,7 @@ FROM ruby:3.3.5
 
 # Instale dependências do sistema
 RUN apt-get update -qq && apt-get install -y \
+    curl \
     build-essential \
     libssl-dev \
     libreadline-dev \
@@ -10,11 +11,15 @@ RUN apt-get update -qq && apt-get install -y \
     libxml2-dev \
     libffi-dev \
     default-libmysqlclient-dev \
-    nodejs \
-    yarn \
     netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
+# Adiciona o repositório oficial do Node.js e instala
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
+
+# Garante que npm e yarn estejam atualizados
+RUN npm install -g npm@10 && npm install -g yarn
 
 # Crie e defina o diretório de trabalho
 WORKDIR /app
