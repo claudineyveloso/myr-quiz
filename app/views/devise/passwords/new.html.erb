@@ -1,16 +1,35 @@
-<h2>Forgot your password?</h2>
+<div class="front-container">
+  <section id="content" class="content">
+    <div class="w-100 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+      <div class="content__wrap">
+        <div class="text-center">
+          <%= image_tag 'marca-myr-pdf.png', class: "img-fluid h-100 mb-30 w-270", data: { aos: "fade-down", aos_duration: "3000" }, alt: "Myr-tech" %>
+        </div>
+        <div class="card shadow-lg">
+          <div class="card-body p-4">
+            <div class="text-center">
+              <h1 class="h3 color-myr-tech"><%= t('devise.passwords.new.forgot_your_password')%></h1>
+              <p class="fs-0-85rem">Informe seu e-mail e lhe enviaremos orientações <br /> para retornar à sua conta.</p>
+              
+            </div>
+            <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'mt-4' } ) do |f| %>
+              <div class="mb-3">
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control" %>
+              </div>
+              <div class="d-grid mt-5">
+                <%= f.submit t('devise.passwords.new.send_me_reset_password_instructions'), class: "btn btn-primary btn-lg btn-login" %>
+              </div>
+            <% end %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+            <div class="d-flex justify-content-between gap-md-5 mt-4">
+              <%= render "devise/shared/links" %>
+            </div>
+            <div class="d-flex align-items-center justify-content-center gap-3 mt-4">
+              <button class="btn btn-light" onclick="window.history.back()">Voltar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
