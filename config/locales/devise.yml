@@ -32,6 +32,9 @@ pt-BR:
       send_paranoid_instructions: "Caso seu e-mail esteja cadastrado, você receberá um link para redefinição de senha no seu e-mail em poucos minutos."
       updated: "Sua senha foi alterada com sucesso. Você está logado agora."
       updated_not_active: "Sua senha foi alterada com sucesso."
+      new:
+        forgot_your_password: "Esqueceu sua senha?"
+        send_me_reset_password_instructions: "Envie-me instruções para redefinir a senha"
     registrations:
       destroyed: "Até mais! Sua conta foi cancelada com sucesso. Esperamos vê-lo novamente em breve."
       signed_up: "Bem-vindo! Você se registrou com sucesso."
@@ -47,6 +50,12 @@ pt-BR:
       send_instructions: "Você receberá um e-mail em poucos minutos com instruções sobre como desbloquear sua conta."
       send_paranoid_instructions: "Caso sua e-mail exista em nossa base, você receberá um e-mail em poucos minutos com instruções sobre como desbloqueá-la."
       unlocked: "Sua conta foi desbloqueada com sucesso. Por favor, faça login para continuar."
+    shared:
+      links:
+        sign_in: "Fazer Login"
+        sign_up: "Criar Conta"
+        sign_out: "Sair"
+        forgot_your_password: "Esqueceu sua senha?"
   errors:
     messages:
       already_confirmed: "já foi confirmado, por favor tente fazer login"

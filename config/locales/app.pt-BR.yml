@@ -116,6 +116,7 @@ pt-BR:
         answer: "Respostas"
         result_quizzes: "Resultados do questionário"
         comment: "Comentário"
+        customer_chart: "Gráficos"
         created_at: "Criado em"
         updated_at: "Atualizado em"
       answer:
