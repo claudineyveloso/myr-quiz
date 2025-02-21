@@ -42,3 +42,6 @@ public/assets/
 !/app/assets/builds/.keep
 
 /node_modules
+
+Dockerfile
+docker-compose.yml
