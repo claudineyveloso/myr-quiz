@@ -1,4 +1,4 @@
-require Rails.root.join('lib', 'rails_admin', 'customer_chart.rb')
+# require Rails.root.join('lib', 'rails_admin', 'customer_chart.rb')
 RailsAdmin.config do |config|
   config.asset_source = :importmap
 
