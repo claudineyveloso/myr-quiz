@@ -1,4 +1,8 @@
 # lib/rails_admin/customer_chart.rb
+puts "###############################################"
+puts "Carregando customer_chart.rb"
+puts "###############################################"
+
 module RailsAdmin
   module Config
     module Actions
