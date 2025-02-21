@@ -1,0 +1,49 @@
+# # config/database.ym
+# default: &default
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   username: rails_user
+#   password: 05092004
+#   host: db
+#   port: 3306
+#   socket: /var/run/mysqld/mysqld.sock
+#
+# development:
+#   <<: *default
+#   database: g_prod_development
+#
+# test:
+#   <<: *default
+#   database: g_prod_test
+#
+# production:
+#   <<: *default
+#   database: <%= ENV['MYSQL_DATABASE'] %>
+#   username: <%= ENV['MYSQL_USER'] %>
+#   password: <%= ENV['MYSQL_PASSWORD'] %>
+#   host: <%= ENV['MYSQL_HOST'] %>
+#
+
+# config/database.ym
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV.fetch("MYSQL_USER") %>
+  password: <%= ENV.fetch("MYSQL_PASSWORD") %>
+  host: <%= ENV.fetch("MYSQL_HOST", "localhost") %>
+  port: <%= ENV.fetch("MYSQL_PORT", 3306) %>
+  socket: /var/run/mysqld/mysqld.sock
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("MYSQL_DATABASE", "g_prod_development") %>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch("MYSQL_DATABASE_TEST", "g_prod_test") %>
+
+production:
+  <<: *default
+  database: <%= ENV.fetch("MYSQL_DATABASE", "db_prod_myr") %>
