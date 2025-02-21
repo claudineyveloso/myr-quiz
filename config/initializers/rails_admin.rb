@@ -1,4 +1,4 @@
-require Rails.root.join('lib', 'rails_admin', 'customer_chart_action.rb')
+require Rails.root.join('lib', 'rails_admin', 'customer_chart.rb')
 RailsAdmin.config do |config|
   config.asset_source = :importmap
 
@@ -55,8 +55,9 @@ RailsAdmin.config do |config|
       field :id
       field :name
       field :email
+      field :phone
+      field :cnpj
       field :created_at
-
       field :customer_chart do
         formatted_value do
           bindings[:view].link_to 'Ver Gráfico', bindings[:view].customer_chart_path(model_name: 'customer', id: bindings[:object].id)
