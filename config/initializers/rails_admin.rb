@@ -36,11 +36,15 @@ RailsAdmin.config do |config|
     delete
     show_in_app
 
-
-    customer_chart do
-      only ['Customer']  # Disponível APENAS no modelo Customer
-    end
-
+    ## Aqui
+    # customer_chart do
+    #   only ['Customer']  # Disponível APENAS no modelo Customer
+    # end
+    #
+    #
+    #
+    #
+    #
     # Adiciona a ação personalizada
     # customer_chart do
     #   only ['Customer'] # Apenas para o modelo Customer
@@ -58,11 +62,11 @@ RailsAdmin.config do |config|
       field :phone
       field :cnpj
       field :created_at
-      field :customer_chart do
-        formatted_value do
-          bindings[:view].link_to 'Ver Gráfico', bindings[:view].customer_chart_path(model_name: 'customer', id: bindings[:object].id)
-        end
-      end
+      # field :customer_chart do
+      #   formatted_value do
+      #     bindings[:view].link_to 'Ver Gráfico', bindings[:view].customer_chart_path(model_name: 'customer', id: bindings[:object].id)
+      #   end
+      # end
     end
   end
 end
