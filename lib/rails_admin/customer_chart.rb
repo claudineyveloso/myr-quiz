@@ -1,4 +1,4 @@
-# lib/rails_admin/customer_chart_action.rb
+# lib/rails_admin/customer_chart.rb
 module RailsAdmin
   module Config
     module Actions
@@ -79,7 +79,6 @@ module RailsAdmin
                 }
               end
             end
-            flash[:notice] = "Exibindo gráfico para o Cliente #{customer.id}"
             average_score = (total_average_score / 3 * 10).floor / 10.0
 
             maturity = Maturity.find_by("range_initial <= ? AND range_final >= ?", average_score, average_score)
